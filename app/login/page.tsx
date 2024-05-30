@@ -1,119 +1,97 @@
+"use client";
+import { createClient } from "@/utils/supabase/client";
+import { ThemeSupa, ViewType } from "@supabase/auth-ui-shared";
+import { Auth } from "@supabase/auth-ui-react";
+import Image from "next/image";
 import Link from "next/link";
-import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { SubmitButton } from "./submit-button";
 
-export default function Login({
-  searchParams,
-}: {
-  searchParams: { message: string };
-}) {
-  const signIn = async (formData: FormData) => {
-    "use server";
+const supabase = createClient();
 
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/protected");
-  };
-
-  const signUp = async (formData: FormData) => {
-    "use server";
-
-    const origin = headers().get("origin");
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      return redirect("/login?message=Could not authenticate user");
-    }
-
-    return redirect("/login?message=Check email to continue sign in process");
-  };
-
+const views: { id: ViewType; title: string }[] = [
+  { id: "sign_in", title: "Sign In" },
+  { id: "sign_up", title: "Sign Up" },
+  { id: "magic_link", title: "Magic Link" },
+  { id: "forgotten_password", title: "Forgotten Password" },
+  { id: "update_password", title: "Update Password" },
+  { id: "verify_otp", title: "Verify Otp" },
+];
+const localization = {
+  variables: {
+    sign_up: {
+      email_label: "Email",
+      password_label: "Parola",
+      email_input_placeholder: "Adresa ta de email",
+      password_input_placeholder: "Parola ta",
+      button_label: "Inregistreaza-te",
+      loading_button_label: "Se incarca ...",
+      link_text: "Nu aveți încă un cont? Înregistrați-vă",
+    },
+    sign_in: {
+      email_label: "Email",
+      email_input_placeholder: "Adresa ta de email",
+      password_label: "Parola",
+      password_input_placeholder: "Parola ta",
+      button_label: "Autentifica-te",
+      loading_button_label: "Se incarca ...",
+      link_text: "Aveți deja un cont? Conectați-vă",
+    },
+    forgotten_password: {
+      email_label: "Email",
+      password_label: "IParola",
+      email_input_placeholder: "Adresa ta de email",
+      button_label: "Trimiteți instrucțiuni pentru resetarea parolei",
+      loading_button_label: "Se incarca ...",
+      link_text: "Ați uitat parola?",
+    },
+  },
+};
+export default function Login() {
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-      <Link
-        href="/"
-        className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1"
-        >
-          <polyline points="15 18 9 12 15 6" />
-        </svg>{" "}
-        Back
-      </Link>
+    <div className="relative lg:mx-auto lg:max-w-md bg-zinc-900">
+      <div className="min-w-[300px] ">
+        <div className="border-scale-400 bg-scale-300 relative rounded-xl px-8 py-10 drop-shadow-sm">
+          <div className="mb-6 flex flex-col gap-6">
+            <div className="flex flex-col items-center gap-3">
+              <Link href="/">
+                <Image
+                  src="/upb.png"
+                  alt="Logo Politehnica"
+                  width={100}
+                  height={100}></Image>
+              </Link>
 
-      <form className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground">
-        <label className="text-md" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          name="email"
-          placeholder="you@example.com"
-          required
-        />
-        <label className="text-md" htmlFor="password">
-          Password
-        </label>
-        <input
-          className="rounded-md px-4 py-2 bg-inherit border mb-6"
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          required
-        />
-        <SubmitButton
-          formAction={signIn}
-          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing In..."
-        >
-          Sign In
-        </SubmitButton>
-        <SubmitButton
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing Up..."
-        >
-          Sign Up
-        </SubmitButton>
-        {searchParams?.message && (
-          <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-            {searchParams.message}
-          </p>
-        )}
-      </form>
+              <h1 className="text-scale-1200 text-2xl text-center mt-2">
+                Universitatea Politehnica Bucuresti
+              </h1>
+            </div>
+          </div>
+          <Auth
+            supabaseClient={supabase}
+            view={views[0].id}
+            appearance={{
+              theme: ThemeSupa,
+              style: {
+                button: {
+                  borderRadius: "10px",
+                  borderColor: "rgba(0,0,0,0)",
+                },
+              },
+              variables: {
+                default: {
+                  colors: {
+                    brand: "rgb(8, 107, 177)",
+                    brandAccent: `gray`,
+                  },
+                },
+              },
+            }}
+            providers={["apple", "google", "github"]}
+            socialLayout={"horizontal"}
+            theme={"dark"}
+            localization={localization}
+          />
+        </div>
+      </div>
     </div>
   );
 }

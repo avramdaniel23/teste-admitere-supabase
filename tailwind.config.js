@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        custom: "-2px 1px 69px 5px rgb(8, 107, 177)",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
