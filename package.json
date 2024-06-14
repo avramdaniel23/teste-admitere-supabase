@@ -6,13 +6,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@headlessui/react": "^2.0.4",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/ssr": "latest",
     "@supabase/supabase-js": "^2.43.4",
     "autoprefixer": "10.4.17",
+    "cookies-next": "^4.2.1",
     "geist": "^1.2.1",
     "next": "latest",
+    "next-themes": "^0.3.0",
     "postcss": "8.4.33",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
