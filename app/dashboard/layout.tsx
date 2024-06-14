@@ -50,7 +50,7 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="h-full flex-1">{children}</main>
+      <main className="h-full flex-1 w-full">{children}</main>
 
       <footer className="w-full border-t border-t-foreground/10 flex justify-center text-center text-xs">
         <QuickNavigation></QuickNavigation>

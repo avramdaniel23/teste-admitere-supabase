@@ -1,3 +1,9 @@
+import HorizontalSection from "@/components/Sections/HorizontalSection";
+
 export default function Dashboard() {
-  return <div>CHILDREN</div>;
+  return (
+    <>
+      <HorizontalSection></HorizontalSection>
+    </>
+  );
 }
