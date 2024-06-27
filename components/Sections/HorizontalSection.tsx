@@ -16,14 +16,12 @@ const HorizontalSection = ({ categoryName, subcategories }: Props) => {
         </h2>
       </header>
       <div
-        className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto lg:grid-cols-4 lg:gap-y-[1.5rem]`}>
-        {subcategories.map((subcategory) => (
-          <CategoryCard
-            key={subcategory.id}
-            title={subcategory.name}
-            categoryId={subcategory.id}
-          />
-        ))}
+        className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto ${numberOfArticles} lg:gap-y-[1.5rem]`}
+      >
+        <CategoryCard title={"Algebra"}></CategoryCard>
+        <CategoryCard title={"Aparate"}></CategoryCard>
+        <CategoryCard title={"trigonometrie"}></CategoryCard>
+        <CategoryCard title={"Septari"}></CategoryCard>
       </div>
     </section>
   );

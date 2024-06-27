@@ -8,7 +8,8 @@ export default function Logo({ size }: any) {
         src="/upb.png"
         alt="Logo Politehnica"
         width={size}
-        height={size}></Image>
+        height={size}
+      ></Image>
     </Link>
   );
 }
