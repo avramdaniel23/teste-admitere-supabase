@@ -1,56 +1,48 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
 
-export default function CategoryCard({ title }: any) {
+interface Props {
+  title: string;
+  categoryId: string;
+}
+
+const CategoryCard = ({ title, categoryId }: Props) => {
+  const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+  const supabase = createClient();
+
+  useEffect(() => {
+    const fetchNumberOfQuestions = async () => {
+      try {
+        const { data: questionsData, error: questionsError } = await supabase
+          .from("questions")
+          .select("id")
+          .eq("subcategory_id", categoryId);
+
+        if (questionsError) {
+          throw questionsError;
+        }
+
+        setNumberOfQuestions(questionsData.length);
+      } catch (error) {
+        console.error("Eroare la încărcarea numărului de întrebări:", error);
+      }
+    };
+
+    fetchNumberOfQuestions();
+  }, [categoryId]);
+
   return (
     <div className=" rounded-lg shadow-xl">
       <div className="w-full ">
-        {/* <img className="w-full" src="/testimage.jpg" alt="" /> */}
-        {/* TITLE */}
         <div className="py-4 flex flex-row-reverse">
           <span className="uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white p-3 rounded-l-full px-[2rem] font-bold tracking-wider">
             {title}
           </span>
         </div>
-        {/* BODY */}
         <div className="px-4 pb-6">
-          <p className="pb-3 font-bold text-m">
-            Descopera teste misto de algebra
-          </p>
           <div className="text-xs flex flex-col">
-            <div className="flex itmes-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="#4062BB"
-                className="size-5 mr-1">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              <span className="flex items-center">300 de teste</span>
-            </div>
-            <div className="flex itmes-center py-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="#4062BB"
-                className="size-5 mr-1">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                />
-              </svg>
-              <span className="flex items-center">123514 de intrebari</span>
-            </div>
-            <div className="flex itmes-center">
+            <div className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -65,12 +57,11 @@ export default function CategoryCard({ title }: any) {
                 />
               </svg>
               <span className="flex items-center">
-                Actualizat la: 12.03.2025
+                {numberOfQuestions} întrebări
               </span>
             </div>
           </div>
         </div>
-        {/* BUTON */}
         <div className="px-4 pb-4 w-full">
           <div className="w-full uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white py-2 rounded-full text-center tracking-wider">
             Vezi categoria
@@ -79,4 +70,6 @@ export default function CategoryCard({ title }: any) {
       </div>
     </div>
   );
-}
+};
+
+export default CategoryCard;
