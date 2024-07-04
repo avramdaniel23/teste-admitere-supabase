@@ -41,7 +41,7 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
+    <div className="flex-1 w-full flex flex-col items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] ">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <div className="flex lg:hidden ">
@@ -52,9 +52,11 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="h-full flex-1 w-full">{children}</main>
+      <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto">
+        {children}
+      </main>
 
-      <footer className="w-full border-t border-t-foreground/10 flex justify-center text-center text-xs">
+      <footer className="w-full h-full border-t border-t-foreground/10 flex justify-center text-center text-xs lg:hidden">
         <QuickNavigation />
       </footer>
     </div>
