@@ -1,4 +1,5 @@
-"use client";
+'use client'
+import { useEffect } from 'react';
 import { createClient } from "@/utils/supabase/client";
 import { ThemeSupa, ViewType } from "@supabase/auth-ui-shared";
 import { Auth } from "@supabase/auth-ui-react";
@@ -45,7 +46,22 @@ const localization = {
     },
   },
 };
+
 export default function Login() {
+  
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        window.location.href = "/";
+      }
+    });
+
+    // Cleanup function to unsubscribe the listener
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []); 
+
   return (
     <div className="relative lg:mx-auto lg:max-w-md bg-zinc-900">
       <div className="min-w-[300px] ">
@@ -57,16 +73,18 @@ export default function Login() {
                   src="/upb.png"
                   alt="Logo Politehnica"
                   width={100}
-                  height={100}></Image>
+                  height={100}
+                ></Image>
               </Link>
 
-              <h1 className="text-scale-1200 text-2xl text-center mt-2">
+              <h1 className="text-scale-1200 text-2xl text-center text-white mt-2">
                 Universitatea Politehnica Bucuresti
               </h1>
             </div>
           </div>
           <Auth
             supabaseClient={supabase}
+            redirectTo="/"
             view={views[0].id}
             appearance={{
               theme: ThemeSupa,
