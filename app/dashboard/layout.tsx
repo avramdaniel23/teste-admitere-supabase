@@ -52,7 +52,7 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto">
+      <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa]">
         {children}
       </main>
 
