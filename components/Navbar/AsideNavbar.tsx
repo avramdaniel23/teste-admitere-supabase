@@ -1,16 +1,15 @@
-import { asideNav } from "@/app/data/asideNav";
+import {asideNav} from "@/app/data/asideNav";
 import Link from "next/link";
 
 export default function AsideNavbar() {
-  const asideNavbar = asideNav;
-  return (
+    return (
     <div className="">
       <div className="h-16 block  p-4 ">
         <h1 className="text-[20px] font-[900] uppercase ">Exerseaza mi l</h1>
       </div>
-      <div className="py-4 ">
+      <div className="py-4">
         <ul>
-          {asideNavbar.map((link: any, index: any) => {
+          {asideNav.map((link: any, index: any) => {
             return (
               <Link href={link.href} key={index}>
                 <li

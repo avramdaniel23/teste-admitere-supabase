@@ -5,7 +5,6 @@ import AuthButton from "@/components/AuthButton";
 import Logo from "@/components/Logo/Logo";
 import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNavigation";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
-
 async function getTimeData() {
   const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
   return res.json();
@@ -41,24 +40,29 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] ">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <div className="flex lg:hidden ">
-            <Logo size={75} />
+      <div className="flex-1 w-full flex flex-col items-center">
+        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] ">
+          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+            <div className="flex lg:hidden ">
+              <Logo size={75}/>
+            </div>
+            <AuthButton/>
+            <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
           </div>
-          <AuthButton />
-          <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
-        </div>
-      </nav>
+        </nav>
 
-      <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa]">
-        {children}
-      </main>
+              <aside
+                  className="h-full border-t border-t-foreground/10 hidden lg:flex z-10 justify-center text-center text-xs bg-green-500">
+                  <QuickNavigation/>
+              </aside>
+              <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-red-500 lg:ms-[10%]">
+                  {children}
+              </main>
 
-      <footer className="w-full h-full border-t border-t-foreground/10 flex justify-center text-center text-xs lg:hidden">
-        <QuickNavigation />
-      </footer>
-    </div>
+          <footer
+              className="w-full h-full border-t border-t-foreground/10 flex justify-center text-center text-xs lg:hidden">
+          <QuickNavigation/>
+        </footer>
+      </div>
   );
 }
