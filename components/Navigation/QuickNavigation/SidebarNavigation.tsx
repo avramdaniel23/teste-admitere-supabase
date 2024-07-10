@@ -1,28 +1,58 @@
-"use client";
+'use client';
 import Logo from "@/components/Logo/Logo";
 import PCNavLink from "./PCNavLink";
-import {useState} from "react";
+import React, {useState} from "react";
+import DarkModeBtn from "@/components/Buttons/DarkMode";
+import {Fade as Hamburger} from 'hamburger-react';
 
 
+interface SidebarNavigationProps {
+    sunset?: any
+    sunrise?: any
+}
 
+export default function SidebarNavigation({sunset, sunrise}: SidebarNavigationProps) {
 
+    const [isFullSidebar, setIsFullSidebar] = useState(false);
 
-export default function SidebarNavigation() {
-    let [isFullSidebar, setIsFullSidebar] = useState(false);
-
-    function toggleSidebar() {
+    const toggleSidebar = () => {
         setIsFullSidebar(!isFullSidebar);
-    }
+    };
+
+
     return (
-        <nav id="sidebar" className="font-[0.625rem] bg-white leading-[1rem] block w-full h-full sticky top-0 shadow-xl dark:bg-dark dark:border-t-[1px] border-r justify-between" onMouseEnter={toggleSidebar} onMouseLeave={toggleSidebar}>
+        <nav id="sidebar"
+             className="font-[0.625rem] bg-white leading-[1rem] rounded-lg block w-full h-full sticky top-0 shadow-xl dark:bg-dark dark:border-t-[1px] border-r justify-between">
             <div className={"flex justify-center m-2"}>
-                <Logo size={75}></Logo>
+                <Logo size={75} bigSize={150} isBig={isFullSidebar}></Logo>
             </div>
-            <div className={`flex flex-col justify-around w-full px-4 py-4 ${isFullSidebar ? "items-start": "items-center"}  `}>
+            <div
+                className={`flex flex-col justify-around w-full  py-8 gap-8 ${isFullSidebar ? "items-start px-8" : "items-center px-2"}  `}>
+
+                <button className={"w-fit justify-center gap-8 flex py-2"} onClick={toggleSidebar}>
+                    <div className={"flex flex-row items-center gap-4 justify-center"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                             stroke="currentColor" className={`size-8 ${isFullSidebar ? "hidden" : "block"}`}>
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                        </svg>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                             stroke="currentColor" className={`size-8 mx-8 ${isFullSidebar ? "block" : "hidden"}`}>
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5"/>
+                        </svg>
+                        {/*<div className={"w-1/2 justify-center ali gap-8 flex py-2"}>*/}
+                        {/*    <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>*/}
+                        {/*</div>*/}
+                        {isFullSidebar && <p className="text-[16px] ">Inchide</p>}
+                    </div>
+                </button>
                 <PCNavLink
                     href="/dashboard/notifications"
                     icon={
                         <svg
+                            className={"mx-8"}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -42,6 +72,7 @@ export default function SidebarNavigation() {
                     href="/dashboard/leaderboard"
                     icon={
                         <svg
+                            className={"mx-8"}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -61,6 +92,7 @@ export default function SidebarNavigation() {
                     href="/dashboard/quizzes"
                     icon={
                         <svg
+                            className={"mx-8"}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -77,11 +109,13 @@ export default function SidebarNavigation() {
                     showLabel={isFullSidebar}
                 />
             </div>
-            <div className={`flex absolute bottom-0 flex-col justify-around w-full px-4 py-4 ${isFullSidebar ? "items-start": "items-center"} `}>
+            <div
+                className={`flex flex-col justify-around w-full  py-8 gap-8 ${isFullSidebar ? "items-start px-8" : "items-center px-2"} absolute bottom-0 `}>
                 <PCNavLink
                     href="/dashboard/community"
                     icon={
                         <svg
+                            className={"mx-8"}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -101,6 +135,7 @@ export default function SidebarNavigation() {
                     href="/dashboard/profile"
                     icon={
                         <svg
+                            className={"mx-8"}
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -116,6 +151,21 @@ export default function SidebarNavigation() {
                     label="Profil"
                     showLabel={isFullSidebar}
                 />
+                <div className={"text-red-600"}
+                ><PCNavLink
+                    href="/logout"
+                    icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                             stroke="currentColor" className={"size-8 mx-8"}>
+                            <path strokeLinecap="round" strokeLinejoin="round"
+                                  d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"/>
+                        </svg>
+
+                    }
+                    label="Deconectare"
+                    showLabel={isFullSidebar}
+                /></div>
+
             </div>
         </nav>
     );

@@ -18,19 +18,18 @@ const NavLink: FC<NavLinkProps> = ({ href, icon, label ,showLabel}) => {
   return (
     <Link
       href={href}
-      className={
-        isActive ? `border-neon-blue py-2 w-fit center` : "py-2 w-fit"
+      className={`${isActive ? "border-neon-blue" : ""} py-2 w-fit`
       }>
-      <div className="flex flex-col lg:flex-row items-center gap-1 ">
+      <div className="flex flex-row items-center gap-4 justify-center">
         {React.cloneElement(icon, {
           stroke: isActive ? "#0172F0" : "currentColor",
           style: {
-            width: isActive ? "32px" : "24px",
-            height: isActive ? "32px" : "24px",
+            width: isActive ? "48px" : "32px",
+            height: isActive ? "48px" : "32px",
             strokeWidth: isActive ? 1.7 : 1.5,
           },
         })}
-          {showLabel && <p className="lg:pt-0.5 lg:text-[14px] ">{label}</p>}
+          {showLabel && <p className="text-[16px] ">{label}</p>}
       </div>
     </Link>
   );

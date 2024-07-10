@@ -41,22 +41,26 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-      <div className="flex-1 w-full flex flex-col items-center lg:h-full">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden ">
-          <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-            <div className="flex lg:hidden ">
-              <Logo size={75}/>
-            </div>
-            <AuthButton/>
-            <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
-          </div>
-        </nav>
+      <div className="flex-1 w-full flex flex-col items-center lg:h-full lg:p-[1em] rounded">
+          {/*<div className={"fixed bg-green-500 left-0 z-30 top-1/2 w-[18em] h-[10px]"}></div>*/}
+          {/*<div className={"fixed bg-yellow-500 left-0 z-20 top-1/2 w-1/5 h-[10px]"}></div>*/}
+          <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden ">
+              <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+                  <div className="flex lg:hidden ">
+                      <Logo size={75}/>
+                  </div>
+                  <AuthButton/>
+                  <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+              </div>
+          </nav>
           <div className="w-full flex">
               <aside
-                  className="border-t border-t-foreground/10 hidden lg:flex w-fit sticky top-0 justify-center text-center text-xs bg-green-500 h-svh">
-                  <SidebarNavigation/>
+                  //TODO: Sidebar Animation
+                  //TODO: Move open login from child here
+                  className="border-t border-t-foreground/10 hidden lg:flex w-fit mr-[1em]  sticky top-0 justify-center text-center text-xs bg-green-500 h-svh transition ease-in-out delay-1000">
+                  <SidebarNavigation sunset={sunset} sunrise={sunrise}/>
               </aside>
-              <main className="h-full flex-1 w-full p-4 md:p-10 lg:mx-auto bg-red-500">
+              <main className=" h-full flex-1 w-full py-20 px-8 lg:py-2 lg:mx-auto bg-red-500 rounded-lg">
                   {children}
               </main>
 
