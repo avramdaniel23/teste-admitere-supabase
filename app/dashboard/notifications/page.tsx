@@ -1,3 +1,45 @@
 export default function Notifications() {
-  return <>Notifications</>;
+  return (
+    <>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+      <p>Notifications</p>
+    </>
+  )
 }
