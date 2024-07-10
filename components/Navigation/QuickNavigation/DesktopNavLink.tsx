@@ -8,9 +8,10 @@ interface NavLinkProps {
   href: string;
   icon: JSX.Element;
   label: string;
+  isOpen: boolean;
 }
 
-const NavLink: FC<NavLinkProps> = ({ href, icon, label }) => {
+const NavLink: FC<NavLinkProps> = ({ href, icon, label, isOpen }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
 
@@ -19,20 +20,20 @@ const NavLink: FC<NavLinkProps> = ({ href, icon, label }) => {
       href={href}
       className={
         isActive
-          ? "border-t-2 border-neon-blue py-2 w-full lg:border-t-0 lg:border-r-2"
-          : "py-2 w-full"
+          ? "  py-2  flex items-center  justify-start transition-all"
+          : "py-2 flex items-center  justify-start  "
       }
     >
-      <div className="flex flex-col items-center gap-1 ">
+      <div className="flex flex-row items-center gap-1 ">
         {React.cloneElement(icon, {
           stroke: isActive ? "#0172F0" : "currentColor",
           style: {
-            width: isActive ? "32px" : "24px",
-            height: isActive ? "32px" : "24px",
+            width: isActive ? "42px" : "42px",
+            height: isActive ? "42px" : "42px",
             strokeWidth: isActive ? 1.7 : 1.5,
           },
         })}
-        <p className="lg:pt-0.5 lg:text-[14px] ">{label}</p>
+        {isOpen && <p>{label}</p>}
       </div>
     </Link>
   );

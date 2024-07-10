@@ -3,7 +3,7 @@ import NavLink from "./NavLink";
 
 export default function QuickNavigation() {
   return (
-    <nav className="font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10">
+    <nav className="z-20 fixed left-0  bottom-0 font-[0.625rem] bg-white leading-[1rem] block w-full lg:w-[20%] lg:top-0 xl:w-[15%] shadow-xl">
       <div className="flex items-center justify-around w-full px-4">
         <NavLink
           href="/dashboard/notifications"
@@ -13,7 +13,8 @@ export default function QuickNavigation() {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -31,7 +32,8 @@ export default function QuickNavigation() {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -49,7 +51,8 @@ export default function QuickNavigation() {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -67,7 +70,8 @@ export default function QuickNavigation() {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -85,7 +89,8 @@ export default function QuickNavigation() {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

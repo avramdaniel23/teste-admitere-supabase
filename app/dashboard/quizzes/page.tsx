@@ -7,6 +7,54 @@ export default function Quizzes() {
         <div>Configure</div>
       </Link>
       <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
+      <Link href="/dashboard/quizzes/configure">
+        <div>Configure</div>
+      </Link>
+      <div>Join</div>
     </section>
   );
 }
