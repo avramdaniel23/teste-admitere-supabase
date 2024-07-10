@@ -1,6 +1,6 @@
 export default function Notifications() {
   return (
-    <>
+    <div className="bg-slate-200">
       <p>Notifications</p>
       <p>Notifications</p>
       <p>Notifications</p>
@@ -40,6 +40,6 @@ export default function Notifications() {
       <p>Notifications</p>
       <p>Notifications</p>
       <p>Notifications</p>
-    </>
+    </div>
   )
 }

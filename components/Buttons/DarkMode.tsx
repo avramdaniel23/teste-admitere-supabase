@@ -36,9 +36,10 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <div className="pt-2 md:pt-0  ">
+    <div className="pt-2 md:pt-0">
       <Menu>
-        <div className="flex flex-row-reverse">
+        <div className="flex flex-row-reverse lg:items-center lg:w-full">
+          <div className="hidden m-0 p-0 align-text-bottom lg:contents">Fundal</div>
           <MenuButton>
             {currentTheme === "dark" ? (
               <svg
