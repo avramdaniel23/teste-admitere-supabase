@@ -3,8 +3,8 @@ import NavLink from "./NavLink";
 
 export default function QuickNavigation() {
   return (
-    <nav className="font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10">
-      <div className="flex items-center justify-around w-full px-4">
+    <nav className="font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl z-10 dark:bg-dark dark:border-t-[1px] fixed bottom-0 lg:border-t-0 mt-10 lg:static lg:mt-0 lg:p-4 lg:w-44">
+      <div className="flex items-center justify-around w-full lg:flex-col lg:items-start lg:gap-12 px-4">
         <NavLink
           href="/dashboard/notifications"
           icon={
