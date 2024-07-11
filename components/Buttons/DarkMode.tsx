@@ -1,46 +1,46 @@
-"use client";
+'use client'
 
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { hasCookie, setCookie } from "cookies-next";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { hasCookie, setCookie } from 'cookies-next'
+import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 
 interface DarkModeBtnType {
-  sunrise: number;
-  sunset: number;
+  sunrise: number
+  sunset: number
 }
 
 const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
-  const [mounted, setMounted] = useState(false);
-  const { systemTheme, theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false)
+  const { systemTheme, theme, setTheme } = useTheme()
 
-  const date = new Date();
-  const hour = date.getHours();
+  const date = new Date()
+  const hour = date.getHours()
   useEffect(() => {
-    if (!hasCookie("prefferedTheme")) {
+    if (!hasCookie('prefferedTheme')) {
       if (hour >= sunrise && hour < sunset) {
-        setTheme("light");
-        setCookie("prefferedTheme", "true", {});
+        setTheme('light')
+        setCookie('prefferedTheme', 'true', {})
       } else {
-        setTheme("dark");
-        setCookie("prefferedTheme", "true", {});
+        setTheme('dark')
+        setCookie('prefferedTheme', 'true', {})
       }
     }
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
   if (!mounted) {
-    return null;
+    return null
   }
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const currentTheme = theme === 'system' ? systemTheme : theme
 
   return (
-    <div className="pt-2 md:pt-0  ">
+    <div className="pt-2 md:pt-0">
       <Menu>
         <div className="flex flex-row-reverse">
           <MenuButton>
-            {currentTheme === "dark" ? (
+            {currentTheme === 'dark' ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -69,7 +69,7 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                 />
               </svg>
             )}
-          </MenuButton>{" "}
+          </MenuButton>{' '}
         </div>
         <div className="relative z-[101] mt-2 rounded-lg bg-white dark:bg-[#1E293B]">
           <MenuItems>
@@ -78,9 +78,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                 {({ active }) => (
                   <button
                     type="button"
-                    className={`${active && "text-neon-blue"}`}
+                    className={`${active && 'text-neon-blue'}`}
                     onClick={() => {
-                      setTheme("light");
+                      setTheme('light')
                     }}>
                     <div className="flex py-1">
                       <svg
@@ -89,9 +89,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                         fill="none"
                         strokeWidth="2"
                         className={
-                          theme === "light"
-                            ? "mr-2 h-6 w-6 stroke-neon-blue"
-                            : "mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500"
+                          theme === 'light'
+                            ? 'mr-2 h-6 w-6 stroke-neon-blue'
+                            : 'mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500'
                         }>
                         <path
                           strokeLinecap="round"
@@ -101,9 +101,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                       </svg>
                       <p
                         className={
-                          theme === "light"
-                            ? "text-neon-blue"
-                            : "text-slate-700 dark:text-[#CBD5E1]"
+                          theme === 'light'
+                            ? 'text-neon-blue'
+                            : 'text-slate-700 dark:text-[#CBD5E1]'
                         }>
                         Light
                       </p>
@@ -116,7 +116,7 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                   type="button"
                   className="text-neon-blue"
                   onClick={() => {
-                    setTheme("dark");
+                    setTheme('dark')
                   }}>
                   <div className="flex py-1">
                     <svg
@@ -125,9 +125,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                       viewBox="0 0 24 24"
                       strokeWidth="2"
                       className={
-                        theme === "dark"
-                          ? "mr-2 h-6 w-6 stroke-neon-blue"
-                          : "mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500"
+                        theme === 'dark'
+                          ? 'mr-2 h-6 w-6 stroke-neon-blue'
+                          : 'mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500'
                       }>
                       <path
                         strokeLinecap="round"
@@ -137,9 +137,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                     </svg>
                     <p
                       className={
-                        theme === "dark"
-                          ? "text-neon-blue"
-                          : "text-slate-700 dark:text-[#CBD5E1]"
+                        theme === 'dark'
+                          ? 'text-neon-blue'
+                          : 'text-slate-700 dark:text-[#CBD5E1]'
                       }>
                       Dark
                     </p>
@@ -150,9 +150,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                 {({ active }) => (
                   <button
                     type="button"
-                    className={`${active && "text-neon-blue"}`}
+                    className={`${active && 'text-neon-blue'}`}
                     onClick={() => {
-                      setTheme("system");
+                      setTheme('system')
                     }}>
                     <div className="flex py-1">
                       <svg
@@ -161,9 +161,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                         viewBox="0 0 24 24"
                         strokeWidth="2"
                         className={
-                          theme === "system"
-                            ? "mr-2 h-6 w-6 stroke-neon-blue"
-                            : "mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500"
+                          theme === 'system'
+                            ? 'mr-2 h-6 w-6 stroke-neon-blue'
+                            : 'mr-2 h-6 w-6 stroke-slate-400 dark:stroke-slate-500'
                         }>
                         <path
                           strokeLinecap="round"
@@ -173,9 +173,9 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
                       </svg>
                       <p
                         className={
-                          theme === "system"
-                            ? "text-neon-blue"
-                            : "text-slate-700 dark:text-[#CBD5E1]"
+                          theme === 'system'
+                            ? 'text-neon-blue'
+                            : 'text-slate-700 dark:text-[#CBD5E1]'
                         }>
                         System
                       </p>
@@ -188,6 +188,6 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
         </div>
       </Menu>
     </div>
-  );
-};
-export default DarkModeBtn;
+  )
+}
+export default DarkModeBtn

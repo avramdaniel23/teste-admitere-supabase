@@ -1,5 +1,5 @@
-import Logo from "@/components/Logo/Logo";
-import NavLink from "./NavLink";
+import Logo from '@/components/Logo/Logo'
+import NavLink from './NavLink'
 
 export default function QuickNavigation() {
   return (
@@ -97,5 +97,5 @@ export default function QuickNavigation() {
         />
       </div>
     </nav>
-  );
+  )
 }
