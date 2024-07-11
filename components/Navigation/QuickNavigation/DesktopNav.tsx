@@ -33,7 +33,7 @@ const convertTime12to24 = (time12h: any) => {
 };
 
 
-export default async function DesktopNav() {
+export default function DesktopNav() {
   const [isSideBarOpen, setSideBarOpen] = useState(false);
 
   const toggleSideBar = () => {
@@ -48,17 +48,19 @@ export default async function DesktopNav() {
   // if (!user) {
   //   return redirect("/login");
   // }
-  const timeData = await getTimeData();
-  const sunrise = convertTime12to24(timeData.results.sunrise);
-  const sunset = convertTime12to24(timeData.results.sunset);
+  // const timeData = await getTimeData();
+  // const sunrise = convertTime12to24(timeData.results.sunrise);
+  // const sunset = convertTime12to24(timeData.results.sunset);
 
   return (
-    <nav className="font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
-                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black">
+    <nav className={`font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
+                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-500 lg:ease-in-out
+                    ${isSideBarOpen ? "lg:w-[20%]" : "lg:w-[8%]"}`}>
+      
       <div className="flex items-center justify-around w-full px-4 lg:items-center lg:flex lg:flex-col bg-slate-100 lg:px-4 lg:h-screen">
-        <div className="flex flex-row justify-between items-center w-full">
-          <div className="text-4xl font-bold">Dashboard</div>
-          <Hamburger onClick={toggleSideBar} />
+        <div className="flex flex-row gap-1 justify-center items-center w-full">
+          <div className={`${isSideBarOpen ? "text-4xl font-bold" : "hidden"}`}>Dashboard</div>
+          <Hamburger toggleSideBar={toggleSideBar} />
         </div>
         <NavLink
           href="/dashboard/notifications"
@@ -77,6 +79,7 @@ export default async function DesktopNav() {
             </svg>
           }
           label="Notificari"
+          isSidebarOpen={isSideBarOpen}
         />
         <NavLink
           href="/dashboard/leaderboard"
@@ -95,6 +98,7 @@ export default async function DesktopNav() {
             </svg>
           }
           label="Leaderboard"
+          isSidebarOpen={isSideBarOpen}
         />
         <NavLink
           href="/dashboard/quizzes"
@@ -113,6 +117,7 @@ export default async function DesktopNav() {
             </svg>
           }
           label="Quizzes"
+          isSidebarOpen={isSideBarOpen}
         />
         <NavLink
           href="/dashboard/community"
@@ -131,6 +136,7 @@ export default async function DesktopNav() {
             </svg>
           }
           label="Comunitate"
+          isSidebarOpen={isSideBarOpen}
         />
         <NavLink
           href="/dashboard/profile"
@@ -149,16 +155,17 @@ export default async function DesktopNav() {
             </svg>
           }
           label="Profil"
+          isSidebarOpen={isSideBarOpen}
         />
         <hr className="w-full h-[2px] bg-slate-400" />
 
         <div className="flex flex-col gap-4">
-          <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+          {/* <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn> */}
           <div className="flex flex-row items-center w-full">
-            <svg className="hidden size-6 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-            </svg>
             <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover lg:contents">
+              <svg className="hidden size-6 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+              </svg>
               Logout
             </button>
           </div>
