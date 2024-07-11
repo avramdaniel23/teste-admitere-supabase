@@ -32,6 +32,8 @@
     "encoding": "^0.1.13",
     "eslint-plugin-react": "^7.34.2",
     "globals": "^15.4.0",
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
     "typescript-eslint": "^7.13.0"
   }
 }
