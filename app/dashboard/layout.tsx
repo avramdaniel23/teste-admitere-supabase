@@ -42,9 +42,9 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise)
   const sunset = convertTime12to24(timeData.results.sunset)
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
-      <nav className="w-full flex lg:hidden justify-center border-b border-b-foreground/10 h-[75px]">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
+    <div>
+      <nav className="border-b-foreground/10 flex h-[75px] w-full justify-center border-b lg:hidden">
+        <div className="flex w-full max-w-4xl items-center justify-between p-3 text-sm">
           <div className="flex lg:hidden">
             <Logo size={75} />
           </div>
@@ -53,14 +53,14 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="w-full lg:flex flex-1 bg-[#fafafa]">
+      <div className="flex">
         <Sidebar user={user} sunset={sunset} sunrise={sunrise} />
-        <div className="p-4 md:p-10 h-full lg:max-w-7xl lg:mx-auto w-full bg-[#fafafa]">
+        <div className="h-full w-full bg-[#fafafa] p-4 md:p-10 lg:mx-auto lg:max-w-7xl">
           {children}
         </div>
-      </main>
+      </div>
 
-      <footer className="w-full h-full border-t border-t-foreground/10 flex justify-center text-center text-xs lg:hidden">
+      <footer className="border-t-foreground/10 flex h-full w-full justify-center border-t text-center text-xs lg:hidden">
         <QuickNavigation />
       </footer>
     </div>
