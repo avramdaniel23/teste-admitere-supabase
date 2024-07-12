@@ -22,6 +22,7 @@ export default function QuickNavigation() {
             </svg>
           }
           label="Notificari"
+          isSidebarOpen={false}
         />
         <NavLink
           href="/dashboard/leaderboard"
@@ -40,6 +41,7 @@ export default function QuickNavigation() {
             </svg>
           }
           label="Leaderboard"
+          isSidebarOpen={false}
         />
         <NavLink
           href="/dashboard/quizzes"
@@ -58,6 +60,7 @@ export default function QuickNavigation() {
             </svg>
           }
           label="Quizzes"
+          isSidebarOpen={false}
         />
         <NavLink
           href="/dashboard/community"
@@ -76,6 +79,7 @@ export default function QuickNavigation() {
             </svg>
           }
           label="Comunitate"
+          isSidebarOpen={false}
         />
         <NavLink
           href="/dashboard/profile"
@@ -94,6 +98,7 @@ export default function QuickNavigation() {
             </svg>
           }
           label="Profil"
+          isSidebarOpen={false}
         />
       </div>
     </nav>

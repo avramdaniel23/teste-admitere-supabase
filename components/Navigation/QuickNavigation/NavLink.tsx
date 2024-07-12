@@ -30,7 +30,7 @@ const NavLink: FC<NavLinkProps> = ({ href, icon, label, isSidebarOpen}) => {
             strokeWidth: isActive ? 1.7 : 1.5,
           },
         })}
-        <p className={`${isSidebarOpen ? "lg:contents" : "lg:hidden"} lg:pt-0.5 lg:text-[14px]`}>{label}</p>
+        <p className={`${isSidebarOpen ? "lg:text-[14px]" : "lg:text-[0px]"} lg:pt-0.5 `}>{label}</p>
       </div>
     </Link>
   );

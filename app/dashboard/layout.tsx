@@ -55,7 +55,7 @@ export default async function DashboardLayout({ children }: any) {
 
       <div className="lg:h-full lg:w-full lg:flex lg:flex-row">
         <DesktopNav />
-        <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:p-0 lg:mx-auto bg-[#fafafa]">  
+        <main className="h-full flex-1 w-screen p-4 md:p-10 lg:max-w-7xl lg:p-0 lg:mx-auto bg-[#fafafa]">  
           {children}
         </main>
       </div>

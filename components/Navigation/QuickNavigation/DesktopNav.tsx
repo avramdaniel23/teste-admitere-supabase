@@ -54,12 +54,12 @@ export default function DesktopNav() {
 
   return (
     <nav className={`font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
-                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-500 lg:ease-in-out
-                    ${isSideBarOpen ? "lg:w-[20%]" : "lg:w-[8%]"}`}>
+                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-300 lg:ease-in-out
+                    ${isSideBarOpen ? "lg:w-72" : "lg:w-[8%]"}`}>
       
       <div className="flex items-center justify-around w-full px-4 lg:items-center lg:flex lg:flex-col bg-slate-100 lg:px-4 lg:h-screen">
-        <div className="flex flex-row gap-1 justify-center items-center w-full">
-          <div className={`${isSideBarOpen ? "text-4xl font-bold" : "hidden"}`}>Dashboard</div>
+        <div className={`flex flex-row justify-center items-center`}>
+          <p className={`overflow-hidden transition-all duration-300 ${isSideBarOpen ? "text-3xl font-bold w-40 mr-2" : "w-0"}`}>Dashboard</p>
           <Hamburger toggleSideBar={toggleSideBar} />
         </div>
         <NavLink
