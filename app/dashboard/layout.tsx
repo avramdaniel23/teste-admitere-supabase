@@ -57,7 +57,7 @@ export default async function DashboardLayout({ children }: any) {
               <aside
                   //TODO: Sidebar Animation
                   //TODO: Move open login from child here
-                  className="border-t border-t-foreground/10 hidden lg:flex mr-[1em]  sticky top-0 justify-center text-center text-xs bg-green-500 h-svh transition ease-in-out delay-1000">
+                  className="border-t border-t-foreground/10 hidden lg:flex mr-[1em]  sticky top-0 justify-center text-center text-xs bg-green-500 h-svh transition-all duration-300">
                   <SidebarNavigation sunset={sunset} sunrise={sunrise}/>
               </aside>
               <main className=" h-full flex-1 w-full py-20 px-8 lg:py-2 lg:mx-auto  rounded-lg">

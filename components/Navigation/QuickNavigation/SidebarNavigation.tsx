@@ -26,10 +26,10 @@ export default function SidebarNavigation({sunset, sunrise}: SidebarNavigationPr
                 <Logo size={75} bigSize={150} isBig={isFullSidebar}></Logo>
             </div>
             <div
-                className={`flex flex-col justify-around w-full  py-8 gap-8 ${isFullSidebar ? "items-start px-8" : "items-center px-2"}  `}>
+                className={`flex flex-col justify-around w-full  py-8 gap-8 ${isFullSidebar ? "items-start px-8" : "items-center px-2"} transition-all duration-1000  `}>
 
                 <button className={"w-fit justify-center gap-8 flex py-2"} onClick={toggleSidebar}>
-                    <div className={"flex flex-row items-center gap-4 justify-center"}>
+                    <div className={"flex flex-row items-center justify-center"}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className={`size-8 ${isFullSidebar ? "hidden" : "block"}`}>
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -44,7 +44,7 @@ export default function SidebarNavigation({sunset, sunrise}: SidebarNavigationPr
                         {/*<div className={"w-1/2 justify-center ali gap-8 flex py-2"}>*/}
                         {/*    <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>*/}
                         {/*</div>*/}
-                        {isFullSidebar && <p className="text-[16px] ">Inchide</p>}
+                        <p className={`${isFullSidebar ? 'text-[16px]' : 'text-[0px]'} transition-all duration-1000`}>Inchide</p>
                     </div>
                 </button>
                 <PCNavLink
