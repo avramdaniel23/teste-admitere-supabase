@@ -3,7 +3,6 @@ import Logo from "@/components/Logo/Logo";
 import PCNavLink from "./PCNavLink";
 import React, {useState} from "react";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
-import {Fade as Hamburger} from 'hamburger-react';
 
 
 interface SidebarNavigationProps {

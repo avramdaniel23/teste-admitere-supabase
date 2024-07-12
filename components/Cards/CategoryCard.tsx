@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/client";
 
 interface Props {
   title: string;
-  categoryId: string;
+  categoryId?: string;
 }
 
 const CategoryCard = ({ title, categoryId }: Props) => {
