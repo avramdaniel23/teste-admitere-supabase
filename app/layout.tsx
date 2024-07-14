@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <Providers>
-          <main>
+          <main className="min-h-screen">
             {/* <div className="h-[100vh] absolute left-0 top-0 w-[12.5%] bg-white shadow-xl ">
             <AsideNavbar />
           </div> */}

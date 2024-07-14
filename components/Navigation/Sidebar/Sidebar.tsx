@@ -1,5 +1,4 @@
 'use client'
-import Logo from '@/components/Logo/Logo'
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -23,7 +22,7 @@ export default function Sidebar({
 
   return (
     <aside className="sticky top-0 z-20 hidden h-screen shadow-lg lg:block">
-      <div className="relative flex h-full flex-col items-center gap-7 bg-white p-4 pb-2">
+      <div className="relative flex h-full flex-col items-center gap-7 bg-white p-4 dark:bg-gray-900">
         <div
           className={`flex h-[72px] w-full items-center ${
             isExpanded ? 'justify-between' : 'justify-center'
@@ -42,7 +41,7 @@ export default function Sidebar({
           </Link>
           <button
             onClick={() => setIsExpanded(state => !state)}
-            className="rounded-lg bg-white p-2 transition-colors duration-75 hover:bg-zinc-300"
+            className="rounded-lg p-2 transition-colors duration-75 hover:bg-zinc-300 dark:hover:bg-gray-700"
           >
             {isExpanded ? (
               <svg
@@ -174,7 +173,28 @@ export default function Sidebar({
             >
               Community
             </SidebarItem>
+
+            {/* Theme Switch */}
+            <li>
+              <div className="group relative flex items-center rounded-md px-3 py-2 font-semibold transition-colors duration-75 hover:bg-neon-blue">
+                <DarkModeBtn sunset={sunset} sunrise={sunrise}>
+                  <span
+                    className={`overflow-hidden text-left transition-all ${
+                      isExpanded ? 'ml-3 w-52' : 'w-0'
+                    }`}
+                  >
+                    Theme
+                  </span>
+                </DarkModeBtn>
+                {!isExpanded && (
+                  <div className="invisible absolute left-full top-1/2 ml-7 -translate-x-3 -translate-y-1/2 rounded-md bg-blue-200 p-2 text-sm font-semibold text-black opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
+                    Theme
+                  </div>
+                )}
+              </div>
+            </li>
           </ul>
+
           <div className="group relative flex rounded-lg p-3">
             <Link
               href="/dashboard/profile"
@@ -183,9 +203,7 @@ export default function Sidebar({
               {username?.at(0)}
             </Link>
             {!isExpanded && (
-              <div
-                className={`invisible absolute left-full z-20 ml-7 -translate-x-3 rounded-md bg-blue-200 p-2 text-sm font-semibold text-black opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100`}
-              >
+              <div className="invisible absolute left-full top-1/2 ml-5 -translate-x-3 -translate-y-1/2 rounded-md bg-blue-200 p-2 text-sm font-semibold text-black opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
                 Profile
               </div>
             )}
@@ -196,15 +214,17 @@ export default function Sidebar({
             >
               <div className="leading-4">
                 <h4 className="font-semibold">{username}</h4>
-                <span className="text-xs text-gray-600">{user?.email}</span>
+                <span className="text-xs text-gray-600 dark:font-medium dark:text-gray-100">
+                  {user?.email}
+                </span>
               </div>
-              <button className="rounded-lg p-2 transition-colors hover:bg-zinc-300">
+              <button className="rounded-lg p-2 transition-colors hover:bg-zinc-300 dark:hover:bg-gray-700">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  className="size-5"
+                  className="size-7"
                   stroke="currentColor"
                 >
                   <path
@@ -253,9 +273,7 @@ export function SidebarItem({
         </span>
 
         {!isExpanded && (
-          <div
-            className={`invisible absolute left-full z-20 ml-7 -translate-x-3 rounded-md bg-blue-200 p-2 text-sm text-black opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100`}
-          >
+          <div className="invisible absolute left-full ml-7 -translate-x-3 rounded-md bg-blue-200 p-2 text-sm text-black opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
             {children}
           </div>
         )}
