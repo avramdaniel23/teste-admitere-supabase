@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 
 export default function useSidebar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(true)
   const portalRef = useRef<HTMLUListElement | null>(null)
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 

@@ -16,7 +16,6 @@ export default function Sidebar({
   sunrise: number
   sunset: number
 }) {
-  // const [isExpanded, setIsExpanded] = useState(true)
   const {
     isMenuOpen: isExpanded,
     toggleMenu,
