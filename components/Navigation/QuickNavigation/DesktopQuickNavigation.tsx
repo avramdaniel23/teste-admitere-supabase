@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import DesktopNavLink from "./DesktopNavLink";
 import AuthButton from "@/components/AuthButton";
+import Logo from "@/components/Logo/Logo";
 
 const DesktopQuickNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,56 +11,94 @@ const DesktopQuickNavigation = () => {
     <nav
       className={
         isOpen
-          ? "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[200px]  transition-all duration-200 ease-linear "
-          : "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[120px] transition-all duration-200 ease-linear "
+          ? "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[200px]  transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3 items-center "
+          : "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[120px] transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3  items-center"
       }
     >
       <div
         className={
           isOpen
-            ? "flex flex-row  px-3 items-center justify-between mt-5"
-            : "flex items-center justify-center mt-5 px-3"
+            ? "flex flex-row items-center justify-center mt-5 "
+            : "flex items-center justify-center mt-5  "
         }
       >
         {isOpen && <h1 className="text-lg font-[900] uppercase">exerseaza</h1>}
 
-        <button onClick={() => setIsOpen(!isOpen)}>
-          {!isOpen ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
-              />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-8"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-              />
-            </svg>
-          )}
-        </button>
+        <div
+          className={
+            isOpen
+              ? " left-10 bg-[#E68369] rounded-full items-center justify-center flex translate-x-10 duration-300 transition-all"
+              : "duration-300 transition-all items-center justify-center flex"
+          }
+        >
+          <button onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-8"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
       </div>
 
-      <div className="flex flex-col justify-between  h-full items-center">
-        <section className="flex flex-col mt-5 w-fit justify-center ">
+      <div
+        className={
+          isOpen
+            ? "my-5 items-center justify-center scale-150 p-4 transition-all duration-300"
+            : "my-5 items-center justify-center scale-100 transition-all duration-300"
+        }
+      >
+        <Logo size={72} />
+      </div>
+      <div className="flex flex-col items-center justify-between h-full">
+        <section className="flex flex-col items-start  w-fit  justify-center ">
+          <DesktopNavLink
+            href="/dashboard"
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+                />
+              </svg>
+            }
+            label="Dashboard"
+            isOpen={isOpen}
+          />
           <DesktopNavLink
             href="/dashboard/leaderboard"
             icon={
@@ -120,51 +159,68 @@ const DesktopQuickNavigation = () => {
             label="Comunitate"
             isOpen={isOpen}
           />
-        </section>
+          <section className="flex flex-col mt-5 border-t-2">
+            <div className="flex flex-col mt-5 ">
+              <DesktopNavLink
+                href="/dashboard/notifications"
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
+                    />
+                  </svg>
+                }
+                label="Notificari"
+                isOpen={isOpen}
+              />
 
-        <section className="flex flex-col mt-5 w-fit justify-center">
-          <DesktopNavLink
-            href="/dashboard/notifications"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z"
-                />
-              </svg>
-            }
-            label="Notificari"
-            isOpen={isOpen}
-          />
-
-          <DesktopNavLink
-            href="/dashboard/profile"
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                />
-              </svg>
-            }
-            label="Profil"
-            isOpen={isOpen}
-          />
-          {/* <AuthButton /> */}
+              <DesktopNavLink
+                href="/dashboard/profile"
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                    />
+                  </svg>
+                }
+                label="Profil"
+                isOpen={isOpen}
+              />
+              <div className=" flex flex-row  items-center justify-start cursor-pointer mt-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6 text-red-400"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+                  />
+                </svg>
+                {isOpen && <p className="ml-2"> Log Out</p>}
+              </div>
+            </div>
+          </section>
         </section>
       </div>
     </nav>
