@@ -18,9 +18,10 @@ const NavLink: FC<NavLinkProps> = ({ href, icon, label }) => {
     <Link
       href={href}
       className={
-        isActive ? "border-t-2 border-neon-blue py-2 w-full" : "py-2 w-full"
+        isActive ? "border-t-2 lg:border-t-0 lg:text-neon-blue border-neon-blue py-2 w-full font-semibold"
+          : "py-2 w-full hover:text-blue-700 hover:font-semibold"
       }>
-      <div className="flex flex-col items-center gap-1 ">
+      <div className="flex flex-col lg:flex-row items-center gap-1 ">
         {React.cloneElement(icon, {
           stroke: isActive ? "#0172F0" : "currentColor",
           style: {
