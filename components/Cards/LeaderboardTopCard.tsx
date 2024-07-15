@@ -35,7 +35,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                         </div>
                     </div>
                     <div
-                        className="relative left-[1px] bg-gradient-to-b from-gray-400 to-gray-700 w-20 md:w-40 -z-10 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center -skew-x-[9deg]">
+                        className="relative bg-gradient-to-b from-gray-400 to-gray-700 w-20 md:w-40 -z-10 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
                         className="bg-gradient-to-b from-gray-400 to-gray-700 w-20 md:w-40 h-40  text-gray-800 flex flex-col items-center justify-center">
@@ -64,7 +64,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                         </div>
                     </div>
                     <div
-                        className="relative left-[1px] -bottom-1 bg-gradient-to-b from-yellow-400 to-yellow-700 -z-10 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center -skew-x-[9deg]">
+                        className="relative bg-gradient-to-b from-yellow-400 to-yellow-700  w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
                         className="bg-gradient-to-b from-yellow-400 to-yellow-700 w-20 md:w-40 h-52  text-gray-800 flex flex-col items-center justify-center">
@@ -89,7 +89,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                         </div>
                     </div>
                     <div
-                        className="relative left-[1px] -bottom-1 bg-gradient-to-b from-orange-400 to-orange-700 -z-10 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center -skew-x-[9deg]">
+                        className="relative  bg-gradient-to-b from-orange-400 to-orange-700 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
                         className="bg-gradient-to-b from-orange-400 to-orange-700 w-20 md:w-40 h-32  text-gray-800 flex flex-col items-center justify-center">
