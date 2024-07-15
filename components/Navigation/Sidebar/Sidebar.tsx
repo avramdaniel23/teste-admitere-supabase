@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { User } from '@supabase/supabase-js'
 import DarkModeBtn from '@/components/Buttons/DarkMode'
+import useSidebar from '@/hooks/useSidebar'
 
 export default function Sidebar({
   user,
@@ -15,13 +16,22 @@ export default function Sidebar({
   sunrise: number
   sunset: number
 }) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  // const [isExpanded, setIsExpanded] = useState(true)
+  const {
+    isMenuOpen: isExpanded,
+    toggleMenu,
+    portalRef,
+    buttonRef,
+  } = useSidebar()
 
   const name = user?.email?.split('@')[0]
   const username = name && name[0].toUpperCase() + name.slice(1)
 
   return (
-    <aside className="sticky top-0 z-20 hidden h-screen shadow-lg lg:block">
+    <aside
+      className="sticky top-0 z-20 hidden h-screen shadow-lg lg:block"
+      ref={portalRef}
+    >
       <div className="relative flex h-full flex-col items-center gap-7 bg-white p-4 dark:bg-gray-900">
         <div
           className={`flex h-[72px] w-full items-center ${
@@ -40,7 +50,8 @@ export default function Sidebar({
             />
           </Link>
           <button
-            onClick={() => setIsExpanded(state => !state)}
+            onClick={() => toggleMenu()}
+            ref={buttonRef}
             className="rounded-lg p-2 transition-colors duration-75 hover:bg-zinc-300 dark:hover:bg-gray-700"
           >
             {isExpanded ? (
