@@ -110,6 +110,7 @@ export default function SidebarNavigation({sunset, sunrise}: SidebarNavigationPr
             </div>
             <div
                 className={`flex flex-col justify-around w-full  py-8 gap-8 ${isFullSidebar ? "items-start px-8" : "items-center px-2"} absolute bottom-0 `}>
+                <DarkModeBtn sunrise={sunrise} sunset={sunset}></DarkModeBtn>
                 <PCNavLink
                     href="/dashboard/community"
                     icon={
