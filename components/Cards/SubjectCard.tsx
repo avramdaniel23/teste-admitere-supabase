@@ -1,12 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
+import { useState } from "react";
 
-interface gradient {
-    from: string;
-    to: string;
-
-}
 interface Props {
     title: string;
     className: string;
@@ -14,45 +8,20 @@ interface Props {
 }
 
 const SubjectCard = ({ title, className, categories}: Props) => {
-    const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
-    const supabase = createClient();
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const toggleExpansion = () => {
         setIsExpanded(!isExpanded);
     };
 
-    //
-    // useEffect(() => {
-    //     const fetchNumberOfQuestions = async () => {
-    //         try {
-    //             const { data: questionsData, error: questionsError } = await supabase
-    //                 .from("questions")
-    //                 .select("id")
-    //                 .eq("subcategory_id", categoryId);
-    //
-    //             if (questionsError) {
-    //                 throw questionsError;
-    //             }
-    //
-    //             setNumberOfQuestions(questionsData.length);
-    //         } catch (error) {
-    //             console.error("Eroare la încărcarea numărului de întrebări:", error);
-    //         }
-    //     };
-    //
-    //     fetchNumberOfQuestions();
-    // }, [categoryId]);
-
     return (
-        <div className={`w-full h-fit rounded-lg shadow-xl bg-gradient-to-r ${className}`} onClick={toggleExpansion} >
-
-                <div className="py-4 flex justify-center">
-          <p className="w-full uppercase p-6 text-white m-3 text-center shadow-2xl backdrop-blur font-bold tracking-wider">
-            {title}
-          </p>
-                </div>
-                <div className={`${isExpanded ? 'h-0 overflow-hidden ': 'h-1/2' } transition-all duration-1000`}>{categories}</div>
-            </div>
+        <div className={"flex flex-col"}>
+        <div className={`py-4 flex justify-center w-full h-fit overflow-hidden rounded-lg shadow-xl bg-gradient-to-r ${className} `} onClick={toggleExpansion}>
+            <p className={`w-full uppercase p-6 text-white m-3 text-center shadow-2xl backdrop-blur font-bold tracking-wider ${isExpanded && 'rounded-b-none'}`}>
+                {title}
+            </p>
+        </div>
+            <div className={`w-full ${isExpanded ? 'h-full' : 'h-0 max-h-fit overflow-hidden'} transition-all duration-1000 overflow-hidden rounded-lg shadow-xl bg-gradient-to-r ${className} relative -top-2`}>{categories}</div>
+        </div>
     );
 };
 

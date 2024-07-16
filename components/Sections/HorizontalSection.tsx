@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import CategoryCard from "../Cards/CategoryCard";
 import SubjectCard from "@/components/Cards/SubjectCard";
 
@@ -18,13 +17,15 @@ const HorizontalSection = () => {
         </h2>
       </header>
       <div
-        className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem]`}
+        className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem] transition-all duration-1000`}
       >
           <SubjectCard title={"Matematica"} className={"from-purple-500 to-pink-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
               title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>}/>
           <SubjectCard title={"Fizica"} className={"from-green-500 to-lime-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
               title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>} />
           <SubjectCard title={"Chimie"} className={"from-blue-500 to-cyan-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
+              title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>} />
+          <SubjectCard title={"Informatica"} className={"from-red-500 to-orange-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
               title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>} />
       </div>
     </section>
