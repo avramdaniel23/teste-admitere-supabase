@@ -54,13 +54,13 @@ export default function DesktopNav() {
 
   return (
     <nav className={`font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
-                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-300 lg:ease-in-out
+                    lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-300 lg:ease-in
                     ${isSideBarOpen ? "lg:w-72" : "lg:w-[8%]"}`}>
       
       <div className="flex items-center justify-around w-full px-4 lg:items-center lg:flex lg:flex-col bg-slate-100 lg:px-4 lg:h-screen">
         <div className={`flex flex-row justify-center items-center`}>
-          <p className={`overflow-hidden transition-all duration-300 ${isSideBarOpen ? "text-3xl font-bold w-40 mr-2" : "w-0"}`}>Dashboard</p>
-          <Hamburger toggleSideBar={toggleSideBar} />
+          <p className={`overflow-hidden ${isSideBarOpen ? "text-3xl font-bold duration-500 w-40 mr-2" : "duration-500 w-0"}`}>Dashboard</p>
+          <Hamburger toggleSideBar={toggleSideBar} isSideBarOpen={isSideBarOpen} />
         </div>
         <NavLink
           href="/dashboard/notifications"
@@ -161,7 +161,7 @@ export default function DesktopNav() {
 
         <div className="flex flex-col gap-4">
           {/* <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn> */}
-          <div className="flex flex-row items-center w-full">
+          <div className="flex flex-row items-center w-full p-1 duration-200 rounded-lg bg-red-200 hover:bg-red-300">
             <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover lg:contents">
               <svg className="hidden size-6 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
