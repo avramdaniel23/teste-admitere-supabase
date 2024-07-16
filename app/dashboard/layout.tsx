@@ -49,15 +49,19 @@ export default async function DashboardLayout({ children }: any) {
             <Logo size={75} />
           </div>
           <AuthButton />
-          <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+          <DarkModeBtn
+            sunset={sunset}
+            sunrise={sunrise}
+            isOpen={true}
+          ></DarkModeBtn>
         </div>
       </nav>
 
       <div className="flex flex-1 w-full h-full ">
         <aside>
-          <DesktopQuickNavigation />
+          <DesktopQuickNavigation sunrise={sunrise} sunset={sunset} />
         </aside>
-        <main className="h-full  flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa]">
+        <main className="h-full  flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-dark transition-all duration-200">
           {children}
         </main>
       </div>

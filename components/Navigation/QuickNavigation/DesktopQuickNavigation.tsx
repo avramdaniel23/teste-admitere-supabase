@@ -2,10 +2,16 @@
 
 import React, { useState } from "react";
 import DesktopNavLink from "./DesktopNavLink";
-import AuthButton from "@/components/AuthButton";
+// import AuthButton from "@/components/AuthButton";
 import Logo from "@/components/Logo/Logo";
+import DarkModeBtn from "@/components/Buttons/DarkMode";
 
-const DesktopQuickNavigation = () => {
+interface Props {
+  sunset: number;
+  sunrise: number;
+}
+
+const DesktopQuickNavigation = ({ sunrise, sunset }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <nav
@@ -202,6 +208,7 @@ const DesktopQuickNavigation = () => {
                 label="Profil"
                 isOpen={isOpen}
               />
+              <DarkModeBtn sunrise={sunrise} sunset={sunset} isOpen={isOpen} />
               <div className=" flex flex-row  items-center justify-start cursor-pointer mt-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

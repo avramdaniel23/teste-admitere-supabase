@@ -16,6 +16,13 @@ const SubjectCard = ({ subject, numberOfTests, color, icon }: Props) => {
     yellow: `bg-yellow-500`,
   };
 
+  const shadowVariants = {
+    blue: `dark:shadow-blue-500`,
+    red: `dark:shadow-red-500`,
+    green: `dark:shadow-green-500`,
+    yellow: `dark:shadow-yellow-500`,
+  };
+
   const lgColorVariants = {
     blue: `lg:bg-blue-500`,
     red: `lg:bg-red-500`,
@@ -26,10 +33,10 @@ const SubjectCard = ({ subject, numberOfTests, color, icon }: Props) => {
   return (
     <Link
       href="#"
-      className=" flex flex-col w-full items-center rounded-lg border-2 shadow-xl hover:scale-105 lg:pb-2 trasnsition-all duration-300"
+      className={`flex flex-col w-[100%]  items-center rounded-lg border-2 shadow-xl hover:scale-105 lg:pb-2 trasnsition-all duration-300 dark:bg-slate-900 dark:border-0 ${shadowVariants[color]} dark:shadow-md `}
     >
       <div className="flex flex-row w-full items-center h-full  lg:flex-col-reverse  ">
-        <div className="hidden lg:flex text-lg text-slate-600  lg:flex-row w-full justify-between px-4">
+        <div className="hidden lg:flex text-lg text-slate-600  lg:flex-row w-full justify-between px-4 dark:text-white ">
           <p>{numberOfTests} teste</p>
           <p>Ai terminat 10 teste</p>
         </div>

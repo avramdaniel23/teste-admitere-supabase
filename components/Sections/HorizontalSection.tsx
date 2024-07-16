@@ -18,7 +18,7 @@ const HorizontalSection = () => {
         </h2>
       </header> */}
       <div
-        className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem]`}
+        className={`grid  grid-cols-auto gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem]`}
       >
         {/* <CategoryCard title={"Algebra"} categoryId="1"></CategoryCard>
         <CategoryCard title={"Aparate"} categoryId="1"></CategoryCard>

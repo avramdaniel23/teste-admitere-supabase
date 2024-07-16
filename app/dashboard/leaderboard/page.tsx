@@ -1,18 +1,26 @@
+"use client";
+import { useRef } from "react";
 import { users } from "./mockData";
 
 export default function Leaderboard() {
+  const tableRef = useRef<HTMLDivElement>(null);
+  const handleScroll = () => {
+    if (tableRef.current)
+      tableRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
   const sortedUsers = users.sort((a, b) => b.points - a.points);
   const ranking = sortedUsers.map((user, index) => ({
     ...user,
     place: index + 1,
   }));
-  console.log(ranking);
+
   const podiumRanking = [ranking[1], ranking[0], ranking[2]];
 
   return (
-    <div>
-      <div className="w-full  flex items-center justify-center">
-        <div className="items-center justify-center flex p-4  px-5 flex-row shadow-2xl rounded-full">
+    <div className="dark:bg-dark  transitions-all duration-300">
+      <div className="w-full  flex items-center justify-center ">
+        <div className="items-center justify-center flex p-4  px-5 flex-row shadow-2xl rounded-full  ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -29,19 +37,25 @@ export default function Leaderboard() {
           <h1 className="ml-2 text-xl font-semibold">Leaderboard</h1>
         </div>
       </div>
-      <section className="flex items-center justify-center mt-5  ">
-        <div className="flex flex-row items-center justify-center bg-orange-300 p-4 rounded-lg gap-2 shadow-lg">
-          <div className="flex bg-orange-400 p-2 rounded-2xl ">
+      <section className="flex items-center justify-center mt-5   ">
+        <div
+          className="flex flex-row items-center justify-center hover:scale-110 transition-all duration-300 bg-orange-300 p-4 rounded-lg gap-2 shadow-xl  w-full md:w-auto
+         dark:bg-pink-600 dark:shadow-lg dark:shadow-pink-500 "
+        >
+          <div className="flex bg-orange-400 p-2 rounded-2xl dark:bg-pink-800 ">
             <h1 className="text-[30px] text-white font-bold ">#12 </h1>
           </div>
-          <div>
-            <p>You are doing great.</p> <p> Keep up the good work! </p>
+          <div className="p-2">
+            <p>
+              Keep up the good work! You have <b>800 points</b>
+            </p>
+            <p> </p>
           </div>
         </div>
       </section>
 
-      <div className="relative">
-        <div className="absolute right-0 -top-12  w-fit bg-blue-300 mt-5 p-2 rounded-md flex-row flex items-center justify-center text-black shadow-lg scale-75 lg:scale-100  ">
+      <div className="relative justify-center items-center flex">
+        <div className="absolute right-0 -top-12  w-fit bg-blue-300 mt-5 p-2 rounded-lg flex-row flex items-center justify-center text-black shadow-lg scale-75 lg:scale-100  dark:text-white dark:bg-blue-900  dark:shadow-blue-600 dark:shadow-lg ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -57,10 +71,10 @@ export default function Leaderboard() {
             />
           </svg>
 
-          <p>02d 12h 20min</p>
+          <p className="ml-1">02d 12h 20min</p>
         </div>
 
-        <section className="w-full grid grid-cols-3 gap-5 lg:gap-3  items-end shadow-lg mt-16 ">
+        <section className="w-full lg:w-[100%] grid grid-cols-3 gap-3 lg:gap-3  items-end mt-16 ">
           {podiumRanking.map((user, index) => (
             <LeaderboardPillar
               key={index}
@@ -70,8 +84,32 @@ export default function Leaderboard() {
             />
           ))}
         </section>
+        <a
+          href="#"
+          onClick={handleScroll}
+          className="absolute bottom-0 hover:text-white  hidden lg:flex dark:hover:text-black bg-transparent p-2"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-8 animate-bounce"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </a>
       </div>
-      <section className="gap-1 flex flex-col pt-2 border-t-4 border-blue-500   text-white bg-gradient-to-b from-blue-400 to-blue-200  rounded-lg ">
+      <div
+        id="table"
+        ref={tableRef}
+        className="gap-1 flex flex-col  border-t-4 border-blue-500   text-white bg-gradient-to-b from-blue-400 to-blue-200  rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 mt-1"
+      >
         {ranking.slice(3, ranking.length).map((user) => (
           <LeaderboardCard
             key={user.place}
@@ -80,7 +118,7 @@ export default function Leaderboard() {
             points={user.points}
           />
         ))}
-      </section>
+      </div>
     </div>
   );
 }
@@ -93,33 +131,30 @@ interface Props {
 interface ProfileProps {
   name: string;
   points: number;
+  place: number;
 }
 
 const LeaderboardPillar = ({ place, name, points }: Props) => {
-  const firstPlaceStyle = `flex items-center justify-center bg-gradient-to-b from-yellow-400 to-yellow-200 h-[210px]   w-full relative `;
-  const secondPlaceStyle = `flex items-center justify-center bg-gradient-to-b from-slate-400 to-blue-200  h-[160px]  w-full relative `;
-  const thirdPlaceStyle = `flex items-center justify-center bg-gradient-to-b from-amber-600 to-amber-500 h-[130px]   w-full relative `;
+  const pillarStyle = {
+    1: `flex items-center justify-center bg-gradient-to-b from-yellow-400 to-yellow-200 h-[210px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600 `,
+    2: `flex items-center justify-center bg-gradient-to-b from-slate-400 to-blue-200 h-[160px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600`,
+    3: `flex items-center justify-center bg-gradient-to-b from-amber-600 to-amber-500 h-[130px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600`,
+  };
   const podiumFloorColors = {
-    1: "bg-yellow-500",
-    2: "bg-slate-500",
-    3: "bg-amber-700",
+    1: "bg-yellow-500 dark:bg-pink-700",
+    2: "bg-slate-500 dark:bg-pink-700",
+    3: "bg-amber-700 dark:bg-pink-700",
   };
 
   return (
-    <div className="flex flex-col items-center justify-center  ">
-      <PillarProfile name={name} points={points} />
+    <div className="flex flex-col items-center justify-center hover:scale-105 origin-bottom cursor-pointer duration-300 transition-all   ">
+      <PillarProfile name={name} points={points} place={place} />
 
-      <div
-        className={
-          place == 1
-            ? firstPlaceStyle
-            : place == 2
-            ? secondPlaceStyle
-            : thirdPlaceStyle
-        }
-      >
+      <div className={pillarStyle[place as keyof typeof pillarStyle]}>
         <div
-          className={`absolute bottom-full w-full h-[100px] ${podiumFloorColors[place]} flex [clip-path:polygon(8%_80%,_90%_80%,_100%_100%,_0%_100%)] `}
+          className={`absolute bottom-full w-full h-[100px] ${
+            podiumFloorColors[place as keyof typeof podiumFloorColors]
+          } flex [clip-path:polygon(8%_80%,_92%_80%,_100%_100%,_0%_100%)] `}
         ></div>
         <div className="bg-white text-black shadow-2xl shadow-black  rounded-full p-4 flex justify-center flex-col items-center ">
           <h1 className="text-xl font-extrabold relative">{place}</h1>
@@ -156,27 +191,38 @@ const LeaderboardPillar = ({ place, name, points }: Props) => {
   );
 };
 
-const PillarProfile = ({ name, points }: ProfileProps) => {
+const PillarProfile = ({ name, points, place }: ProfileProps) => {
+  const profileShadow = {
+    1: "shadow-yellow-500",
+    2: "shadow-slate-500",
+    3: "shadow-amber-500",
+  };
+
   return (
-    <div className="flex items-center justify-center flex-col mb-5 lg:scale-125 lg:mb-8">
-      <div className="flex  flex-col items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-10 "
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-          />
-        </svg>
+    <div className="flex items-center justify-center flex-col mb-8 lg:scale-110 lg:mb-8">
+      <div
+        className={`flex  flex-col items-center justify-center  
+        }`}
+      >
+        <div className={` rounded-full shadow-xl `}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-10 "
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        </div>
         <h1 className="text-lg font-bold">{name}</h1>
       </div>
-      <div>
+      <div className="bg-yellow-500 rounded-full p-1 px-2 font-bold dark:bg-pink-600">
         <h1>{points}</h1>
       </div>
     </div>
@@ -185,8 +231,8 @@ const PillarProfile = ({ name, points }: ProfileProps) => {
 
 const LeaderboardCard = ({ place, name, points }: Props) => {
   return (
-    <div className="flex flex-row items-center justify-center  p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-xl hover:bg-purple-400 cursor-pointer">
-      <div className="flex w-[30px] bg-white p-2 rounded-lg shadow-inner shadow-slate-600 items-center justify-center">
+    <div className="flex flex-row items-center justify-center  p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-xl hover:bg-purple-400 cursor-pointer ">
+      <div className="flex w-[35px] h-[35px] bg-white p-2 rounded-lg  shadow-slate-600 items-center justify-center">
         <h1 className="font-bold ">{place}</h1>
       </div>
       <div className="flex items-center  justify-between w-full border-l-2 ml-2 p-2">

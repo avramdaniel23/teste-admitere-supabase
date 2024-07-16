@@ -20,8 +20,8 @@ const NavLink: FC<NavLinkProps> = ({ href, icon, label, isOpen }) => {
       href={href}
       className={
         isActive
-          ? "  py-2  flex items-center  justify-start transition-all duration-200 text-[#E68369] "
-          : "py-2 flex items-center  justify-start transition-all duration-200"
+          ? "  py-2  flex items-center  justify-start transition-all duration-200 text-[#E68369] hover:scale-110"
+          : "py-2 flex items-center  justify-start transition-all duration-200 hover:scale-110"
       }
     >
       <div

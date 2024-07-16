@@ -9,5 +9,4 @@ export const users = [
   { id: 8, points: 1900, name: "Alibec" },
   { id: 9, points: 1400, name: "Nita" },
   { id: 10, points: 1800, name: "Racovitan" },
-  { id: 11, points: 1765, name: "Coman" },
 ];
