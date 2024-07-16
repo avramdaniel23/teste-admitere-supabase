@@ -21,7 +21,7 @@ export default function SidebarNavigation({sunset, sunrise}: SidebarNavigationPr
 
     return (
         <nav id="sidebar"
-             className="font-[0.625rem] bg-white leading-[1rem] rounded-lg block w-full h-full sticky top-0 shadow-xl dark:bg-dark dark:border-t-[1px] border-r justify-between">
+             className="font-[0.625rem] bg-white leading-[1rem] rounded-lg block w-full h-full sticky top-0 shadow-xl dark:bg-dark border justify-between">
             <div className={"flex justify-center m-2"}>
                 <Logo size={75} bigSize={150} isBig={isFullSidebar}></Logo>
             </div>

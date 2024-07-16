@@ -16,7 +16,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
     return (
         <div className="text-center text-white">
             <h1 className="text-3xl font-bold mb-6">Final Scoreboard</h1>
-            <div className="flex items-end justify-center md:justify-around">
+            <div className="flex items-end justify-around md:justify-evenly">
                 <div className="flex flex-col items-center">
                     <div className="relative" >
                         <div

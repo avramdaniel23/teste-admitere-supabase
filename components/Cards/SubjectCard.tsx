@@ -51,7 +51,7 @@ const SubjectCard = ({ title, className, categories}: Props) => {
             {title}
           </p>
                 </div>
-                {isExpanded && <div>{categories}</div>}
+                <div className={`${isExpanded ? 'h-0 overflow-hidden ': 'h-1/2' } transition-all duration-1000`}>{categories}</div>
             </div>
     );
 };

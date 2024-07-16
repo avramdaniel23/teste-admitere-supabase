@@ -21,11 +21,10 @@ const HorizontalSection = () => {
         className={`grid auto-rows-auto grid-cols-1 gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem]`}
       >
           <SubjectCard title={"Matematica"} className={"from-purple-500 to-pink-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
-              title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>}
-              />
+              title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>}/>
           <SubjectCard title={"Fizica"} className={"from-green-500 to-lime-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
               title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>} />
-          <SubjectCard title={"Fizica"} className={"from-blue-500 to-cyan-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
+          <SubjectCard title={"Chimie"} className={"from-blue-500 to-cyan-500"} categories={<><CategoryCard title={"Algebra"}></CategoryCard><CategoryCard title={"Aparate"}></CategoryCard><CategoryCard
               title={"trigonometrie"}></CategoryCard><CategoryCard title={"Septari"}></CategoryCard></>} />
       </div>
     </section>

@@ -71,7 +71,7 @@ const DarkModeBtn = ({ sunrise, sunset }: DarkModeBtnType) => {
             )}
           </MenuButton>{" "}
         </div>
-        <div className="relative z-[101] mt-2 rounded-lg bg-white dark:bg-[#1E293B]">
+        <div className="relative lg:absolute z-[101] mt-2 rounded-lg bg-white dark:bg-[#1E293B]">
           <MenuItems>
             <div className="relative z-[101] flex w-[9rem] flex-col rounded-lg border p-2 text-[0.875rem] font-bold shadow-[0px_2px_8px_0_rgba(0,99,99,0.2)] dark:border-none">
               <MenuItem>
