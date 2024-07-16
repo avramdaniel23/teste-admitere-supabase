@@ -29,6 +29,7 @@ interface Subject {
   name: string;
   chapters: Chapter[];
 }
+
 const dificultate = [
   { value: "1", name: "Usor" },
   { value: "2", name: "Mediu" },
@@ -43,42 +44,60 @@ export default function QuizzesConfigure() {
     dificultate: "",
     numarIntrebari: "",
   });
-  const [questions, setQuestions] = useState<any[]>([]);
+  const [questions, setQuestions] = useState<string[]>([]); // Stocăm acum doar ID-urile întrebărilor
   const [filteredChapters, setFilteredChapters] = useState<Chapter[]>([]);
 
-  // Get subjects from libs
   const materii: Subject[] = subjects;
 
-  // Define the data fetching function
-  const fetchData = async () => {
+  const fetchQuestionsData = async () => {
+    const { materie, capitol, dificultate, numarIntrebari } = configuration;
+
+    const queryParams = new URLSearchParams({
+      materie,
+      capitol,
+      dificultate,
+      numarIntrebari,
+    }).toString();
+
+    const url = `/api/get/filteredQuestions?${queryParams}`;
+
     try {
-      const response = await fetch("/api/get/allQuestions", {
+      const response = await fetch(url, {
         method: "GET",
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const questionsData = await response.json();
-      return questionsData;
+      const fetchedQuestions = await response.json();
+      const questionIDs = fetchedQuestions.questions.map(
+        (question: any) => question._id
+      ); // Extragem doar ID-urile întrebărilor
+      setQuestions(questionIDs);
     } catch (error) {
-      console.error("Error fetching data:", error);
-      throw error;
+      console.log("Error fetching data:", error);
     }
   };
 
-  // Fetch data on component mount
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const questionsData = await fetchData();
-        setQuestions(questionsData);
-      } catch (error) {
-        console.error("Error fetching questions data:", error);
+  const submitQuizz = async (questionsIDS: string[]) => {
+    const dataToBeSent = { config: configuration, questionsIDS };
+    try {
+      const response = await fetch("/api/post/createQuizz", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToBeSent),
+      });
+      if (response.ok) {
+        console.log("Quiz successfully created");
+      } else {
+        alert("Error submitting the form. Please try again.");
       }
-    };
-
-    fetchQuestions();
-  }, []);
+    } catch (error) {
+      console.error("Error submitting quiz:", error);
+      alert("Failed to submit the form. Please try again later.");
+    }
+  };
 
   const handleMaterieChange = (value: string) => {
     setConfiguration((prev) => ({
@@ -117,6 +136,7 @@ export default function QuizzesConfigure() {
       [name]: value,
     }));
   };
+
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setConfiguration((prev) => ({
@@ -124,7 +144,8 @@ export default function QuizzesConfigure() {
       [name]: value,
     }));
   };
-  const handleGenerate = async (e: any) => {
+
+  const handleGenerate = async () => {
     const hasEmptyField = Object.values(configuration).some(
       (value) => value === ""
     );
@@ -135,19 +156,15 @@ export default function QuizzesConfigure() {
     }
 
     try {
-      const response = await fetch(
-        `/api/get/filteredQuestions?materie=${configuration.materie}&capitol=${configuration.capitol}&dificultate=${configuration.dificultate}&numarIntrebari=${configuration.numarIntrebari}`
-      );
+      await fetchQuestionsData(); // Așteaptă finalizarea fetch-ului pentru întrebări
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const questionsData = await response.json();
-      console.log(questionsData);
-      setQuestions(questionsData); // Optional: set questions in state if you want to display them
+      // După ce fetch-ul s-a terminat, actualizăm 'questions'
+      // și apoi apelăm submitQuizz
+      const questionIDs = [...questions]; // facem o copie pentru a fi siguri ca datele sunt inregistrate
+      await submitQuizz(questionIDs); // Apoi trimite quiz-ul complet către server
     } catch (error) {
-      console.error("Error fetching questions:", error);
+      console.error("Error generating quiz:", error);
+      alert("Error generating quiz. Please try again.");
     }
   };
 
