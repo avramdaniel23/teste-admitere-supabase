@@ -7,10 +7,10 @@ import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNaviga
 import DarkModeBtn from "@/components/Buttons/DarkMode";
 import DesktopNav from "@/components/Navigation/QuickNavigation/DesktopNav";
 
-async function getTimeData() {
-  const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
-  return res.json();
-}
+// async function getTimeData() {
+//   const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
+//   return res.json();
+// }
 
 const convertTime12to24 = (time12h: any) => {
   const [time, modifier] = time12h.split(" ");
@@ -38,9 +38,9 @@ export default async function DashboardLayout({ children }: any) {
   if (!user) {
     return redirect("/login");
   }
-  const timeData = await getTimeData();
-  const sunrise = convertTime12to24(timeData.results.sunrise);
-  const sunset = convertTime12to24(timeData.results.sunset);
+  // const timeData = await getTimeData();
+  // const sunrise = convertTime12to24(timeData.results.sunrise);
+  // const sunset = convertTime12to24(timeData.results.sunset);
   return (
     <div className="flex-1 w-full flex flex-col items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden">
@@ -49,7 +49,7 @@ export default async function DashboardLayout({ children }: any) {
             <Logo size={75} />
           </div>
           <AuthButton />
-          <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+          {/* <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn> */}
         </div>
       </nav>
 

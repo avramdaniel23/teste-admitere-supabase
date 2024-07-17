@@ -14,7 +14,7 @@ interface Props {
 
 const HorizontalSection = () => {
   return (
-    <section className="bg-white flex justify-center flex-col w-full mx-auto my-auto max-w-[80rem] px-[1rem] pb-[5.5rem] pt-10 md:p-10 lg:h-screen lg:items-center lg:w-full lg:px-[1rem] xl:px-0">
+    <section className="bg-white flex justify-center flex-col w-full mx-auto my-auto max-w-[80rem] px-[1rem] pb-[5.5rem] pt-10 md:items-center md:p-10 lg:h-screen lg:items-center lg:w-full lg:px-[1rem] xl:px-0">
       {/* <header className="flex justify-center mb-[1rem] gap-y-[0.75rem] lg:mb-[1.5rem]">
         <h2 className="w-fit relative text-[1.5rem] md:text-[2.25rem] font-[900] uppercase">
            {categoryName.toUpperCase()}
@@ -22,7 +22,7 @@ const HorizontalSection = () => {
         </h2>
       </header> */}
 
-      <div className="flex flex-col gap-12 items-center h-fit w-full md:grid md:grid-cols-2 lg:w-fit">
+      <div className="flex flex-col gap-12 items-center h-fit w-full md:grid md:grid-cols-2 md:h-fit md:w-full lg:w-full lg:h-fit">
 
         <SubjectCard
           title="Matematica"
