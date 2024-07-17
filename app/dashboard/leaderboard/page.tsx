@@ -12,6 +12,9 @@ const subjects = new Map([
 const subjectKeys = Array.from(subjects.keys());
 const subjectValues = Array.from(subjects.values());
 
+"use client";
+import { useEffect, useState } from "react";
+
 export default function Leaderboard() {
   return <div className="flex flex-col items-center pb-24 w-full lg:py-20">
     {/* <h5 className="w-fit">Leaderboard</h5> */}
