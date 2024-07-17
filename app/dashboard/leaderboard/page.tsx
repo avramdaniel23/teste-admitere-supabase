@@ -1,4 +1,5 @@
 "use client";
+import LeaderboardSection from "@/components/Sections/LeaderboardSection";
 import { useEffect, useState } from "react";
 
 export default function Leaderboard() {
@@ -36,19 +37,8 @@ export default function Leaderboard() {
   }, []);
 
   return (
-    <div>
-      <h1>Leaderboard</h1>
-      {leaderboard.length === 0 ? (
-        <p>No leaderboard data available.</p>
-      ) : (
-        <ul>
-          {leaderboard.map((entry, index) => (
-            <li key={index}>
-              {entry.user_id}: {entry.total_score} points
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="mx-auto">
+      <LeaderboardSection></LeaderboardSection>
     </div>
   );
 }
