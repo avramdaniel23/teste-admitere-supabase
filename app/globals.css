@@ -38,3 +38,18 @@ body {
   display: flex;
   flex-direction: column-reverse;
 }
+
+.podium {
+  perspective: 100px;
+}
+.podium-column {
+  transform-style: preserve-3d;
+  transition: transform 0.3s;
+}
+.podium-column:hover {
+  transform: rotateX(15deg) rotateY(15deg);
+}
+
+.cub3d {
+  clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+}

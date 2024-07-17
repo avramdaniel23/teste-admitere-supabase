@@ -21,7 +21,7 @@ export default function Sidebar({
   const [expanded, setExpanded] = useState(true);
   const username = user?.email?.split("@")[0];
   return (
-    <aside className="sticky hidden lg:block top-0 h-screen bg-white shadow-lg z-10">
+    <aside className="sticky hidden lg:block top-0 h-screen bg-white shadow-lg z-10 dark:bg-zinc-900">
       <div
         className={`flex w-full pt-5 ${
           expanded ? "justify-end pr-5" : "justify-center"
@@ -29,7 +29,7 @@ export default function Sidebar({
       >
         <button
           onClick={() => setExpanded((curr) => !curr)}
-          className="p-2  rounded-lg bg-gray-50 hover:bg-purple-100"
+          className="p-2  rounded-lg bg-gray-100 hover:bg-purple-100 dark:bg-zinc-700 dark:hover:bg-purple-600"
         >
           {expanded ? (
             <svg
@@ -93,7 +93,7 @@ export default function Sidebar({
               <div
                 className={`
             absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-purple-500 text-sm
+            bg-indigo-100 text-purple-500  text-sm
             invisible opacity-20 -translate-x-3 transition-all
             group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 font-semibold
         `}
@@ -111,7 +111,7 @@ export default function Sidebar({
                 <h4 className="font-semibold">{username}</h4>
                 <span className="text-xs text-gray-600">{user?.email}</span>
               </div>
-              <button className="p-1.5 rounded-lg bg-gray-50 hover:bg-purple-100">
+              <button className="p-1.5 rounded-lg bg-gray-50 hover:bg-purple-100 dark:bg-purple-600">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -217,7 +217,14 @@ export default function Sidebar({
                 </svg>
               }
             />
-            <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+            <SidebarItem
+              text="Theme"
+              href=""
+              expanded={expanded}
+              icon={
+                <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+              }
+            />
           </ul>
         </nav>
       </div>
