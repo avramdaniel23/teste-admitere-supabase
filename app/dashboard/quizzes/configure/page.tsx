@@ -8,6 +8,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Switch,
 } from "@headlessui/react";
 import { subjects } from "@/libs/selectOptions/generateQuizzOptions";
 
@@ -17,6 +18,7 @@ interface Configuration {
   capitol: string;
   dificultate: string;
   numarIntrebari: string;
+  privacy: boolean;
 }
 
 interface Chapter {
@@ -43,8 +45,9 @@ export default function QuizzesConfigure() {
     capitol: "",
     dificultate: "",
     numarIntrebari: "",
+    privacy: false,
   });
-  const [questions, setQuestions] = useState<string[]>([]); // Stocăm acum doar ID-urile întrebărilor
+  const [questions, setQuestions] = useState<string[]>([]);
   const [filteredChapters, setFilteredChapters] = useState<Chapter[]>([]);
 
   const materii: Subject[] = subjects;
@@ -71,10 +74,11 @@ export default function QuizzesConfigure() {
       const fetchedQuestions = await response.json();
       const questionIDs = fetchedQuestions.questions.map(
         (question: any) => question._id
-      ); // Extragem doar ID-urile întrebărilor
-      setQuestions(questionIDs);
+      );
+      return questionIDs; // Return the fetched question IDs
     } catch (error) {
       console.log("Error fetching data:", error);
+      return [];
     }
   };
 
@@ -97,6 +101,13 @@ export default function QuizzesConfigure() {
       console.error("Error submitting quiz:", error);
       alert("Failed to submit the form. Please try again later.");
     }
+  };
+
+  const handlePrivacyChange = (value: boolean) => {
+    setConfiguration((prev) => ({
+      ...prev,
+      privacy: value,
+    }));
   };
 
   const handleMaterieChange = (value: string) => {
@@ -156,12 +167,8 @@ export default function QuizzesConfigure() {
     }
 
     try {
-      await fetchQuestionsData(); // Așteaptă finalizarea fetch-ului pentru întrebări
-
-      // După ce fetch-ul s-a terminat, actualizăm 'questions'
-      // și apoi apelăm submitQuizz
-      const questionIDs = [...questions]; // facem o copie pentru a fi siguri ca datele sunt inregistrate
-      await submitQuizz(questionIDs); // Apoi trimite quiz-ul complet către server
+      const questionIDs = await fetchQuestionsData(); // Fetch questions and wait for the result
+      await submitQuizz(questionIDs); // Submit the quiz with the fetched questions
     } catch (error) {
       console.error("Error generating quiz:", error);
       alert("Error generating quiz. Please try again.");
@@ -181,6 +188,23 @@ export default function QuizzesConfigure() {
               className="border p-2 rounded-lg ps-4 bg-white focus:outline-none"
             />
           </Field>
+        </div>
+        <div className="py-2">
+          <Switch
+            checked={configuration.privacy}
+            onChange={handlePrivacyChange}
+            className="w-full">
+            <span className=" bg-white rounded shadow h-[2rem] w-full flex">
+              <span
+                className={`flex justify-center items-center h-full w-1/2 rounded transition duration-300 ease-in-out transform ${
+                  configuration.privacy
+                    ? "bg-neon-blue translate-x-full text-white"
+                    : "bg-gray-100"
+                }`}>
+                {configuration.privacy ? "Public" : "Privat"}
+              </span>
+            </span>
+          </Switch>
         </div>
         <div className="py-2">
           <Field className="flex flex-col">

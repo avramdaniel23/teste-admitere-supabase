@@ -20,7 +20,7 @@ export async function POST(request: Request) {
       difficulty: parseInt(requestData.config.dificultate, 10) || 0,
       name: requestData.config.name || "",
       points: points || 0,
-      privacy: false,
+      privacy: requestData.config.privacy,
       questions: requestData.questionsIDS || [],
       subject: requestData.config.materie || "",
       user_id: user?.id || "",
