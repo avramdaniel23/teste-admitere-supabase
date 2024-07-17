@@ -8,6 +8,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Switch,
 } from "@headlessui/react";
 import { subjects } from "@/libs/selectOptions/generateQuizzOptions";
 
@@ -17,6 +18,7 @@ interface Configuration {
   capitol: string;
   dificultate: string;
   numarIntrebari: string;
+  privacy: boolean;
 }
 
 interface Chapter {
@@ -36,6 +38,11 @@ const dificultate = [
   { value: "3", name: "Greu" },
 ];
 
+const numarIntrebariOptions = [
+  { value: "15", name: "15" },
+  { value: "30", name: "30" },
+];
+
 export default function QuizzesConfigure() {
   const [configuration, setConfiguration] = useState<Configuration>({
     name: "",
@@ -43,8 +50,9 @@ export default function QuizzesConfigure() {
     capitol: "",
     dificultate: "",
     numarIntrebari: "",
+    privacy: false,
   });
-  const [questions, setQuestions] = useState<string[]>([]); // Stocăm acum doar ID-urile întrebărilor
+  const [questions, setQuestions] = useState<string[]>([]);
   const [filteredChapters, setFilteredChapters] = useState<Chapter[]>([]);
 
   const materii: Subject[] = subjects;
@@ -71,10 +79,11 @@ export default function QuizzesConfigure() {
       const fetchedQuestions = await response.json();
       const questionIDs = fetchedQuestions.questions.map(
         (question: any) => question._id
-      ); // Extragem doar ID-urile întrebărilor
-      setQuestions(questionIDs);
+      );
+      return questionIDs; // Return the fetched question IDs
     } catch (error) {
       console.log("Error fetching data:", error);
+      return [];
     }
   };
 
@@ -97,6 +106,13 @@ export default function QuizzesConfigure() {
       console.error("Error submitting quiz:", error);
       alert("Failed to submit the form. Please try again later.");
     }
+  };
+
+  const handlePrivacyChange = (value: boolean) => {
+    setConfiguration((prev) => ({
+      ...prev,
+      privacy: value,
+    }));
   };
 
   const handleMaterieChange = (value: string) => {
@@ -127,13 +143,10 @@ export default function QuizzesConfigure() {
     }));
   };
 
-  const handleNumarIntrebariChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { name, value } = e.target;
+  const handleNumarIntrebariChange = (value: string) => {
     setConfiguration((prev) => ({
       ...prev,
-      [name]: value,
+      numarIntrebari: value,
     }));
   };
 
@@ -156,12 +169,8 @@ export default function QuizzesConfigure() {
     }
 
     try {
-      await fetchQuestionsData(); // Așteaptă finalizarea fetch-ului pentru întrebări
-
-      // După ce fetch-ul s-a terminat, actualizăm 'questions'
-      // și apoi apelăm submitQuizz
-      const questionIDs = [...questions]; // facem o copie pentru a fi siguri ca datele sunt inregistrate
-      await submitQuizz(questionIDs); // Apoi trimite quiz-ul complet către server
+      const questionIDs = await fetchQuestionsData(); // Fetch questions and wait for the result
+      await submitQuizz(questionIDs); // Submit the quiz with the fetched questions
     } catch (error) {
       console.error("Error generating quiz:", error);
       alert("Error generating quiz. Please try again.");
@@ -181,6 +190,23 @@ export default function QuizzesConfigure() {
               className="border p-2 rounded-lg ps-4 bg-white focus:outline-none"
             />
           </Field>
+        </div>
+        <div className="py-2">
+          <Switch
+            checked={configuration.privacy}
+            onChange={handlePrivacyChange}
+            className="w-full">
+            <span className=" bg-white rounded shadow h-[2rem] w-full flex">
+              <span
+                className={`flex justify-center items-center h-full w-1/2 rounded transition duration-300 ease-in-out transform ${
+                  configuration.privacy
+                    ? "bg-neon-blue translate-x-full text-white"
+                    : "bg-gray-100"
+                }`}>
+                {configuration.privacy ? "Public" : "Privat"}
+              </span>
+            </span>
+          </Switch>
         </div>
         <div className="py-2">
           <Field className="flex flex-col">
@@ -258,14 +284,39 @@ export default function QuizzesConfigure() {
         <div className="py-2">
           <Field className="flex flex-col">
             <Label className="mb-2 text-[1.6rem]">Numar de intrebari</Label>
-            <Input
-              name="numarIntrebari"
+            <RadioGroup
               value={configuration.numarIntrebari}
               onChange={handleNumarIntrebariChange}
-              className="border p-2 rounded-lg ps-4 bg-white focus:outline-none"
-            />
+              aria-label="Numar de intrebari">
+              {numarIntrebariOptions.map((option) => (
+                <Radio
+                  key={option.value}
+                  value={option.value}
+                  className="bg-white flex justify-between shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] my-4 p-4 rounded-lg transition-all ease-in-out data-[checked]:bg-neon-blue data-[checked]:text-white">
+                  <Label>{option.name}</Label>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="white"
+                    className={`size-6 ${
+                      configuration.numarIntrebari === option.value
+                        ? "visible opacity-100"
+                        : "invisible opacity-0"
+                    }`}>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </Radio>
+              ))}
+            </RadioGroup>
           </Field>
         </div>
+
         <div className="py-2">
           <Field className="flex flex-col">
             <Label className="mb-2 text-[1.6rem]">Dificultate</Label>
