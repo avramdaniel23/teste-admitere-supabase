@@ -72,13 +72,6 @@ export default async function Index() {
               </div>
             </div>
           </span>
-          <Image
-            src="/twitter-image.png"
-            width={400}
-            height={400}
-            alt=""
-            className="hidden lg:flex"
-          />
         </section>
 
         <section className=" mt-24 max-w-[70%] mx-auto text-center ">
