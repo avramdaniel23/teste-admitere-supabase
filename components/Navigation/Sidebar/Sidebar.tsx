@@ -31,7 +31,7 @@ export default function Sidebar({
       className="sticky top-0 z-20 hidden h-screen shadow-lg lg:block"
       ref={portalRef}
     >
-      <div className="relative flex h-full flex-col items-center gap-7 bg-white p-4 dark:bg-gray-900">
+      <div className="relative flex h-full flex-col items-center gap-7 bg-white p-4 dark:bg-slate-900">
         <div
           className={`flex h-[72px] w-full items-center ${
             isExpanded ? 'justify-between' : 'justify-center'
