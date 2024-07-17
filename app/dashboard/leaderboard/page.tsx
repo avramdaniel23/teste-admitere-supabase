@@ -1,8 +1,11 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { users } from "./mockData";
 
 export default function Leaderboard() {
+  const [activeSubject, setActiveSubject] = useState("general");
+  const [activeCategory, setActiveCategory] = useState("");
+
   const tableRef = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
     if (tableRef.current)
@@ -17,40 +20,59 @@ export default function Leaderboard() {
 
   const podiumRanking = [ranking[1], ranking[0], ranking[2]];
 
+  const subjects = ["matematica", "fizica", "informatica", "chimie"];
+
+  const subCategories = {
+    general: [""],
+    matematica: ["algebra", "geometrie", "trigonometrie", "analiza"],
+    fizica: ["mecanica", "optica"],
+    informatica: ["vectori", "algoritmica", "backtracking"],
+    chimie: ["chimie1", "chimie2", "chimie3"],
+  };
+
+  subCategories["matematica"].map((nume) => console.log(nume));
+
   return (
     <div className="dark:bg-dark  transitions-all duration-300">
-      <div className="w-full  flex items-center justify-center ">
-        <div className="items-center justify-center flex p-4  px-5 flex-row shadow-2xl rounded-full  ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="size-8 text-yellow-500 "
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 0 0-.584.859 6.753 6.753 0 0 0 6.138 5.6 6.73 6.73 0 0 0 2.743 1.346A6.707 6.707 0 0 1 9.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 0 0-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 0 1-1.112-3.173 6.73 6.73 0 0 0 2.743-1.347 6.753 6.753 0 0 0 6.139-5.6.75.75 0 0 0-.585-.858 47.077 47.077 0 0 0-3.07-.543V2.62a.75.75 0 0 0-.658-.744 49.22 49.22 0 0 0-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 0 0-.657.744Zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 0 1 3.16 5.337a45.6 45.6 0 0 1 2.006-.343v.256Zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 0 1-2.863 3.207 6.72 6.72 0 0 0 .857-3.294Z"
-              clipRule="evenodd"
-            />
-          </svg>
-
-          <h1 className="ml-2 text-xl font-semibold">Leaderboard</h1>
-        </div>
-      </div>
-      <section className="flex items-center justify-center mt-5   ">
-        <div
-          className="flex flex-row items-center justify-center hover:scale-110 transition-all duration-300 bg-orange-300 p-4 rounded-lg gap-2 shadow-xl  w-full md:w-auto
-         dark:bg-pink-600 dark:shadow-lg dark:shadow-pink-500 "
+      <div className="w-full flex items-center justify-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="size-8 text-yellow-500 "
         >
-          <div className="flex bg-orange-400 p-2 rounded-2xl dark:bg-pink-800 ">
-            <h1 className="text-[30px] text-white font-bold ">#12 </h1>
-          </div>
-          <div className="p-2">
-            <p>
-              Keep up the good work! You have <b>800 points</b>
-            </p>
-            <p> </p>
-          </div>
+          <path
+            fillRule="evenodd"
+            d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 0 0-.584.859 6.753 6.753 0 0 0 6.138 5.6 6.73 6.73 0 0 0 2.743 1.346A6.707 6.707 0 0 1 9.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 0 0-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 0 1-1.112-3.173 6.73 6.73 0 0 0 2.743-1.347 6.753 6.753 0 0 0 6.139-5.6.75.75 0 0 0-.585-.858 47.077 47.077 0 0 0-3.07-.543V2.62a.75.75 0 0 0-.658-.744 49.22 49.22 0 0 0-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 0 0-.657.744Zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 0 1 3.16 5.337a45.6 45.6 0 0 1 2.006-.343v.256Zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 0 1-2.863 3.207 6.72 6.72 0 0 0 .857-3.294Z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <h1 className="text-xl capitalize ml-2 font-bold">
+          {activeSubject}: {activeCategory}
+        </h1>
+      </div>
+      <section className="flex flex-col gap-2  items-center justify-center w-full mt-2 ">
+        <div className="flex flex-row  overflow-x-auto md:overflow-x-hidden bg-orange-700 text-white rounded-full gap-2 shadow-xl   ">
+          {subjects.map((subject) => (
+            <SubjectChips
+              subject={subject}
+              setActiveSubject={setActiveSubject}
+              activeSubject={activeSubject}
+              key={subject}
+            />
+          ))}
+        </div>
+        <div className="flex flex-row  overflow-x-auto md:overflow-x-hidden bg-orange-700 text-white  rounded-full gap-2 shadow-xl   ">
+          {subCategories[activeSubject as keyof typeof subCategories].map(
+            (subCategory) =>
+              activeSubject != "general" && (
+                <SubjectChips
+                  subject={subCategory}
+                  setActiveSubject={setActiveCategory}
+                  activeSubject={activeCategory}
+                />
+              )
+          )}
         </div>
       </section>
 
@@ -74,7 +96,7 @@ export default function Leaderboard() {
           <p className="ml-1">02d 12h 20min</p>
         </div>
 
-        <section className="w-full lg:w-[100%] grid grid-cols-3 gap-3 lg:gap-3  items-end mt-16 ">
+        <section className="w-full  lg:px-4 lg:w-[100%] grid grid-cols-3 gap-3 lg:gap-7  items-end mt-16 ">
           {podiumRanking.map((user, index) => (
             <LeaderboardPillar
               key={index}
@@ -87,7 +109,7 @@ export default function Leaderboard() {
         <a
           href="#"
           onClick={handleScroll}
-          className="absolute bottom-0 hover:text-white  hidden lg:flex dark:hover:text-black bg-transparent p-2"
+          className="absolute top-[94%] hover:scale-110  hidden lg:flex dark:hover:text-black bg-transparent p-2 transition-all duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +117,7 @@ export default function Leaderboard() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-8 animate-bounce"
+            className="size-10 "
           >
             <path
               strokeLinecap="round"
@@ -108,7 +130,7 @@ export default function Leaderboard() {
       <div
         id="table"
         ref={tableRef}
-        className="gap-1 flex flex-col  border-t-4 border-blue-500   text-white bg-gradient-to-b from-blue-400 to-blue-200  rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 mt-1"
+        className="gap-2 flex flex-col  text-white   rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 "
       >
         {ranking.slice(3, ranking.length).map((user) => (
           <LeaderboardCard
@@ -231,11 +253,11 @@ const PillarProfile = ({ name, points, place }: ProfileProps) => {
 
 const LeaderboardCard = ({ place, name, points }: Props) => {
   return (
-    <div className="flex flex-row items-center justify-center  p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-xl hover:bg-purple-400 cursor-pointer ">
-      <div className="flex w-[35px] h-[35px] bg-white p-2 rounded-lg  shadow-slate-600 items-center justify-center">
+    <div className="flex flex-row items-center justify-center border-slate-300 border-t-4 dark:border-none   p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-xl hover:shadow-blue-500 hover:shadow-md  dark:hover:bg-purple-400 cursor-pointer transition-all ease-linear duration-200">
+      <div className="flex w-[35px] h-[35px]  p-2 rounded-lg bg-slate-500 shadow-lg text-white dark:shadow-slate-600  dark:bg-white items-center justify-center">
         <h1 className="font-bold ">{place}</h1>
       </div>
-      <div className="flex items-center  justify-between w-full border-l-2 ml-2 p-2">
+      <div className="flex items-center  justify-between w-full border-l-2 border-slate-700 ml-4 p-2">
         <div className="flex items-center justify-start">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -255,6 +277,33 @@ const LeaderboardCard = ({ place, name, points }: Props) => {
         </div>
         <div className="font-lg font-bold">{points}</div>
       </div>
+    </div>
+  );
+};
+
+interface ChipProps {
+  subject: String;
+  setActiveSubject: Function;
+  activeSubject: string;
+}
+
+const SubjectChips = ({
+  subject,
+  setActiveSubject,
+  activeSubject,
+}: ChipProps) => {
+  return (
+    <div
+      className={`flex items-center justify-center   cursor-pointer  rounded-full p-1 px-2  transition-all duration-300 ease-linear  ${
+        activeSubject == subject && "bg-orange-900 "
+      }`}
+      onClick={() => {
+        activeSubject == subject
+          ? setActiveSubject("general")
+          : setActiveSubject(subject);
+      }}
+    >
+      <p>{subject}</p>
     </div>
   );
 };

@@ -17,8 +17,8 @@ const DesktopQuickNavigation = ({ sunrise, sunset }: Props) => {
     <nav
       className={
         isOpen
-          ? "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[200px]  transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3 items-center "
-          : "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[120px] transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3  items-center"
+          ? "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[200px]  transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3 items-center dark:bg-gray-900  "
+          : "hidden lg:flex h-screen shadow-xl sticky top-0 flex-col w-[120px] transition-all duration-200 ease-linear bg-[#131842] text-[#FBF6E2] p-3  items-center dark:bg-gray-900 "
       }
     >
       <div

@@ -61,7 +61,7 @@ export default async function DashboardLayout({ children }: any) {
         <aside>
           <DesktopQuickNavigation sunrise={sunrise} sunset={sunset} />
         </aside>
-        <main className="h-full  flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-dark transition-all duration-200">
+        <main className="h-full  flex-1 w-full p-4 md:px-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-dark transition-all duration-200">
           {children}
         </main>
       </div>

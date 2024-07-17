@@ -37,7 +37,7 @@ const DarkModeBtn = ({ sunrise, sunset, isOpen }: DarkModeBtnType) => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <div className="pt-2 md:pt-0  ">
+    <div className="pt-2 md:pt-0  lg:my-2 ">
       <Menu>
         <div className="flex flex-row-reverse">
           {isOpen && <div className="ml-2 hidden lg:flex">Dark Mode</div>}
