@@ -3,7 +3,6 @@ import TopPlacement from "@/components/Leaderboard/TopPlacement";
 import NavLB from "@/components/Leaderboard/NavLB";
 
 const subjects = new Map([
-  ['General', []],
   ['Matematica', ['General', 'Algebra', 'Geometrie']],
   ['Fizica', ['General', 'Mecanica', 'Electricitate', 'Termodinamica']],
   ['Chimie', ['General', 'Organica', 'Anorganica']],
