@@ -30,15 +30,15 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-gray-500 py-1 px-2  font-bold">{f2.name}</div>
-                            <div className="text-lg bg-gray-400 py-1 px-2 rounded-full font-bold">{f2.score}</div>
+                            <div className="text-lg text-gray-400 py-1 px-2  font-bold">{f2.name}</div>
+                            <div className="text-lg bg-gray-700 py-1 px-2 rounded-full font-bold">{f2.score}</div>
                         </div>
                     </div>
                     <div
-                        className="relative bg-gradient-to-tl from-gray-400 to-gray-700 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
+                        className="relative bg-gradient-to-tl from-gray-400 to-gray-700 w-28 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
-                        className="bg-gradient-to-b from-gray-400 to-gray-700 w-20 md:w-40 h-40  text-gray-800 flex flex-col items-center justify-center">
+                        className="bg-gradient-to-b from-gray-400 to-gray-700 w-28 md:w-40 h-40  text-gray-800 flex flex-col items-center justify-center">
 
                         <div className="text-2xl font-bold text-white">2</div>
                     </div>
@@ -48,8 +48,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
 
                 <div className="flex flex-col items-center">
                     <div className="relative">
-                        <div
-                            className="bg-yellow-500 w-24 h-24 rounded-full flex items-center justify-center hover:scale-110 shadow-yellow-300 hover:shadow-yellow-400 shadow-2xl hover:shadow-3xl transition-all duration-150">
+                        <div className="bg-yellow-500 w-24 h-24 rounded-full flex items-center justify-center hover:scale-110 shadow-yellow-300 hover:shadow-yellow-400 shadow-2xl hover:shadow-3xl transition-all duration-150">
                             {f1.photo && <img src={f1.photo} alt={f1.name} className="w-24 h-24 rounded-full"/>}
                             {!f1.photo && <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                strokeWidth={1.5}
@@ -59,15 +58,15 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-yellow-500 py-1 px-2  font-bold">{f1.name}</div>
-                            <div className="text-lg bg-yellow-400 py-1 px-2 rounded-full font-bold">{f1.score}</div>
+                            <div className="text-lg text-yellow-400 py-1 px-2  font-bold">{f1.name}</div>
+                            <div className="text-lg bg-yellow-700 py-1 px-2 rounded-full font-bold">{f1.score}</div>
                         </div>
                     </div>
                     <div
-                        className="relative bg-yellow-500 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
+                        className="relative bg-yellow-500 w-28 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
-                        className="bg-gradient-to-b from-yellow-400 to-yellow-700 w-20 md:w-40 h-52  text-gray-800 flex flex-col items-center justify-center">
+                        className="bg-gradient-to-b from-yellow-400 to-yellow-700 w-28 md:w-40 h-52  text-gray-800 flex flex-col items-center justify-center">
                         <div className="text-2xl font-bold text-white">1</div>
                     </div>
                 </div>
@@ -84,15 +83,15 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-orange-500 py-1 px-2  font-bold">{f3.name}</div>
-                            <div className="text-lg bg-orange-400 py-1 px-2 rounded-full font-bold">{f3.score}</div>
+                            <div className="text-lg text-orange-400 py-1 px-2  font-bold">{f3.name}</div>
+                            <div className="text-lg bg-orange-700 py-1 px-2 rounded-full font-bold">{f3.score}</div>
                         </div>
                     </div>
                     <div
-                        className="relative  bg-gradient-to-tr from-orange-400 to-orange-700 w-20 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
+                        className="relative  bg-gradient-to-tr from-orange-400 to-orange-700 w-28 md:w-40 h-4 mt-6 rounded-t-lg text-gray-800 flex flex-col items-center justify-center clip-3d">
                     </div>
                     <div
-                        className="bg-gradient-to-b from-orange-400 to-orange-700 w-20 md:w-40 h-32  text-gray-800 flex flex-col items-center justify-center">
+                        className="bg-gradient-to-b from-orange-400 to-orange-700 w-28 md:w-40 h-32  text-gray-800 flex flex-col items-center justify-center">
                         <div className="text-2xl text-white font-bold">3</div>
                     </div>
                 </div>
