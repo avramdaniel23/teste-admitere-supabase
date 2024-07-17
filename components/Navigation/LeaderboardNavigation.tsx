@@ -1,44 +1,29 @@
 import {useState} from "react";
 import LeaderboardNavigationItem from "@/components/Navigation/LeaderboardNavigationItem";
+import {number} from "prop-types";
 
 
-type navBounds = {
-    start: number
-    size: number
-}
 export default function LeaderboardNavigation() {
-    let [navPosition , setNavPosition] = useState<navBounds>({start: 0, size: 3})
+    let [selected , setSelected] = useState<number>(-1)
     const data = ["Matematica","Informatica","Fizica","Chimie","Economie"];
-    const navLeft = () => {
-        console.log('left');
-        if (navPosition.start>0) {
-            const position= {start: navPosition.start-navPosition.size, size: navPosition.size};
-            console.log(position);
-            setNavPosition(position);
-        }
+    let select = (nr: number): undefined => {
+        setSelected(nr)
     }
-    const navRight = () => {
-        console.log('right');
-        if (navPosition.start<data.length-2) {
-            const position= {start: navPosition.start+navPosition.size, size:navPosition.size};
-            console.log(position);
-            setNavPosition(position);
-        }
-    }
+
     return (
-        <div className={"w-full overflow-hidden"}>
-            <div className={"flex justify-between items-center  h-20 border-4 "}>
-                <div className={`${navPosition.start==0 ? 'w-0 overflow-hidden':'w-fit'}`} onClick={navLeft} >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="size-12">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
-                    </svg>
-                </div>
-                <div className={"flex w-full justify-around overflow-x-scroll"}>
+        <div className={"w-full relative"}>
+            <div className={"flex justify-between items-center  border-b-4 h-16"}>
+                <div
+                    className="bg-gradient-to-l from-[rgba(255,255,255,0)] to-[rgba(255,255,255,0.25)] dark:from-[rgba(0,0,0,0)] dark:to-[rgba(255,255,255,0.25)] absolute top-0 bottom-0 left-0 w-16 md:hidden"></div>
+                <div className={"flex w-full justify-around overflow-x-auto no-scrollbar"}>
                     {data.map((value, index) => (
-                      <LeaderboardNavigationItem text={value} className={`${index >= navPosition.start && index < navPosition.start + navPosition.size ? 'w-full':'w-full'}`}></LeaderboardNavigationItem>
-                    ))}
+                        <div  className={`${index == selected && 'border-b-4 border-blue-700'} border rounded-full content-center text-center px-4 py-2 mx-2 transition-all duration-100 hover:bg-purple-500 hover:text-white`}>{value} </div>
+
+                ))}
                 </div>
+                <div
+                    className="bg-gradient-to-r from-[rgba(255,255,255,0)] to-[rgba(255,255,255,1)] dark:from-[rgba(0,0,0,0)] dark:to-[rgba(255,255,255,0.25)] absolute top-0 bottom-0 right-0 w-16 md:hidden"></div>
+
                 {/*<div className={`${navPosition.start<data.length-2 ? 'w-fit':'w-0 overflow-hidden'}`} onClick={navRight}>*/}
                 {/*    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
                 {/*         stroke="currentColor" className="size-12">*/}
@@ -47,5 +32,5 @@ export default function LeaderboardNavigation() {
                 {/*</div>*/}
             </div>
         </div>
-          )
+    )
 }
