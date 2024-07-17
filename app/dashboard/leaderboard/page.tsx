@@ -1,69 +1,54 @@
-"use client"
-import LeaderboardSection from "@/components/Sections/LeaderboardSection";
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
 
 export default function Leaderboard() {
-    const [subject,setSubject] = useState("");
-    const [showGeneral,setShowGeneral] = useState(true);
-    
-    const toggleGeneral = () => {
-      setSubject("General");
-      setShowGeneral(true);
-  }
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
 
-    const toggleAlgebra = () => {
-        setSubject("Algebra si Analiza");
-        setShowGeneral(false);
+  const fetchLeaderboardData = async () => {
+    try {
+      const response = await fetch("/api/get/getLeaderboard", {
+        method: "GET",
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const leaderboardData = await response.json();
+      console.log("Fetched data:", leaderboardData); // Log fetched data
+      return leaderboardData;
+    } catch (error) {
+      console.log("Error fetching data:", error);
+      throw error;
     }
+  };
 
-    const toggleFizica = () => {
-        setSubject("Fizica");
-        setShowGeneral(false);
-    }
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const leaderboard = await fetchLeaderboardData();
+        setLeaderboard(leaderboard);
+        console.log("State updated with leaderboard:", leaderboard);
+      } catch (error) {
+        console.error("Error fetching leaderboard data:", error);
+      }
+    };
 
-    const toggleTrigo = () => {
-        setSubject("Trigonometrie");
-        setShowGeneral(false);
-    }
+    fetchLeaderboard();
+  }, []);
 
-    const toggleInfo = () => {
-      setSubject("Informatica");
-      setShowGeneral(false);
-    }
-
-    const toggleChimie = () => {
-      setSubject("Chimie");
-      setShowGeneral(false);
-    }
-
-    const toggleEconomie = () => {
-      setSubject("Economie");
-      setShowGeneral(false);
-    }
-  
-  return( 
-    <div className="lg:mx-auto">
-      <div className="l p-2 lg:p-4 overflow-x-auto lg:overflow-hidden">
-                <div className="flex justify-start space-x-2 md:justify-center lg:justify-center">
-                    <button onClick={toggleGeneral} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">General</button>
-                    <button onClick={toggleAlgebra} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1 whitespace-nowrap">Algebra si analiza</button>
-                    <button onClick={toggleTrigo} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Trigonometrie</button>
-                    <button onClick={toggleFizica} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Fizica</button>
-                    <button onClick={toggleChimie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Chimie</button>
-                    <button onClick={toggleInfo} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Informatica</button>
-                    <button onClick={toggleEconomie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Economie</button>
-                </div>
-        </div>
-
-        <div>
-          {showGeneral && (
-            <LeaderboardSection subjectName="General"></LeaderboardSection>
-          )}
-
-          {!showGeneral && (
-            <LeaderboardSection subjectName={`${subject}`}></LeaderboardSection>
-          )}
-        </div>
+  return (
+    <div>
+      <h1>Leaderboard</h1>
+      {leaderboard.length === 0 ? (
+        <p>No leaderboard data available.</p>
+      ) : (
+        <ul>
+          {leaderboard.map((entry, index) => (
+            <li key={index}>
+              {entry.user_id}: {entry.total_score} points
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-  )
+  );
 }
