@@ -30,7 +30,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-gray-400 py-1 px-2  font-bold">{f2.name}</div>
+                            <div className="text-lg text-gray-700 dark:text-gray-400 py-1 px-2  font-bold">{f2.name}</div>
                             <div className="text-lg bg-gray-700 py-1 px-2 rounded-full font-bold">{f2.score}</div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-yellow-400 py-1 px-2  font-bold">{f1.name}</div>
+                            <div className="text-lg text-yellow-700 dark:text-yellow-400 py-1 px-2  font-bold">{f1.name}</div>
                             <div className="text-lg bg-yellow-700 py-1 px-2 rounded-full font-bold">{f1.score}</div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@ const LeaderboardTopCard = ({f1, f2, f3}: Props) => {
                             </svg>}
                         </div>
                         <div className="relative -bottom-2 w-full text-center hover:scale-110 transition-all duration-300">
-                            <div className="text-lg text-orange-400 py-1 px-2  font-bold">{f3.name}</div>
+                            <div className="text-lg text-orange-700 dark:text-orange-400 py-1 px-2  font-bold">{f3.name}</div>
                             <div className="text-lg bg-orange-700 py-1 px-2 rounded-full font-bold">{f3.score}</div>
                         </div>
                     </div>
