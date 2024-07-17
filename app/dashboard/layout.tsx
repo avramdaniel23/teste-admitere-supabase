@@ -5,6 +5,9 @@ import AuthButton from "@/components/AuthButton";
 import Logo from "@/components/Logo/Logo";
 import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNavigation";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
+import Sidebar from "@/components/Navigation/Sidebar";
+import { toggleSidebar } from "../actions/toggleSidebar";
+import { cookies } from "next/headers";
 
 async function getTimeData() {
   const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
@@ -27,8 +30,10 @@ const convertTime12to24 = (time12h: any) => {
   return hours;
 };
 
+
 export default async function DashboardLayout({ children }: any) {
   const supabase = createClient();
+  const isSidebarEnabled = cookies().get("isSidebarEnabled")?.value === "true";
 
   const {
     data: { user },
@@ -37,22 +42,30 @@ export default async function DashboardLayout({ children }: any) {
   if (!user) {
     return redirect("/login");
   }
+
   const timeData = await getTimeData();
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
+
   return (
     <div className="flex-1 w-full flex flex-col items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] ">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <div className="flex lg:hidden ">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:justify-normal lg:p-4 lg:hidden">
+        
+        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm lg:justify-end">
+          <div className="flex lg:hidden">
             <Logo size={75} />
           </div>
           <AuthButton />
-          <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+          <div className="mt-2">
+            <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+          </div>
         </div>
       </nav>
 
-      <main className="h-full flex-1 w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa]">
+      <main className={`h-full flex-1 w-full p-4 md:p-10 bg-[#fafafa] lg:p-0 lg:flex ${isSidebarEnabled ? "lg:ml-60 lg:transition-all lg:duration-300 lg:max-w-[80rem]" : "lg:ml-20 lg:transition-all lg:duration-300 lg:max-w-full"}`}>
+        <div className="hidden lg:block">
+          <Sidebar/>
+        </div>
         {children}
       </main>
 
