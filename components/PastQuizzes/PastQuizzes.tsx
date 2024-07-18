@@ -11,24 +11,27 @@ export default function PastQuizzes() {
   });
 
   return (
-    <div className=" grid md:grid-cols-2 lg:grid-cols-3 w-full">
+    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-full my-8">
       {userQuizzes.map((quiz: any, index: any) => {
         return (
           <div
             key={index}
-            className=" bg-gray-200 mx-auto rounded-xl flex justify-center align-middle items-center "
+            className="  mx-auto rounded-xl block align-middle items-center w-full"
           >
-            <div className=" w-[90%] h-[85%] p-8 block bg-[#0172f0] rounded-lg text-white ">
+            <div className=" w-full p-8 block bg-[#66A5AD] rounded-t-lg text-white ">
               <div className=" w-full flex justify-center text-center ">
-                <h2 className="text-[24px] font-bold">{quiz.name}</h2>
+                <h2 className="text-[30px] font-bold  uppercase">
+                  {quiz.name}
+                </h2>
               </div>
-              <div className=" flex justify-around ">
-                <p>
-                  Materie: <b>{quiz.subject}</b>
-                </p>
-                <p>
-                  Punctaj total: <b>{quiz.points}</b>
-                </p>
+            </div>
+            <div className=" grid  md:grid-cols-2 rounded-b-lg text-center p-4 mt-2 bg-[#C4DFE6]">
+              <div className="text-[16px] border-r border-[#66A5AD] ">
+                <b className="uppercase text-[20px] ">{quiz.subject}</b>
+              </div>
+
+              <div className=" text-[16px] ">
+                <b className="uppercase text-[20px] ">{quiz.points}</b> / 50
               </div>
             </div>
           </div>
