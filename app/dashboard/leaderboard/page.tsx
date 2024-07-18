@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { users } from "./mockData";
+import Image from "next/image";
 
 export default function Leaderboard() {
   const [activeSubject, setActiveSubject] = useState("general");
@@ -23,7 +24,7 @@ export default function Leaderboard() {
   const subjects = ["matematica", "fizica", "informatica", "chimie"];
 
   const subCategories = {
-    general: [""],
+    general: ["general"],
     matematica: ["algebra", "geometrie", "trigonometrie", "analiza"],
     fizica: ["mecanica", "optica"],
     informatica: ["vectori", "algoritmica", "backtracking"],
@@ -34,57 +35,66 @@ export default function Leaderboard() {
 
   return (
     <div className="dark:bg-dark  transitions-all duration-300">
-      <div className="w-full flex items-center justify-center">
+      <div className="w-full flex items-center justify-center text-yellow-500">
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          fill="none"
           viewBox="0 0 24 24"
-          fill="currentColor"
-          className="size-8 text-yellow-500 "
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-8 "
         >
           <path
-            fillRule="evenodd"
-            d="M5.166 2.621v.858c-1.035.148-2.059.33-3.071.543a.75.75 0 0 0-.584.859 6.753 6.753 0 0 0 6.138 5.6 6.73 6.73 0 0 0 2.743 1.346A6.707 6.707 0 0 1 9.279 15H8.54c-1.036 0-1.875.84-1.875 1.875V19.5h-.75a2.25 2.25 0 0 0-2.25 2.25c0 .414.336.75.75.75h15a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-2.25-2.25h-.75v-2.625c0-1.036-.84-1.875-1.875-1.875h-.739a6.706 6.706 0 0 1-1.112-3.173 6.73 6.73 0 0 0 2.743-1.347 6.753 6.753 0 0 0 6.139-5.6.75.75 0 0 0-.585-.858 47.077 47.077 0 0 0-3.07-.543V2.62a.75.75 0 0 0-.658-.744 49.22 49.22 0 0 0-6.093-.377c-2.063 0-4.096.128-6.093.377a.75.75 0 0 0-.657.744Zm0 2.629c0 1.196.312 2.32.857 3.294A5.266 5.266 0 0 1 3.16 5.337a45.6 45.6 0 0 1 2.006-.343v.256Zm13.5 0v-.256c.674.1 1.343.214 2.006.343a5.265 5.265 0 0 1-2.863 3.207 6.72 6.72 0 0 0 .857-3.294Z"
-            clipRule="evenodd"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.5 18.75h-9m9 0a3 3 0 0 1 3 3h-15a3 3 0 0 1 3-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 0 1-.982-3.172M9.497 14.25a7.454 7.454 0 0 0 .981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 0 0 7.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 0 0 2.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 0 1 2.916.52 6.003 6.003 0 0 1-5.395 4.972m0 0a6.726 6.726 0 0 1-2.749 1.35m0 0a6.772 6.772 0 0 1-3.044 0"
           />
         </svg>
-        <h1 className="text-xl capitalize ml-2 font-bold">
-          {activeSubject}: {activeCategory}
+
+        <h1 className="text-xl capitalize ml-2 font-bold text-black">
+          {activeSubject} / {activeCategory}
         </h1>
       </div>
-      <section className="flex flex-col gap-2  items-center justify-center w-full mt-2 ">
-        <div className="flex flex-row  overflow-x-auto md:overflow-x-hidden bg-orange-700 text-white rounded-full gap-2 shadow-xl   ">
+      <section className="flex flex-col gap-2  items-center justify-center w-full mt-2 relative ">
+        <div className="flex overflow-x-auto w-full lg:w-fit  md:overflow-x-hidden  text-black  gap-2   ">
           {subjects.map((subject) => (
             <SubjectChips
               subject={subject}
               setActiveSubject={setActiveSubject}
               activeSubject={activeSubject}
               key={subject}
+              setActiveCategory={setActiveCategory}
             />
           ))}
         </div>
-        <div className="flex flex-row  overflow-x-auto md:overflow-x-hidden bg-orange-700 text-white  rounded-full gap-2 shadow-xl   ">
+        <div
+          className={`absolute top-10 flex  overflow-x-auto w-full lg:w-fit  md:overflow-x-hidden  text-black  rounded-full gap-2   transition-all duration-700 ease-in-out ${
+            activeSubject == "general" ? "scale-0" : "scale-100"
+          } `}
+        >
           {subCategories[activeSubject as keyof typeof subCategories].map(
-            (subCategory) =>
-              activeSubject != "general" && (
-                <SubjectChips
-                  subject={subCategory}
-                  setActiveSubject={setActiveCategory}
-                  activeSubject={activeCategory}
-                />
-              )
+            (subCategory) => (
+              // activeSubject != "general" &&
+              <SubCategoryChip
+                activeSubject={activeSubject}
+                category={subCategory}
+                activeCategory={activeCategory}
+                setActiveCategory={setActiveCategory}
+              />
+            )
           )}
         </div>
       </section>
 
-      <div className="relative justify-center items-center flex">
-        <div className="absolute right-0 -top-12  w-fit bg-blue-300 mt-5 p-2 rounded-lg flex-row flex items-center justify-center text-black shadow-lg scale-75 lg:scale-100  dark:text-white dark:bg-blue-900  dark:shadow-blue-600 dark:shadow-lg ">
+      <div className="relative justify-center  px-4 items-center flex mt-16 rounded-2xl shadow-lg shadow-slate-400 ">
+        <div className="absolute right-0 top-0  w-fit bg-blue-300  p-2 rounded-lg flex-row flex items-center justify-center text-black shadow-lg  text-sm lg:text-md font-bold m-2  dark:text-white dark:bg-blue-900  dark:shadow-blue-600 dark:shadow-lg ">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="size-5"
+            className="size-4 lg:size-6"
           >
             <path
               strokeLinecap="round"
@@ -96,20 +106,21 @@ export default function Leaderboard() {
           <p className="ml-1">02d 12h 20min</p>
         </div>
 
-        <section className="w-full  lg:px-4 lg:w-[100%] grid grid-cols-3 gap-3 lg:gap-7  items-end mt-16 ">
+        <section className="w-full   grid grid-cols-3 gap-3 lg:gap-7  items-end mt-16 ">
           {podiumRanking.map((user, index) => (
             <LeaderboardPillar
               key={index}
               place={user.place}
               name={user.name}
               points={user.points}
+              avatar={user.avatar}
             />
           ))}
         </section>
         <a
           href="#"
           onClick={handleScroll}
-          className="absolute top-[94%] hover:scale-110  hidden lg:flex dark:hover:text-black bg-transparent p-2 transition-all duration-300"
+          className="absolute top-[93%] hover:scale-125  hidden lg:flex dark:hover:text-black bg-transparent p-2 transition-all duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +141,7 @@ export default function Leaderboard() {
       <div
         id="table"
         ref={tableRef}
-        className="gap-2 flex flex-col  text-white   rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 "
+        className="gap-2 flex flex-col  mt-4 text-white   rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 "
       >
         {ranking.slice(3, ranking.length).map((user) => (
           <LeaderboardCard
@@ -138,6 +149,7 @@ export default function Leaderboard() {
             name={user.name}
             place={user.place}
             points={user.points}
+            avatar={user.avatar}
           />
         ))}
       </div>
@@ -149,18 +161,20 @@ interface Props {
   place: number;
   name: string;
   points: number;
+  avatar: string;
 }
 interface ProfileProps {
   name: string;
   points: number;
   place: number;
+  avatar: string;
 }
 
-const LeaderboardPillar = ({ place, name, points }: Props) => {
+const LeaderboardPillar = ({ place, name, points, avatar }: Props) => {
   const pillarStyle = {
     1: `flex items-center justify-center bg-gradient-to-b from-yellow-400 to-yellow-200 h-[210px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600 `,
-    2: `flex items-center justify-center bg-gradient-to-b from-slate-400 to-blue-200 h-[160px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600`,
-    3: `flex items-center justify-center bg-gradient-to-b from-amber-600 to-amber-500 h-[130px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600`,
+    2: `flex items-center justify-center bg-gradient-to-b from-slate-400 to-blue-200 h-[160px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600 `,
+    3: `flex items-center justify-center bg-gradient-to-b from-amber-600 to-amber-500 h-[130px] w-full relative dark:bg-gradient-to-b dark:from-pink-500 dark:to-violet-600 `,
   };
   const podiumFloorColors = {
     1: "bg-yellow-500 dark:bg-pink-700",
@@ -169,8 +183,13 @@ const LeaderboardPillar = ({ place, name, points }: Props) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center hover:scale-105 origin-bottom cursor-pointer duration-300 transition-all   ">
-      <PillarProfile name={name} points={points} place={place} />
+    <div className="flex flex-col   items-center justify-center hover:scale-105 origin-bottom cursor-pointer duration-300 transition-all   ">
+      <PillarProfile
+        name={name}
+        points={points}
+        place={place}
+        avatar={avatar}
+      />
 
       <div className={pillarStyle[place as keyof typeof pillarStyle]}>
         <div
@@ -213,13 +232,7 @@ const LeaderboardPillar = ({ place, name, points }: Props) => {
   );
 };
 
-const PillarProfile = ({ name, points, place }: ProfileProps) => {
-  const profileShadow = {
-    1: "shadow-yellow-500",
-    2: "shadow-slate-500",
-    3: "shadow-amber-500",
-  };
-
+const PillarProfile = ({ name, points, place, avatar }: ProfileProps) => {
   return (
     <div className="flex items-center justify-center flex-col mb-8 lg:scale-110 lg:mb-8">
       <div
@@ -227,20 +240,11 @@ const PillarProfile = ({ name, points, place }: ProfileProps) => {
         }`}
       >
         <div className={` rounded-full shadow-xl `}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-10 "
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-            />
-          </svg>
+          <img
+            className="w-12 h-12 lg:w-14 lg:h-14  object-scale-down p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+            src={avatar}
+            alt="Bordered avatar"
+          />
         </div>
         <h1 className="text-lg font-bold">{name}</h1>
       </div>
@@ -251,28 +255,21 @@ const PillarProfile = ({ name, points, place }: ProfileProps) => {
   );
 };
 
-const LeaderboardCard = ({ place, name, points }: Props) => {
+const LeaderboardCard = ({ place, name, points, avatar }: Props) => {
   return (
-    <div className="flex flex-row items-center justify-center border-slate-300 border-t-4 dark:border-none   p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-xl hover:shadow-blue-500 hover:shadow-md  dark:hover:bg-purple-400 cursor-pointer transition-all ease-linear duration-200">
+    <div className="flex flex-row items-center justify-center border-slate-300 border-t-4 dark:border-none my-2  p-3 px-5  text-lg  bg-transparent text-black  rounded-lg  shadow-lg hover:border-slate-600 hover:shadow-md t ease-in-out dark:hover:bg-purple-400 cursor-pointer transition-all  duration-300">
       <div className="flex w-[35px] h-[35px]  p-2 rounded-lg bg-slate-500 shadow-lg text-white dark:shadow-slate-600  dark:bg-white items-center justify-center">
         <h1 className="font-bold ">{place}</h1>
       </div>
       <div className="flex items-center  justify-between w-full border-l-2 border-slate-700 ml-4 p-2">
         <div className="flex items-center justify-start">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-10"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          <div className={` rounded-full shadow-xl `}>
+            <img
+              className="w-10 h-10 lg:h-12 lg:w-12  object-scale-down p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500"
+              src={avatar}
+              alt="Bordered avatar"
             />
-          </svg>
+          </div>
           <h1 className="font-lg font-bold ml-2">{name}</h1>
         </div>
         <div className="font-lg font-bold">{points}</div>
@@ -285,25 +282,63 @@ interface ChipProps {
   subject: String;
   setActiveSubject: Function;
   activeSubject: string;
+  setActiveCategory: Function;
 }
 
 const SubjectChips = ({
   subject,
   setActiveSubject,
   activeSubject,
+  setActiveCategory,
 }: ChipProps) => {
   return (
     <div
-      className={`flex items-center justify-center   cursor-pointer  rounded-full p-1 px-2  transition-all duration-300 ease-linear  ${
-        activeSubject == subject && "bg-orange-900 "
-      }`}
+      className={`flex items-center justify-center   cursor-pointer border-2   rounded-full p-1 px-2  transition-all duration-300 ease-linear  ${
+        activeSubject == subject && "bg-orange-300 border-black "
+      }  `}
       onClick={() => {
-        activeSubject == subject
-          ? setActiveSubject("general")
-          : setActiveSubject(subject);
+        if (activeSubject == subject) {
+          setActiveSubject("general");
+          setActiveCategory("");
+        } else {
+          setActiveSubject(subject);
+          setActiveCategory("general");
+        }
       }}
     >
-      <p>{subject}</p>
+      <p className="font-bold">{subject}</p>
+    </div>
+  );
+};
+
+interface SubCategoryChipProps {
+  category: String;
+  activeSubject: string;
+  activeCategory: string;
+  setActiveCategory: Function;
+}
+
+const SubCategoryChip = ({
+  category,
+  activeSubject,
+  activeCategory,
+  setActiveCategory,
+}: SubCategoryChipProps) => {
+  return (
+    <div
+      className={`flex items-center justify-center   cursor-pointer border-2   rounded-full p-1 px-2    ${
+        activeCategory == category &&
+        activeSubject != "general" &&
+        "bg-orange-300 border-black"
+      }   `}
+      onClick={() => {
+        if (activeCategory == category) {
+          setActiveCategory("general");
+          setActiveCategory("");
+        } else setActiveCategory(category);
+      }}
+    >
+      <p className="font-bold">{category}</p>
     </div>
   );
 };
