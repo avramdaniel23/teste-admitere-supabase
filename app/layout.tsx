@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "./Providers";
 import AsideNavbar from "@/components/Navbar/AsideNavbar";
 
-
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -20,17 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={GeistSans.className}>
+    <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <Providers>
-           <main className="min-h-screen flex flex-col items-center justify-center">
-          {/* <div className="h-[100vh] absolute left-0 top-0 w-[12.5%] bg-white shadow-xl ">
+          <main className="min-h-screen">
+            {/* <div className="h-[100vh] absolute left-0 top-0 w-[12.5%] bg-white shadow-xl ">
             <AsideNavbar />
           </div> */}
-          {children}
+            {children}
           </main>
         </Providers>
-
       </body>
     </html>
   );

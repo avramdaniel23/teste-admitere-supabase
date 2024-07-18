@@ -1,7 +1,7 @@
 "use client";
 import Logo from "@/components/Logo/Logo";
 import NavLink from "../QuickNavigation/NavLink";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,11 +12,12 @@ function capitalizeFirstLetter(string: string | undefined) {
 }
 
 export default function Sidebar({ user }: { user: User | null }) {
-  const [expanded, setExpanded] = useState(true);
+  // const [expanded, setExpanded] = useState(true);
+  const { isMenuOpen: expanded, toggleMenu } = useMobileMenu();
   const username = user?.email?.split("@")[0];
 
   return (
-    <aside className="h-screen hidden lg:flex flex-col bg-white shadow-sm p-5 gap-10">
+    <aside className="h-screen sticky top-0 hidden lg:flex flex-col bg-white shadow-sm p-5 gap-10">
       <div
         className={`flex items-center ${
           expanded ? "justify-between" : "justify-center"
@@ -28,12 +29,12 @@ export default function Sidebar({ user }: { user: User | null }) {
           width={100}
           height={100}
           className={`overflow-hidden transition-all ${
-            expanded ? "w-24" : "w-0"
+            expanded ? "w-9" : "w-0"
           }`}
         ></Image>
         <button
-          onClick={() => setExpanded((curr) => !curr)}
-          className="p-1.5 rounded-lg"
+          onClick={() => toggleMenu()}
+          className="p-1.5 rounded-lg hover:text-indigo-800"
         >
           {expanded ? (
             <svg
@@ -158,8 +159,8 @@ export default function Sidebar({ user }: { user: User | null }) {
             }
           />
         </ul>
-        <div className="border-t bottom-0 fixed flex p-3">
-          <div className="w-10 h-10 bg-blue-300 rounded-md grid place-items-center">
+        <div className="bottom-2 left-3 fixed flex p-3 shadow-lg font-semibold">
+          <div className="w-10 h-10 bg-blue-200 rounded-full grid place-items-center">
             {capitalizeFirstLetter(username?.at(0))}
           </div>
           <div
@@ -192,6 +193,38 @@ export default function Sidebar({ user }: { user: User | null }) {
     </aside>
   );
 }
+
+function useMobileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const portalRef = useRef<HTMLUListElement | null>(null);
+  const buttonRef = useRef<HTMLSpanElement | null>(null);
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        isMenuOpen &&
+        !portalRef.current?.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  return { isMenuOpen, toggleMenu, portalRef, buttonRef };
+}
 export function SidebarItem({
   icon,
   href,
@@ -216,7 +249,7 @@ export function SidebarItem({
           ${
             isActive
               ? "bg-neon-blue/10"
-              : "hover:bg-indigo-50 hover:text-neon-blue"
+              : "hover:bg-indigo-100 hover:text-indigo-800"
           }
       `}
       >

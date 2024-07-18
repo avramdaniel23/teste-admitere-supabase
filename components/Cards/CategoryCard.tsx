@@ -5,9 +5,10 @@ import { createClient } from "@/utils/supabase/client";
 interface Props {
   title: string;
   categoryId: string;
+  backgroundColor: string;
 }
 
-const CategoryCard = ({ title, categoryId }: Props) => {
+const CategoryCard = ({ title, categoryId, backgroundColor }: Props) => {
   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
   const supabase = createClient();
 
@@ -33,10 +34,12 @@ const CategoryCard = ({ title, categoryId }: Props) => {
   }, [categoryId]);
 
   return (
-    <div className=" rounded-lg shadow-xl">
+    <div className="rounded-lg group hover:scale-105 shadow-[rgba(100,100,111,0.3)_0px_7px_29px_0px] transition ease-in duration-75">
       <div className="w-full ">
         <div className="py-4 flex flex-row-reverse">
-          <span className="uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white p-3 rounded-l-full px-[2rem] font-bold tracking-wider">
+          <span
+            className={`uppercase bg-gradient-to-r ${backgroundColor} text-white p-3 rounded-l-full px-[2rem] font-bold tracking-wider`}
+          >
             {title}
           </span>
         </div>
@@ -49,7 +52,8 @@ const CategoryCard = ({ title, categoryId }: Props) => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="#4062BB"
-                className="size-5 mr-1">
+                className="size-5 mr-1"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -63,7 +67,9 @@ const CategoryCard = ({ title, categoryId }: Props) => {
           </div>
         </div>
         <div className="px-4 pb-4 w-full">
-          <div className="w-full uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white py-2 rounded-full text-center tracking-wider">
+          <div
+            className={`w-full uppercase bg-gradient-to-r ${backgroundColor} text-white py-2 rounded-full text-center tracking-wider font-semibold`}
+          >
             Vezi categoria
           </div>
         </div>
