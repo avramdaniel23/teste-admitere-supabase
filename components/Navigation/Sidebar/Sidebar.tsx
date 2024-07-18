@@ -214,7 +214,7 @@ export default function Sidebar({ user }: { user: User | null }) {
           </ul>
         </div>
 
-        <div className="mt-4 flex p-3 font-semibold border-t-[1px]">
+        <div className="mt-4 flex px-3 pt-5 font-semibold border-t-[1px]">
           <div className="w-10 h-10 bg-blue-200 rounded-full grid place-items-center">
             {capitalizeFirstLetter(username?.at(0))}
           </div>
