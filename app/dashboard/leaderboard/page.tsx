@@ -98,7 +98,6 @@ export default function Leaderboard() {
   return (
       <div className={"w-full"}>
        <LeaderboardNavigation></LeaderboardNavigation>
-        <h1>Leaderboard</h1>
         {leaderboard.length === 0 ? (
             <p>No leaderboard data available.</p>
         ) : (
