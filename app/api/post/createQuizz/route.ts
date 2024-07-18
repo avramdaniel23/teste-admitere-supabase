@@ -32,7 +32,10 @@ export async function POST(request: Request) {
       .insertOne(documentToInsert);
 
     return new Response(
-      JSON.stringify({ message: "Successfully updated the document" }),
+      JSON.stringify({
+        message: "Successfully updated the document",
+        quizID: cursor.insertedId,
+      }),
       { status: 200 }
     );
   } catch (error) {
