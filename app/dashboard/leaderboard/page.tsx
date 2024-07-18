@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import LeaderboardCard from "@/components/Cards/LeaderboardCard";
 import LeaderboardTopCard from "@/components/Cards/LeaderboardTopCard";
 import {Placement} from "@/components/Cards/LeaderboardTopCard";
-import LeaderboardNavigationItem from "@/components/Navigation/LeaderboardNavigationItem";
 import LeaderboardNavigation from "@/components/Navigation/LeaderboardNavigation";
 
 
