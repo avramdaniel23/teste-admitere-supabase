@@ -208,7 +208,7 @@ export default function Sidebar({
           <div className="group relative flex rounded-lg p-3">
             <Link
               href="/dashboard/profile"
-              className="grid place-items-center rounded-lg bg-neon-blue/30 px-4 py-2 text-xl transition-colors hover:bg-neon-blue/60"
+              className="grid place-items-center rounded-full bg-neon-blue/30 px-4 py-2 text-xl transition-colors hover:bg-neon-blue/60"
             >
               {username?.at(0)}
             </Link>

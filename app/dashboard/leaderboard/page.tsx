@@ -1,3 +1,4 @@
+import LeaderboardNav from '@/components/Leaderboard/LeaderboardNav'
 import Podium from '@/components/Leaderboard/Podium'
 import Table from '@/components/Leaderboard/Table'
 
@@ -72,6 +73,7 @@ const users = [
 export default function Leaderboard() {
   return (
     <section>
+      <LeaderboardNav />
       <Podium users={users.slice(0, 3)} />
       <Table users={users.slice(3)} />
     </section>

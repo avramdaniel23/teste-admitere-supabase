@@ -7,54 +7,112 @@ type PodiumProps = {
 }
 
 export default function Podium({ users }: PodiumProps) {
+  const backgroundsStyles = {
+    first: {
+      figureTop:
+        'bg-blue-400 group-hover:bg-blue-500 dark:bg-blue-500 group-hover:dark:bg-blue-400',
+      figureFront:
+        'bg-blue-500 transition-colors group-hover:bg-blue-700 dark:bg-blue-700 group-hover:dark:bg-blue-600',
+    },
+    second: {
+      figureTop:
+        'bg-blue-400 group-hover:bg-blue-500 dark:bg-blue-500 group-hover:dark:bg-blue-400',
+      figureFront:
+        'bg-blue-500 transition-colors group-hover:bg-blue-700 dark:bg-blue-700 group-hover:dark:bg-blue-600',
+    },
+    third: {
+      figureTop:
+        'bg-blue-400 group-hover:bg-blue-500 dark:bg-blue-500 group-hover:dark:bg-blue-400',
+      figureFront:
+        'bg-blue-500 transition-colors group-hover:bg-blue-700 dark:bg-blue-700 group-hover:dark:bg-blue-600',
+    },
+  }
   return (
     <div className="flex items-end justify-center gap-2 rounded-t-lg bg-slate-300 pt-4 dark:bg-slate-900">
-      <PodiumUser
-        user={users[1]}
-        podiumClass="top-second"
-        medalClass="silver"
-      />
-      <PodiumUser user={users[0]} podiumClass="top-first" medalClass="gold" />
-      <PodiumUser user={users[2]} podiumClass="top-third" medalClass="bronze" />
+      <PodiumUser user={users[1]}>
+        <div className="cube-container h-32 w-24 duration-200 group-hover:-translate-y-[4.4px] group-hover:scale-y-105">
+          <div className="cube size-full transition-colors">
+            <figure
+              className={`top-second ${backgroundsStyles.second.figureTop} absolute h-20 transition-colors`}
+            ></figure>
+            <figure
+              className={`${backgroundsStyles.second.figureFront} absolute flex h-full w-24 justify-center`}
+            >
+              {/* Medal */}
+              <div className="relative mt-2">
+                <div
+                  className={`quiz-medal__circle quiz-medal__circle--silver`}
+                >
+                  <span>2</span>
+                </div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--left"></div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--right"></div>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </PodiumUser>
+
+      <PodiumUser user={users[0]}>
+        <div className="cube-container h-44 w-24 duration-200 group-hover:-translate-y-[3.2px] group-hover:scale-y-105">
+          <div className="cube size-full transition-colors">
+            <figure
+              className={`top-first ${backgroundsStyles.first.figureTop} absolute h-20 transition-colors`}
+            ></figure>
+            <figure
+              className={`${backgroundsStyles.first.figureFront} absolute flex h-full w-24 justify-center`}
+            >
+              {/* Medal */}
+              <div className="relative mt-2">
+                <div className="quiz-medal__circle quiz-medal__circle--gold">
+                  <span>1</span>
+                </div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--left"></div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--right"></div>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </PodiumUser>
+
+      <PodiumUser user={users[2]}>
+        <div className="cube-container h-24 w-24 duration-200 group-hover:-translate-y-[2.5px] group-hover:scale-y-105">
+          <div className="cube size-full transition-colors">
+            <figure
+              className={`top-third ${backgroundsStyles.third.figureTop} absolute h-20 transition-colors`}
+            ></figure>
+            <figure
+              className={`${backgroundsStyles.third.figureFront} absolute flex h-full w-24 justify-center`}
+            >
+              {/* Medal */}
+              <div className="relative mt-2">
+                <div className="quiz-medal__circle quiz-medal__circle--bronze">
+                  <span>3</span>
+                </div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--left"></div>
+                <div className="quiz-medal__ribbon quiz-medal__ribbon--right"></div>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </PodiumUser>
     </div>
   )
 }
 
 function PodiumUser({
   user,
-  podiumClass,
-  medalClass,
+  children,
 }: {
   user: {
     id: number
     name: string
     score: number
   }
-  podiumClass: 'top-first' | 'top-second' | 'top-third'
-  medalClass: 'silver' | 'gold' | 'bronze'
+  children: React.ReactNode
 }) {
-  const topMap = {
-    'top-first': {
-      height: 'h-44',
-      translate: 'group-hover:-translate-y-[4.4px]',
-    },
-    'top-second': {
-      height: 'h-32',
-      translate: 'group-hover:-translate-y-[3.2px]',
-    },
-    'top-third': {
-      height: 'h-24',
-      translate: 'group-hover:-translate-y-[2.5px]',
-    },
-  }
-  const medalMap = {
-    silver: '2',
-    gold: '1',
-    bronze: '3',
-  }
-  const top = topMap[podiumClass]
-  const medalNumber = medalMap[medalClass]
-  const firstLetter = user.name[0].toLocaleUpperCase()
+  if (!user) return null
+  const firstLetter = user?.name[0].toLocaleUpperCase()
 
   return (
     <div className="group flex cursor-pointer flex-col items-center gap-1">
@@ -70,28 +128,8 @@ function PodiumUser({
         {user.score.toLocaleString()}
       </span>
 
-      {/* Podium cube */}
-      <div
-        className={`cube-container w-24 ${top.height} ${top.translate} duration-200 group-hover:scale-y-105`}
-      >
-        <div className="cube size-full transition-colors">
-          <figure
-            className={`${podiumClass} absolute h-20 bg-blue-400 transition-colors group-hover:bg-blue-500 dark:bg-blue-500 group-hover:dark:bg-blue-400`}
-          ></figure>
-          <figure className="absolute flex h-full w-24 justify-center bg-blue-500 transition-colors group-hover:bg-blue-700 dark:bg-blue-700 group-hover:dark:bg-blue-600">
-            {/* Medal */}
-            <div className="relative mt-2">
-              <div
-                className={`quiz-medal__circle quiz-medal__circle--${medalClass}`}
-              >
-                <span>{medalNumber}</span>
-              </div>
-              <div className="quiz-medal__ribbon quiz-medal__ribbon--left"></div>
-              <div className="quiz-medal__ribbon quiz-medal__ribbon--right"></div>
-            </div>
-          </figure>
-        </div>
-      </div>
+      {/* Podium */}
+      {children}
     </div>
   )
 }
