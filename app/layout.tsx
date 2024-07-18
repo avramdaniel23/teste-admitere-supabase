@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "./Providers";
 import AsideNavbar from "@/components/Navbar/AsideNavbar";
 
-
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
   : "http://localhost:3000";
@@ -23,14 +22,10 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className}>
       <body className="bg-background text-foreground">
         <Providers>
-           <main className="min-h-screen flex flex-col items-center justify-center">
-          {/* <div className="h-[100vh] absolute left-0 top-0 w-[12.5%] bg-white shadow-xl ">
-            <AsideNavbar />
-          </div> */}
-          {children}
+          <main className="min-h-screen flex flex-col items-center justify-center">
+            {children}
           </main>
         </Providers>
-
       </body>
     </html>
   );
