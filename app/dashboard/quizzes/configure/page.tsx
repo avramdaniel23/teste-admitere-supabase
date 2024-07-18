@@ -1,16 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  Field,
-  Input,
-  Label,
-  Radio,
-  RadioGroup,
-  Select,
-  Switch,
-} from "@headlessui/react";
+import { useState } from "react";
+import { Field, Input, Label, Switch } from "@headlessui/react";
 import { subjects } from "@/libs/selectOptions/generateQuizzOptions";
+import {
+  dificultateOptions,
+  dificultateSimulare,
+  numarIntrebariOptions,
+} from "@/libs/configureQuizz/config";
+import {
+  fetchQuestionsData,
+  submitQuizz,
+} from "@/libs/configureQuizz/dataHelpers";
+import RadioGroupComponent from "@/components/RadioGroup/RadioGroupComponent";
 
 interface Configuration {
   name: string;
@@ -32,17 +34,6 @@ interface Subject {
   chapters: Chapter[];
 }
 
-const dificultate = [
-  { value: "1", name: "Usor" },
-  { value: "2", name: "Mediu" },
-  { value: "3", name: "Greu" },
-];
-
-const numarIntrebariOptions = [
-  { value: "15", name: "15" },
-  { value: "30", name: "30" },
-];
-
 export default function QuizzesConfigure() {
   const [configuration, setConfiguration] = useState<Configuration>({
     name: "",
@@ -52,61 +43,9 @@ export default function QuizzesConfigure() {
     numarIntrebari: "",
     privacy: false,
   });
-  const [questions, setQuestions] = useState<string[]>([]);
   const [filteredChapters, setFilteredChapters] = useState<Chapter[]>([]);
-
+  const [selectedCapitol, setSelectedCapitol] = useState<string>("");
   const materii: Subject[] = subjects;
-
-  const fetchQuestionsData = async () => {
-    const { materie, capitol, dificultate, numarIntrebari } = configuration;
-
-    const queryParams = new URLSearchParams({
-      materie,
-      capitol,
-      dificultate,
-      numarIntrebari,
-    }).toString();
-
-    const url = `/api/get/filteredQuestions?${queryParams}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const fetchedQuestions = await response.json();
-      const questionIDs = fetchedQuestions.questions.map(
-        (question: any) => question._id
-      );
-      return questionIDs; // Return the fetched question IDs
-    } catch (error) {
-      console.log("Error fetching data:", error);
-      return [];
-    }
-  };
-
-  const submitQuizz = async (questionsIDS: string[]) => {
-    const dataToBeSent = { config: configuration, questionsIDS };
-    try {
-      const response = await fetch("/api/post/createQuizz", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(dataToBeSent),
-      });
-      if (response.ok) {
-        console.log("Quiz successfully created");
-      } else {
-        alert("Error submitting the form. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error submitting quiz:", error);
-      alert("Failed to submit the form. Please try again later.");
-    }
-  };
 
   const handlePrivacyChange = (value: boolean) => {
     setConfiguration((prev) => ({
@@ -116,20 +55,17 @@ export default function QuizzesConfigure() {
   };
 
   const handleMaterieChange = (value: string) => {
+    const selectedSubject = materii.find((materie) => materie.value === value);
     setConfiguration((prev) => ({
       ...prev,
       materie: value,
-    }));
-
-    const selectedSubject = materii.find((materie) => materie.value === value);
-    setFilteredChapters(selectedSubject ? selectedSubject.chapters : []);
-    setConfiguration((prev) => ({
-      ...prev,
       capitol: "",
     }));
+    setFilteredChapters(selectedSubject ? selectedSubject.chapters : []);
   };
 
   const handleCapitolChange = (value: string) => {
+    setSelectedCapitol(value);
     setConfiguration((prev) => ({
       ...prev,
       capitol: value,
@@ -144,6 +80,13 @@ export default function QuizzesConfigure() {
   };
 
   const handleNumarIntrebariChange = (value: string) => {
+    if (configuration.numarIntrebari === "15" && value !== "15") {
+      setConfiguration((prev) => ({
+        ...prev,
+        dificultate: "",
+      }));
+    }
+
     setConfiguration((prev) => ({
       ...prev,
       numarIntrebari: value,
@@ -169,13 +112,22 @@ export default function QuizzesConfigure() {
     }
 
     try {
-      const questionIDs = await fetchQuestionsData(); // Fetch questions and wait for the result
-      await submitQuizz(questionIDs); // Submit the quiz with the fetched questions
+      const questionIDs = await fetchQuestionsData(configuration);
+      console.log("🚀 ~ handleGenerate ~ questionIDs:", questionIDs);
+      // await submitQuizz(configuration, questionIDs);
+      console.log(configuration);
+
+      console.log("Quiz successfully created");
     } catch (error) {
       console.error("Error generating quiz:", error);
       alert("Error generating quiz. Please try again.");
     }
   };
+
+  const filteredDificultate =
+    configuration.numarIntrebari === "15"
+      ? [...dificultateOptions, dificultateSimulare]
+      : dificultateOptions;
 
   return (
     <>
@@ -211,72 +163,23 @@ export default function QuizzesConfigure() {
         <div className="py-2">
           <Field className="flex flex-col">
             <Label className="mb-2 text-[1.6rem]">Materie</Label>
-            <RadioGroup
+            <RadioGroupComponent
               value={configuration.materie}
               onChange={handleMaterieChange}
-              aria-label="Materie">
-              {materii.map((materie) => (
-                <Radio
-                  key={materie.value}
-                  value={materie.value}
-                  className="bg-white flex justify-between shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] my-4 p-4 rounded-lg transition-all ease-in-out data-[checked]:bg-neon-blue data-[checked]:text-white">
-                  <Label>{materie.name}</Label>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="white"
-                    className={`size-6 ${
-                      configuration.materie === materie.value
-                        ? "visible opacity-100"
-                        : "invisible opacity-0"
-                    }`}>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                </Radio>
-              ))}
-            </RadioGroup>
+              options={subjects}
+            />
           </Field>
         </div>
-        {configuration.materie.length > 0 ? (
+
+        {filteredChapters.length > 0 ? (
           <div className="py-2">
             <Field className="flex flex-col">
               <Label className="mb-2 text-[1.6rem]">Capitol</Label>
-              <RadioGroup
-                value={configuration.capitol}
+              <RadioGroupComponent
+                value={selectedCapitol}
                 onChange={handleCapitolChange}
-                aria-label="Capitol">
-                {filteredChapters.map((capitol) => (
-                  <Radio
-                    key={capitol.value}
-                    value={capitol.value}
-                    className="bg-white flex justify-between shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] my-4 p-4 rounded-lg transition-all ease-in-out data-[checked]:bg-neon-blue data-[checked]:text-white">
-                    <Label>{capitol.name}</Label>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="white"
-                      className={`size-6 ${
-                        configuration.capitol === capitol.value
-                          ? "visible opacity-100"
-                          : "invisible opacity-0"
-                      }`}>
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </Radio>
-                ))}
-              </RadioGroup>
+                options={filteredChapters}
+              />
             </Field>
           </div>
         ) : null}
@@ -284,72 +187,22 @@ export default function QuizzesConfigure() {
         <div className="py-2">
           <Field className="flex flex-col">
             <Label className="mb-2 text-[1.6rem]">Numar de intrebari</Label>
-            <RadioGroup
+            <RadioGroupComponent
               value={configuration.numarIntrebari}
               onChange={handleNumarIntrebariChange}
-              aria-label="Numar de intrebari">
-              {numarIntrebariOptions.map((option) => (
-                <Radio
-                  key={option.value}
-                  value={option.value}
-                  className="bg-white flex justify-between shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] my-4 p-4 rounded-lg transition-all ease-in-out data-[checked]:bg-neon-blue data-[checked]:text-white">
-                  <Label>{option.name}</Label>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="white"
-                    className={`size-6 ${
-                      configuration.numarIntrebari === option.value
-                        ? "visible opacity-100"
-                        : "invisible opacity-0"
-                    }`}>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                </Radio>
-              ))}
-            </RadioGroup>
+              options={numarIntrebariOptions}
+            />
           </Field>
         </div>
 
         <div className="py-2">
           <Field className="flex flex-col">
             <Label className="mb-2 text-[1.6rem]">Dificultate</Label>
-            <RadioGroup
+            <RadioGroupComponent
               value={configuration.dificultate}
               onChange={handleDificultateChange}
-              aria-label="Dificultate">
-              {dificultate.map((diff) => (
-                <Radio
-                  key={diff.value}
-                  value={diff.value}
-                  className="bg-white flex justify-between shadow-[0_2px_8px_0_rgba(99,99,99,0.2)] my-4 p-4 rounded-lg transition-all ease-in-out data-[checked]:bg-neon-blue data-[checked]:text-white">
-                  <Label>{diff.name}</Label>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="white"
-                    className={`size-6 ${
-                      configuration.dificultate === diff.value
-                        ? "visible opacity-100"
-                        : "invisible opacity-0"
-                    }`}>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                    />
-                  </svg>
-                </Radio>
-              ))}
-            </RadioGroup>
+              options={filteredDificultate}
+            />
           </Field>
         </div>
 
