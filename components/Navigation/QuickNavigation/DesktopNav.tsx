@@ -53,9 +53,9 @@ export default function DesktopNav() {
   // const sunset = convertTime12to24(timeData.results.sunset);
 
   return (
-    <nav className={`font-[0.625rem] bg-white leading-[1rem] block w-full shadow-xl dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
+    <nav className={`font-[0.625rem] bg-white leading-[1rem] block w-full shadow-lg dark:bg-dark dark:border-t-[1px] fixed bottom-0 border-t mt-10 
                     lg:mt-0 lg:sticky lg:top-0 lg:block lg:bg-slate-400 lg:w-[20%] lg:h-screen lg:shadow-black lg:transition-all lg:duration-300 lg:ease-in
-                    ${isSideBarOpen ? "lg:w-72" : "lg:w-[8%]"}`}>
+                    ${isSideBarOpen ? "lg:w[18rem]" : "lg:w-[6rem]"}`}>
       
       <div className="flex items-center justify-around w-full px-4 lg:items-center lg:flex lg:flex-col bg-slate-100 lg:px-4 lg:h-screen">
         <div className={`flex flex-row justify-center items-center`}>
@@ -157,17 +157,16 @@ export default function DesktopNav() {
           label="Profil"
           isSidebarOpen={isSideBarOpen}
         />
-        <hr className="w-full h-[2px] bg-slate-400" />
+
+        <div className="rounded-full w-full h-0.5 bg-gray-400"></div>
 
         <div className="flex flex-col gap-4">
           {/* <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn> */}
-          <div className="flex flex-row items-center w-full p-1 duration-200 rounded-lg bg-red-200 hover:bg-red-300">
-            <button className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover lg:contents">
-              <svg className="hidden size-6 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
-              </svg>
-              Logout
-            </button>
+          <div className={`${isSideBarOpen ? "w-[220px]" : ""} flex flex-row items-center justify-center duration-500 rounded-lg w-[56px] h-[56px] bg-red-100 hover:bg-red-400 hover:cursor-pointer`}>
+            <svg className="hidden size-8 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+            </svg>
+            <p className={`${isSideBarOpen ? "lg:text-[16px]" : "lg:text-[0px]"} duration-500`}>Logout</p>
           </div>
         </div>
       </div>

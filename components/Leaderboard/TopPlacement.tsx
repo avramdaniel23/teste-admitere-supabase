@@ -6,7 +6,7 @@ interface PlacementProps {
 
   const TopPlacement = ({ username, place, points }: PlacementProps) => {
     return (
-    <div className="flex flex-col gap-4 items-center h-fit">
+    <div className="flex flex-col gap-4 w-full items-center h-fit">
         <div className="flex flex-col items-center">
             <div className="w-12 h-12 bg-slate-400 rounded-full lg:w-16 lg:h-16"></div>
             <div className="top-8 rounded-xl px-2 text-slate-800 font-medium lg:font-semibold lg:text-lg">{username}</div>

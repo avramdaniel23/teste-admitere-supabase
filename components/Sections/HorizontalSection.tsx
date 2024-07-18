@@ -22,7 +22,7 @@ const HorizontalSection = () => {
         </h2>
       </header> */}
 
-      <div className="flex flex-col gap-12 items-center h-fit w-full md:grid md:grid-cols-2 md:h-fit md:w-full lg:w-full lg:h-fit">
+      <div className="flex flex-col gap-12 items-center h-fit w-full md:grid md:grid-cols-2 md:h-fit md:w-fit lg:gap-y-16 lg:w-fit lg:h-fit">
 
         <SubjectCard
           title="Matematica"

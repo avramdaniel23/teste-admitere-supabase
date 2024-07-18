@@ -2,15 +2,20 @@ import React from 'react';
 
 interface NavLBProps {
   category: string[];
-  subCategory: string[][];
+  activeCategory: string | null;
+  onCategoryClick: (category: string) => void;
 }
 
-const NavLB: React.FC<NavLBProps> = ({ category }) => {
+const NavLB: React.FC<NavLBProps> = ({ category, activeCategory, onCategoryClick }) => {
   return (
-    <div className="absolute flex flex-row gap-2 items-center justify-between w-full h-fit p-3 overflow-scroll">
+    <div className="absolute top-0 flex flex-row items-center justify-center gap-2 p-2 overflow-scroll w-full h-fit md:w-[80%] lg:w-[100%]">
       {category.map((cat, index) => (
-        <div key={index} className="flex flex-row items-center rounded-lg bg-white shadow-md p-1">
-          <p className="text-sm text-slate-800 font-normal">{cat}</p>
+        <div
+          key={index}
+          onClick={() => onCategoryClick(cat)}
+          className={`flex flex-row items-center rounded-2xl cursor-pointer duration-200 shadow-sm shadow-gray-400 bg-white lg:hover:bg-blue-100 ${activeCategory === cat ? 'bg-blue-400' : ''}`}
+        >
+          <p className="text-[12px] text-slate-700 p-1 font-medium md:text-base lg:text-xl">{cat}</p>
         </div>
       ))}
     </div>
