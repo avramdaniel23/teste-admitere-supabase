@@ -38,7 +38,7 @@ export default function Leaderboard() {
 
         },
         {
-          name: "John",
+          name: "Lorem-ipsumstein",
           score: 9996,
           photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
 

@@ -40,7 +40,7 @@ export default function LeaderboardNavigation() {
                 {/*</div>*/}
             </div>
             {data[selected].value &&
-                <div className={"flex w-full justify-around overflow-x-auto no-scrollbar text-nowrap"}>
+                <div className={"flex w-full justify-around overflow-x-auto no-scrollbar text-nowrap mt-2"}>
                     <div
                         className="bg-gradient-to-l from-[rgba(255,255,255,0)] to-[rgba(255,255,255,0.25)] dark:from-[rgba(0,0,0,0)] dark:to-[rgba(255,255,255,0.25)] absolute top-0 bottom-0 left-0 w-16 md:hidden"></div>
                     <TabGroup className={"relative top-0"} onChange={(index) => (
