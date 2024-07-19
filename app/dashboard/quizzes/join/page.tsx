@@ -11,11 +11,11 @@ interface QuizType {
   difficulty: number;
   privacy: boolean;
   points: number;
-  questions: [];
+  questions: any[];
 }
 
 export default function QuizzesJoin() {
-  const [quizzesData, setQuizzes] = useState<QuizType[]>([]);
+  const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
@@ -84,7 +84,7 @@ export default function QuizzesJoin() {
 
   if (quizzesData.length > 0 && quizzesData[0].questions) {
     filteredQuestions = questionsData.filter((question: any) =>
-      quizzesData[0].questions.some((q: any) => q._id === question._id)
+      quizzesData[0].questions.filter((q: any) => q._id === question._id)
     );
   }
 
@@ -92,7 +92,7 @@ export default function QuizzesJoin() {
     <div>
       {quizzesData &&
         quizzesData.length > 0 &&
-        quizzesData.map((quiz, index) => (
+        quizzesData.map((quiz: any, index: any) => (
           <div key={index}>
             <div>{quiz.name}</div>
             <div>{quiz.subject}</div>
