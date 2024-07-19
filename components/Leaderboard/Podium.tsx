@@ -8,6 +8,7 @@ type PodiumProps = {
 
 export default function Podium({ data }: PodiumProps) {
   return (
+    
     <div className="flex items-center justify-center px-2 py-2 bg-stone-300 dark:bg-zinc-900">
       <div className="podium flex items-end md:space-x-4 lg:space-x-8">
         {/* Podiums */}

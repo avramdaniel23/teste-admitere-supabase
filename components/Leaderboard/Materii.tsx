@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 type MateriiProps = {
   materii: {
     categorie: string;
@@ -6,37 +8,36 @@ type MateriiProps = {
 };
 
 export default function Materii({ materii }: MateriiProps) {
+  const [active, setIsActive] = useState<string | null>(null);
   return (
     <div>
-      <div className="flex items-center justify-center text-purple-500 font-bold pb-3">
+      <div className="flex justify-center items-center text-purple-500 font-bold text-xl pb-5 dark:text-white">
         LeaderBoard
       </div>
-      <nav className="flex gap-5 items-center justify-center cursor-pointer font-semibold px-3 py-4">
-        {materii.map((materie) => {
-          return (
-            <div key={materie.categorie}>
-              {materie.categorie}
-              <button className="flex p-1.5 rounded-lg bg-gray-100 hover:bg-purple-100 dark:bg-purple-600">
-                {" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                  />
-                </svg>
+
+      <div className="overflow-x-auto bg-violet-200 dark:bg-stone-400 rounded">
+        <nav className="flex  md:justify-center gap-2 lg:gap-5 p-2 font-semibold px-3 py-4">
+          {materii.map((materie) => {
+            return (
+              <button
+                key={materie.categorie}
+                onClick={() => setIsActive(materie.categorie)}
+                className={`${
+                  active === materie.categorie
+                    ? "bg-purple-500 text-white"
+                    : "hover:bg-purple-400 bg-blue-300 dark:bg-blue-400  dark:hover:bg-purple-500"
+                } flex cursor-pointer flex-shrink-0 gap-2  rounded px-2 py-2 `}
+              >
+                {materie.categorie}
               </button>
-            </div>
-          );
-        })}
-      </nav>
+            );
+          })}
+        </nav>
+      </div>
+
+      <span className="flex justify-center h-10 text-xl py-2 font-semibold">
+        {active}
+      </span>
     </div>
   );
 }

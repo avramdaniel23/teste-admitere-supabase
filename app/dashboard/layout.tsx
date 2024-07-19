@@ -55,7 +55,7 @@ export default async function DashboardLayout({ children }: any) {
 
       <main className="flex bg-[#fafafa] dark:bg-zinc-800">
         <Sidebar user={user} sunset={sunset} sunrise={sunrise} />
-        <div className="h-full flex-1 p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-zinc-800">
+        <div className="h-full w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-zinc-800">
           {children}
         </div>
       </main>

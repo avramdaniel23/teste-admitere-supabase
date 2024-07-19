@@ -79,42 +79,77 @@ export default function ProfileSettings() {
   return (
     <div>
       <h1>Profile Settings</h1>
+      <section className=" flex items-center justify-center p-3 bg-blue-400 rounded">
+        <div className="relative cursors-pointer">
+          <img
+            className="w-20 h-20 border-4 border-green-600 rounded-full object-scale-down  "
+            src="https://i.pinimg.com/564x/c1/6f/c6/c16fc648ed45ed1e6617e0669316111b.jpg"
+          ></img>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6 absolute bottom-0 right-0"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+            />
+          </svg>
+        </div>
+      </section>
+
       <form onSubmit={handleUpdateProfile}>
-        <div>
-          <label htmlFor="email">Email:</label>
+        <div className="mt-4">
+          <label htmlFor="email" className="font-semibold text-black">
+            Email:
+          </label>
           <input
             type="email"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className=" block w-full rounded-lg border-black border-2 bg-white/5 py-1.5 px-2 text-sm/6 text-black outline-none focus:border-blue-400 "
             required
           />
         </div>
-        <div>
-          <label htmlFor="firstName">First Name:</label>
+        <div className="py-2">
+          <label htmlFor="firstName" className="font-semibold text-black">
+            First Name:
+          </label>
           <input
             type="text"
             id="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            className=" block w-full rounded-lg border-black border-2 bg-white/5 py-1.5 px-2 text-sm/6 text-black outline-none focus:border-blue-400 "
           />
         </div>
         <div>
-          <label htmlFor="lastName">Last Name:</label>
+          <label htmlFor="lastName" className="font-semibold text-black">
+            Last Name:
+          </label>
           <input
             type="text"
             id="lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            className=" block w-full rounded-lg border-black border-2 bg-white/5 py-1.5 px-2 text-sm/6 text-black outline-none focus:border-blue-400 "
           />
         </div>
         <div>
-          <label htmlFor="phone">Phone:</label>
+          <label htmlFor="phone" className="font-semibold text-black">
+            Phone:
+          </label>
           <input
             type="tel"
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            className=" block w-full rounded-lg border-black border-2 bg-white/5 py-1.5 px-2 text-sm/6 text-black outline-none focus:border-blue-400 "
           />
         </div>
         <div>
