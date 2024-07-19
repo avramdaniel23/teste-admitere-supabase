@@ -1,6 +1,8 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import InputField from "@/components/Inputs/InputField";
+import DropdownField from "@/components/Inputs/DropdownField";
 
 const supabase = createClient();
 
@@ -76,86 +78,58 @@ export default function ProfileSettings() {
     return <div>Loading...</div>;
   }
 
+
+
+  const classOptions = ["A 9-a", "A 10-a", "A 11-a", "A 12-a"];
+  const facultyOptions = [
+    "Facultatea de Automatică și Calculatoare",
+    "Facultatea de Inginerie Electrică",
+    "Facultatea de Electronică, Telecomunicații și Tehnologia Informației",
+    "Facultatea de Energetică",
+    "Facultatea de Inginerie Mecanică și Mecatronică",
+    "Facultatea de Inginerie și Managementul Sistemelor Tehnologice",
+    "Facultatea de Inginerie Industrială și Robotică",
+    "Facultatea de Știința și Ingineria Materialelor",
+    "Facultatea de Inginerie a Sistemelor Biotehnice",
+    "Facultatea de Inginerie Chimică și Biotehnologii",
+    "Facultatea de Chimie Aplicată și Știința Materialelor",
+    "Facultatea de Inginerie în Limbi Străine",
+    "Facultatea de Inginerie Aerospațială",
+    "Facultatea de Inginerie a Transporturilor",
+    "Facultatea de Științe Aplicate",
+    "Facultatea de Antreprenoriat, Ingineria și Managementul Afacerilor"
+  ];
+
   return (
-    <div className="flex flex-col gap-4 p-2 bg-slate-100">
-      <div className="flex flex-row gap-1 items-center text-xl bg-white shadow-sm rounded-md p-1">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+    <div className="flex flex-col gap-4 py-2 px-6 bg-slate-100">
+      <div className="flex flex-row gap-1 items-center text-xl bg-white shadow-sm rounded-md p-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 lg:size-8">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Zm6-10.125a1.875 1.875 0 1 1-3.75 0 1.875 1.875 0 0 1 3.75 0Zm1.294 6.336a6.721 6.721 0 0 1-3.17.789 6.721 6.721 0 0 1-3.168-.789 3.376 3.376 0 0 1 6.338 0Z" />
         </svg>
-
-        <h1>Profile Settings</h1>
+        <h1 className="lg:text-3xl">Profile Settings</h1>
       </div>
       <div className="flex flex-col p-4 items-center rounded-md bg-white shadow-sm">
-        <div className="relative w-20 h-20 rounded-full bg-gray-400">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgb(240, 246, 255)" className="absolute bottom-0 right-0 bg-blue-400 p-0.5 rounded-lg size-6">
+        <div className="relative w-20 h-20 rounded-full bg-gray-400 lg:w-32 lg:h-32">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="rgb(240, 246, 255)" className="absolute bottom-0 right-0 bg-blue-400 p-0.5 rounded-lg size-6 lg:size-8">
             <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
           </svg>
 
         </div>
       </div>
-      <form className="flex flex-col gap-4" onSubmit={handleUpdateProfile}>
-        <div className="flex flex-col gap-1">
-          <label className="text-sm" htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="focus:outline-none bg-inherit"
-          />
-          <div className="duration-200 rounded-full w-[20%] w-[100%] h-0.5 bg-blue-400"></div>
-        </div>
 
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone:</label>
-          <input
-            type="tel"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="userClass">Class:</label>
-          <input
-            type="text"
-            id="userClass"
-            value={userClass}
-            onChange={(e) => setUserClass(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="faculty">Faculty of Interest:</label>
-          <input
-            type="text"
-            id="faculty"
-            value={faculty}
-            onChange={(e) => setFaculty(e.target.value)}
-          />
-        </div>
+      <form className="flex flex-col gap-10 bg-white rounded-md p-2 shadow-sm lg:p-8 lg:grid lg:grid-cols-2" onSubmit={handleUpdateProfile}>
+        <InputField label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <InputField label="First Name" type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        <InputField label="Last Name" type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <InputField label="Phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <DropdownField label="Class" value={userClass} onChange={(e) => setUserClass(e.target.value)} options={classOptions} />
+        <DropdownField label="Faculty of Interest" value={faculty} onChange={(e) => setFaculty(e.target.value)} options={facultyOptions} />
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit">Update Profile</button>
+        
+        <button type="submit" className="mx-auto w-fit bg-blue-300 px-2 rounded-md">Update Profile</button>
       </form>
+
       <p>Email: {user.email}</p>
       <p>First Name: {user.user_metadata?.firstName}</p>
       <p>Last Name: {user.user_metadata?.lastName}</p>
