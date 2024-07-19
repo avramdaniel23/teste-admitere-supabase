@@ -10,11 +10,19 @@ function capitalizeFirstLetter(string: string | undefined) {
 }
 
 export default function Sidebar({ user }: { user: User | null }) {
-  const { isMenuOpen: expanded, toggleMenu } = useMobileMenu()
+  const {
+    isMenuOpen: expanded,
+    toggleMenu,
+    buttonRef,
+    portalRef,
+  } = useSidebarMenu()
   const username = user?.email?.split('@')[0]
 
   return (
-    <aside className="sticky top-0 hidden h-screen flex-col gap-10 bg-white p-5 shadow-sm lg:flex">
+    <aside
+      className="sticky top-0 hidden h-screen flex-col gap-10 bg-white p-5 shadow-sm lg:flex"
+      ref={portalRef}
+    >
       <div
         className={`flex items-center ${
           expanded ? 'justify-between' : 'justify-center'
@@ -31,6 +39,7 @@ export default function Sidebar({ user }: { user: User | null }) {
         ></Image>
         <button
           onClick={() => toggleMenu()}
+          ref={buttonRef}
           className="rounded-lg p-1.5 hover:text-indigo-800"
         >
           {expanded ? (
@@ -258,10 +267,10 @@ export default function Sidebar({ user }: { user: User | null }) {
   )
 }
 
-function useMobileMenu() {
+function useSidebarMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const portalRef = useRef<HTMLUListElement | null>(null)
-  const buttonRef = useRef<HTMLSpanElement | null>(null)
+  const buttonRef = useRef<HTMLButtonElement | null>(null)
 
   const toggleMenu = () => {
     setIsMenuOpen(prev => !prev)
