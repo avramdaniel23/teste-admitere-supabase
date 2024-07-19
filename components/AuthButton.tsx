@@ -18,12 +18,7 @@ export default async function AuthButton() {
   };
 
   return user ? (
-<<<<<<< HEAD
-    <div className="flex items-center gap-4 lg:flex-col">
-      <div className="p-0 m-0 lg:hidden">Hey, {user.email}!</div>
-=======
     <div className="flex items-center gap-4">
->>>>>>> main
       <form action={signOut}>
         <div className="flex flex-row items-center w-full">
           <svg className="hidden size-6 lg:block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black">
