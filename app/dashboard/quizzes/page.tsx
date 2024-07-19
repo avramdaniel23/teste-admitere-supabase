@@ -24,7 +24,7 @@ export default function Quizzes() {
           </div>
         </div>
       </Link>
-      <Link href="" className="w-full mt-8  flex justify-center ">
+      <div className="w-full mt-8  flex justify-center ">
         <div className="w-[90%] lg:w-[66%] bg-gray-100  flex justify-center align-middle items-center  rounded-2xl ">
           <div className="block items-center py-4 px-2 lg:p-8 w-[96%] h-[89%] rounded-xl bg-gradient-to-r  from-[#0172f0] to-[#005587] ">
             <p className="text-center my-2 font-[900] text-[32px]  lg:text-[48px] leading-[1.2] text-white ">
@@ -71,7 +71,7 @@ export default function Quizzes() {
             </form>
           </div>
         </div>
-      </Link>
+      </div>
     </section>
   );
 }

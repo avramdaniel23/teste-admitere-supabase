@@ -5,7 +5,7 @@ import AuthButton from "@/components/AuthButton";
 import Logo from "@/components/Logo/Logo";
 import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNavigation";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
-import DesktopQuickNavigation from "@/components/Navigation/QuickNavigation/DesktopQuickNavigation";
+import Sidebar from "@/components/Navigation/Sidebar/Sidebar";
 
 async function getTimeData() {
   const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
@@ -42,10 +42,10 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden ">
+    <div className="w-full min-h-screen flex flex-col">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <div className="flex lg:hidden ">
+          <div className="flex lg:hidden">
             <Logo size={75} />
           </div>
           <AuthButton />
@@ -57,14 +57,12 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <div className="flex flex-1 w-full h-full ">
-        <aside>
-          <DesktopQuickNavigation sunrise={sunrise} sunset={sunset} />
-        </aside>
-        <main className="h-full  flex-1 w-full p-4 md:px-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-dark transition-all duration-200">
+      <main className="flex bg-[#fafafa] flex-grow">
+        <Sidebar user={user} />
+        <div className="p-4 bg-[#fafafa] md:p-10 h-full lg:max-w-7xl lg:mx-auto w-full">
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
 
       <footer className="w-full border-t border-t-foreground/10 block justify-center text-center text-xs lg:hidden">
         <QuickNavigation />
