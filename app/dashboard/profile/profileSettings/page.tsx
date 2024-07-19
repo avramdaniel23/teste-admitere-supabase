@@ -2,7 +2,23 @@
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
+import InputForm from "@/components/Forms/InputForm";
+
 const supabase = createClient();
+const classes = ["9th", "10th", "11th", "12th"];
+
+const faculties = [
+  "Choose a faculty",
+  "Automatica",
+  "ETTI",
+  "Energetica",
+  "Inginerie Mecanica si Mecatronica",
+  "Faima",
+  "Transporturi",
+  "Fils",
+  "Electrica",
+  "etc",
+];
 
 export default function ProfileSettings() {
   const [user, setUser] = useState<any>(null);
@@ -77,12 +93,12 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div className="w-full flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center ">
       <h1>Profile Settings</h1>
-      <section className="w-[90%] items-center justify-center flex bg-blue-200 p-4 rounded-md ">
+      <section className=" items-center justify-center flex p-4 rounded-md ">
         <div className={`rounded-full shadow-xl relative cursor-pointer `}>
           <img
-            className="w-20 h-20 lg:h-12 lg:w-12  object-scale-down p-1 rounded-full ring-2 ring-gray-400 dark:ring-gray-500"
+            className="w-28 h-28 lg:h-32 lg:w-32  object-scale-down p-1 rounded-full ring-2 ring-gray-400 dark:ring-gray-500"
             src="https://i.pinimg.com/564x/f4/76/2b/f4762b5fa708c903317cfd38647237f4.jpg"
             alt="Bordered avatar"
           />
@@ -91,8 +107,8 @@ export default function ProfileSettings() {
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 absolute bottom-0 right-0"
+            stroke="black"
+            className="size-6 absolute bottom-0 -right-2"
           >
             <path
               strokeLinecap="round"
@@ -103,60 +119,78 @@ export default function ProfileSettings() {
         </div>
       </section>
 
-      <form onSubmit={handleUpdateProfile}>
-        <div className="p-1">
-          <label htmlFor="email" className="text-sm/6 font-medium text-black">
-            Email:
-          </label>
-          <input
+      <form
+        onSubmit={handleUpdateProfile}
+        className="w-full items-center justify-center flex flex-col"
+      >
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5 mt-5">
+          <InputForm
             type="email"
             id="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="block w-full rounded-lg border bg-white/5 py-1.5 px-3 text-sm/6 text-black "
+            setValue={setEmail}
+            label="Email"
           />
-        </div>
-        <div className="p-1">
-          <label
-            htmlFor="firstName"
-            className="text-sm/6 font-medium text-black"
-          >
-            First Name
-          </label>
-          <input
+          <InputForm
             type="text"
             id="firstName"
             value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className=" block w-full rounded-lg border bg-white/5 py-1.5 px-3 text-sm/6 text-black"
+            setValue={setFirstName}
+            label="First Name"
           />
-        </div>
-        <div className="p-1">
-          <label
-            htmlFor="lastName"
-            className="text-sm/6 font-medium text-black"
-          >
-            Last Name:
-          </label>
-          <input
+          <InputForm
             type="text"
             id="lastName"
             value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className=" block w-full rounded-lg border bg-white/5 py-1.5 px-3 text-sm/6 text-black"
+            setValue={setLastName}
+            label="Last Name"
           />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone:</label>
-          <input
+          <InputForm
             type="tel"
             id="phone"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            setValue={setPhone}
+            label="Phone"
           />
+
+          <div className="p-1 ">
+            <label htmlFor="class" className="ml-2 font-medium ">
+              Class:
+            </label>
+            <select
+              value={userClass}
+              onChange={(e) => {
+                setUserClass(e.target.value);
+              }}
+              id="class"
+              className="block font-medium w-full rounded-lg shadow-md border-2 p-2 text-slate-500 focus:outline-none focus:border-blue-500 focus:text-black"
+            >
+              {classes.map((currClass) => (
+                <option value={currClass}>{currClass}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="p-1 ">
+            <label htmlFor="faculty" className="ml-2 font-medium ">
+              Faculty of interest:
+            </label>
+            <select
+              value={faculty}
+              onChange={(e) => {
+                setFaculty(e.target.value);
+              }}
+              id="faculty"
+              className=" block font-medium w-full rounded-lg shadow-md border-2 p-2 text-slate-500 focus:outline-none focus:border-blue-500 focus:text-black "
+            >
+              {faculties.map((facultate) => (
+                <option value={facultate}>{facultate}</option>
+              ))}
+            </select>
+          </div>
         </div>
-        <div>
+
+        {/* <div className="p-1 ml-2">
           <label htmlFor="userClass">Class:</label>
           <input
             type="text"
@@ -173,11 +207,17 @@ export default function ProfileSettings() {
             value={faculty}
             onChange={(e) => setFaculty(e.target.value)}
           />
-        </div>
+        </div> */}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit">Update Profile</button>
+        <button
+          type="submit"
+          className="bg-blue-500 p-2 text-white m-5 rounded-lg hover:bg-blue-600 shadow-md"
+        >
+          Update Profile
+        </button>
       </form>
+
       <p>Email: {user.email}</p>
       <p>First Name: {user.user_metadata?.firstName}</p>
       <p>Last Name: {user.user_metadata?.lastName}</p>

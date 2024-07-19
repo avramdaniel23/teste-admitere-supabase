@@ -18,7 +18,8 @@ export default function Sidebar({ user }: { user: User | null }) {
       <div
         className={`flex items-center ${
           expanded ? "justify-between" : "justify-center"
-        }`}>
+        }`}
+      >
         <Image
           src="/upb.png"
           alt="Logo Politehnica"
@@ -26,10 +27,12 @@ export default function Sidebar({ user }: { user: User | null }) {
           height={100}
           className={`overflow-hidden transition-all ${
             expanded ? "w-9" : "w-0"
-          }`}></Image>
+          }`}
+        ></Image>
         <button
           onClick={() => toggleMenu()}
-          className="p-1.5 rounded-lg hover:text-indigo-800">
+          className="p-1.5 rounded-lg hover:text-indigo-800"
+        >
           {expanded ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +40,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -51,7 +55,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -75,7 +80,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -95,7 +101,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -115,7 +122,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -135,7 +143,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -155,7 +164,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -177,7 +187,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -189,7 +200,7 @@ export default function Sidebar({ user }: { user: User | null }) {
             <SidebarItem
               text="Settings"
               isExpanded={expanded}
-              href="/dashboard/profile/settings"
+              href="/dashboard/profile/profileSettings"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +208,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -222,7 +234,8 @@ export default function Sidebar({ user }: { user: User | null }) {
             className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}>
+          `}
+          >
             <div className="leading-4">
               <h4 className="font-semibold">{username}</h4>
               <span className="text-xs text-gray-600">{user?.email}</span>
@@ -233,7 +246,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -304,12 +318,14 @@ export function SidebarItem({
               ? "bg-neon-blue/10"
               : "hover:bg-indigo-100 hover:text-indigo-800"
           }
-      `}>
+      `}
+      >
         {icon}
         <span
           className={`overflow-hidden transition-all ${
             isExpanded ? "w-52 ml-3" : "w-0"
-          }`}>
+          }`}
+        >
           {text}
         </span>
 
@@ -318,7 +334,8 @@ export function SidebarItem({
             className="absolute left-full rounded-md px-2 py-1 ml-6
             bg-indigo-100 text-indigo-800 text-sm
             invisible opacity-20 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0"
+          >
             {text}
           </div>
         )}
