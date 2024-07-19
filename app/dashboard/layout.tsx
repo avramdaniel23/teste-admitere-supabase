@@ -42,10 +42,10 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-    <div>
-      <nav className="w-full lg:hidden flex justify-center border-b border-b-foreground/10 h-[75px] ">
+    <div className="w-full min-h-screen flex flex-col">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <div className="flex lg:hidden ">
+          <div className="flex lg:hidden">
             <Logo size={75} />
           </div>
           <AuthButton />
@@ -53,9 +53,9 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="flex bg-[#fafafa] dark:bg-zinc-800">
-        <Sidebar user={user} sunset={sunset} sunrise={sunrise} />
-        <div className="h-full w-full p-4 md:p-10 lg:max-w-7xl lg:mx-auto bg-[#fafafa] dark:bg-zinc-800">
+      <main className="flex bg-[#fafafa] flex-grow">
+        <Sidebar user={user} />
+        <div className="p-4 bg-[#fafafa] md:p-10 h-full lg:max-w-7xl lg:mx-auto w-full">
           {children}
         </div>
       </main>

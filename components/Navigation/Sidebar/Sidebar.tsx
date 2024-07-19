@@ -1,35 +1,37 @@
 "use client";
-import Logo from "@/components/Logo/Logo";
-import NavLink from "../QuickNavigation/NavLink";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { User } from "@supabase/supabase-js";
-import { profile } from "console";
-import DarkModeBtn from "@/components/Buttons/DarkMode";
 
-export default function Sidebar({
-  user,
-  sunrise,
-  sunset,
-}: {
-  user: User | null;
-  sunrise: number;
-  sunset: number;
-}) {
-  const [expanded, setExpanded] = useState(true);
+function capitalizeFirstLetter(string: string | undefined) {
+  return string && string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export default function Sidebar({ user }: { user: User | null }) {
+  const { isMenuOpen: expanded, toggleMenu } = useMobileMenu();
   const username = user?.email?.split("@")[0];
+
   return (
-    <aside className="sticky hidden lg:block top-0 h-screen bg-white shadow-lg z-10 dark:bg-zinc-900">
+    <aside className="h-screen sticky top-0 hidden lg:flex flex-col bg-white shadow-sm p-5 gap-10">
       <div
-        className={`flex w-full pt-5 ${
-          expanded ? "justify-end pr-5" : "justify-center"
+        className={`flex items-center ${
+          expanded ? "justify-between" : "justify-center"
         }`}
       >
+        <Image
+          src="/upb.png"
+          alt="Logo Politehnica"
+          width={100}
+          height={100}
+          className={`overflow-hidden transition-all ${
+            expanded ? "w-9" : "w-0"
+          }`}
+        ></Image>
         <button
-          onClick={() => setExpanded((curr) => !curr)}
-          className="p-2  rounded-lg bg-gray-100 hover:bg-purple-100 dark:bg-zinc-700 dark:hover:bg-purple-600"
+          onClick={() => toggleMenu()}
+          className="p-1.5 rounded-lg hover:text-indigo-800"
         >
           {expanded ? (
             <svg
@@ -43,7 +45,7 @@ export default function Sidebar({
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                d="M6 18 18 6M6 6l12 12"
               />
             </svg>
           ) : (
@@ -53,65 +55,25 @@ export default function Sidebar({
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6 scale-x-[-1]"
+              className="size-6"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
               />
             </svg>
           )}
         </button>
       </div>
-      <div className="flex flex-col items-center p-5 pb-2 gap-5">
-        <div
-          className={`flex items-center ${
-            expanded ? "justify-between" : "justify-center"
-          }`}
-        >
-          <Image
-            src="/upb.png"
-            alt="Logo Politehnica"
-            width={100}
-            height={100}
-            className={`overflow-hidden transition-all ${
-              expanded ? "w-20" : "w-0"
-            }`}
-          />
-        </div>
-
-        <div className="border-t fixed bottom-0">
-          <div className="relative group flex p-3">
-            <Link
-              href="/dashboard/profile"
-              className="w-10 h-10 rounded-md  bg-purple-300 flex items-center justify-center"
-            >
-              {username?.[0]}
-            </Link>
-            {!expanded && (
-              <div
-                className={`
-            absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-purple-500  text-sm
-            invisible opacity-20 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0 font-semibold
-        `}
-              >
-                Profile
-              </div>
-            )}
-            <div
-              className={`
-              flex justify-between items-center 
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">{username}</h4>
-                <span className="text-xs text-gray-600">{user?.email}</span>
-              </div>
-              <button className="p-1.5 rounded-lg bg-gray-50 hover:bg-purple-100 dark:bg-purple-600">
+      <nav className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between h-full">
+          <ul>
+            <SidebarItem
+              text="Dashboard"
+              isExpanded={expanded}
+              href="/dashboard"
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -123,27 +85,23 @@ export default function Sidebar({
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+                    d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
                   />
                 </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <nav>
-          <ul className="flex flex-col gap-1">
+              }
+            />
             <SidebarItem
               text="Notificari"
+              isExpanded={expanded}
               href="/dashboard/notifications"
-              expanded={expanded}
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
+                  className="size-6"
                   stroke="currentColor"
-                  className="size-7 transition-colors"
                 >
                   <path
                     strokeLinecap="round"
@@ -155,16 +113,16 @@ export default function Sidebar({
             />
             <SidebarItem
               text="Leaderboard"
+              isExpanded={expanded}
               href="/dashboard/leaderboard"
-              expanded={expanded}
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
+                  className="size-6"
                   stroke="currentColor"
-                  className="size-7 transition-colors"
                 >
                   <path
                     strokeLinecap="round"
@@ -176,16 +134,16 @@ export default function Sidebar({
             />
             <SidebarItem
               text="Quizzes"
+              isExpanded={expanded}
               href="/dashboard/quizzes"
-              expanded={expanded}
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
+                  className="size-6"
                   stroke="currentColor"
-                  className="size-7 transition-colors"
                 >
                   <path
                     strokeLinecap="round"
@@ -195,19 +153,18 @@ export default function Sidebar({
                 </svg>
               }
             />
-
             <SidebarItem
-              text="Comunitate"
+              text="Community"
+              isExpanded={expanded}
               href="/dashboard/community"
-              expanded={expanded}
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
+                  className="size-6"
                   stroke="currentColor"
-                  className="size-7 transition-colors"
                 >
                   <path
                     strokeLinecap="round"
@@ -217,65 +174,167 @@ export default function Sidebar({
                 </svg>
               }
             />
+          </ul>
+          <ul>
             <SidebarItem
-              text="Theme"
-              href=""
-              expanded={expanded}
+              text="Profile"
+              isExpanded={expanded}
+              href="/dashboard/profile"
               icon={
-                <DarkModeBtn sunset={sunset} sunrise={sunrise}></DarkModeBtn>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                  />
+                </svg>
+              }
+            />
+            <SidebarItem
+              text="Settings"
+              isExpanded={expanded}
+              href="/dashboard/profile/settings"
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 0 1 1.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.559.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.894.149c-.424.07-.764.383-.929.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 0 1-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.398.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 0 1-.12-1.45l.527-.737c.25-.35.272-.806.108-1.204-.165-.397-.506-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.108-1.204l-.526-.738a1.125 1.125 0 0 1 .12-1.45l.773-.773a1.125 1.125 0 0 1 1.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894Z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                  />
+                </svg>
               }
             />
           </ul>
-        </nav>
-      </div>
+        </div>
+
+        <div className="mt-4 flex px-3 pt-5 font-semibold border-t-[1px]">
+          <div className="w-10 h-10 bg-blue-200 rounded-full grid place-items-center">
+            {capitalizeFirstLetter(username?.at(0))}
+          </div>
+          <div
+            className={`
+              flex justify-between items-center
+              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+          `}
+          >
+            <div className="leading-4">
+              <h4 className="font-semibold">{username}</h4>
+              <span className="text-xs text-gray-600">{user?.email}</span>
+            </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+              />
+            </svg>
+          </div>
+        </div>
+      </nav>
     </aside>
   );
 }
 
+function useMobileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const portalRef = useRef<HTMLUListElement | null>(null);
+  const buttonRef = useRef<HTMLSpanElement | null>(null);
+
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        isMenuOpen &&
+        !portalRef.current?.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  return { isMenuOpen, toggleMenu, portalRef, buttonRef };
+}
 export function SidebarItem({
   icon,
   href,
   text,
-  expanded,
+  isExpanded,
 }: {
   icon: React.ReactNode;
   href: string;
   text: string;
-  expanded: boolean;
+  isExpanded: boolean;
 }) {
   const pathname = usePathname();
   const isActive = pathname === href;
   return (
-    <li>
+    <li className="pt-2">
       <Link
         href={href}
         className={`
-          relative flex items-center py-2 px-3 my-1 
+          relative flex items-center py-2 px-3
           font-semibold rounded-md cursor-pointer
-          transition-colors group ${
+          transition-colors group justify-center
+          ${
             isActive
-              ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-purple-500"
-              : "hover:bg-indigo-50 text-black-500 hover:text-purple-500"
+              ? "bg-neon-blue/10"
+              : "hover:bg-indigo-100 hover:text-indigo-800"
           }
       `}
       >
         {icon}
         <span
           className={`overflow-hidden transition-all ${
-            expanded ? "w-52 ml-3" : "w-0"
+            isExpanded ? "w-52 ml-3" : "w-0"
           }`}
         >
           {text}
         </span>
 
-        {!expanded && (
+        {!isExpanded && (
           <div
-            className={`
-            absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-purple-500 text-sm
+            className="absolute left-full rounded-md px-2 py-1 ml-6
+            bg-indigo-100 text-indigo-800 text-sm
             invisible opacity-20 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
-        `}
+            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0"
           >
             {text}
           </div>
