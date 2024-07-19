@@ -8,17 +8,17 @@ import Table from '@/components/Leaderboard/Table'
 const users = [
   {
     id: 1,
-    name: 'Girbi',
+    name: 'Ana',
     score: 5000,
   },
   {
     id: 2,
-    name: 'Alex',
+    name: 'Girbi',
     score: 4000,
   },
   {
     id: 3,
-    name: 'Tibi',
+    name: 'Tyson',
     score: 3000,
   },
   {
