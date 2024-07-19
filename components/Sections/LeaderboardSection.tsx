@@ -9,11 +9,16 @@ export default function LeaderboardSection() {
     const toggleGeneral = () => {
       setSubject("General");
       setShowGeneral(true);
-  }
+    }
 
-    const toggleAlgebra = () => {
-        setSubject("Algebra si Analiza");
-        setShowGeneral(false);
+    const toggleChimie = () => {
+      setSubject("Chimie");
+      setShowGeneral(false);
+    }
+
+    const toggleMate = () => {
+      setSubject("Matematica");
+      setShowGeneral(false);
     }
 
     const toggleFizica = () => {
@@ -21,18 +26,8 @@ export default function LeaderboardSection() {
         setShowGeneral(false);
     }
 
-    const toggleTrigo = () => {
-        setSubject("Trigonometrie");
-        setShowGeneral(false);
-    }
-
     const toggleInfo = () => {
       setSubject("Informatica");
-      setShowGeneral(false);
-    }
-
-    const toggleChimie = () => {
-      setSubject("Chimie");
       setShowGeneral(false);
     }
 
@@ -43,18 +38,16 @@ export default function LeaderboardSection() {
   
   return( 
     <div className="lg:mx-auto">
-      <div className="l p-2 lg:p-4 overflow-x-auto lg:overflow-hidden">
+      <div className="p-2 lg:p-4 overflow-x-auto lg:overflow-hidden">
                 <div className="flex justify-start space-x-2 md:justify-center lg:justify-center">
-                    <button onClick={toggleGeneral} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">General</button>
-                    <button onClick={toggleAlgebra} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1 whitespace-nowrap">Algebra si analiza</button>
-                    <button onClick={toggleTrigo} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Trigonometrie</button>
-                    <button onClick={toggleFizica} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Fizica</button>
-                    <button onClick={toggleChimie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Chimie</button>
-                    <button onClick={toggleInfo} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Informatica</button>
-                    <button onClick={toggleEconomie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 my-1">Economie</button>
+                    <button onClick={toggleGeneral} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1">General</button>
+                    <button onClick={toggleMate} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1 whitespace-nowrap">Matematica</button>
+                    <button onClick={toggleFizica} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1">Fizica</button>
+                    <button onClick={toggleChimie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1">Chimie</button>
+                    <button onClick={toggleInfo} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1">Informatica</button>
+                    <button onClick={toggleEconomie} className="px-3 py-1 text-md text-white bg-black rounded-3xl mx-1">Economie</button>
                 </div>
-        </div>
-
+      </div>
         <div>
           {showGeneral && (
             <LeaderboardComponent subjectName="General"></LeaderboardComponent>

@@ -109,8 +109,10 @@ const LeaderboardComponent: FC<SubjectsProps> = ({subjectName}) => {
                     <div className="flex items-center">
                         <p className="text-xl mr-4">{student.place}</p>
                         <img className="h-[50px] w-[50px] rounded-lg mr-4 border-2 border-black" src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"></img>
+                        <div className="flex flex-col md:flex-row lg:flex-row">
                         <p className="text-xl ml-2">{student.nume}</p>
-                        <p className="text-xl ml-2 hidden md:block lg:block">{student.prenume}</p>
+                        <p className="text-xl ml-2">{student.prenume}</p>
+                        </div>
                     </div>
                     <p className="text-xl p-2 hidden md:block lg:block">{student.grade}/10</p>
                     <p className="text-xl px-3 py-1 text-white bg-black rounded-3xl whitespace-nowrap">{student.score} puncte</p>

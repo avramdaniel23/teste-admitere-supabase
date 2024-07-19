@@ -77,74 +77,94 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div>
-      <h1>Profile Settings</h1>
+    <div className="p-6 bg-white rounded-2xl my-8 mx-4 shadow-xl flex-col items-center justify-center md:p-8 lg:p-8 lg:mx-auto lg:w-[50%] lg:h-[50%]">
+      <h1 className="text-4xl font-bold justify-center">Profile Settings</h1>
       <form onSubmit={handleUpdateProfile}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <div className="flex flex-col mt-2">
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2" htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              className="flex-1 outline-none w-[200px] bg-stone-100 rounded-lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2" htmlFor="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstName"
+              className="flex-1 outline-none w-[150px] bg-stone-100 rounded-lg"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2" htmlFor="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              className="flex-1 outline-none w-[150px] bg-stone-100 rounded-lg"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2" htmlFor="phone">Phone:</label>
+            <input
+              type="tel"
+              id="phone"
+              className="flex-1 outline-none w-[200px] bg-stone-100 rounded-lg"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2" htmlFor="userClass">Class:</label>
+            <select className="flex bg-stone-100 rounded-lg outline-none w-[40px]" id="userClass" value={userClass} onChange={(e) => setUserClass(e.target.value)}>
+                <option>9</option>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+            </select>
+          </div>
+          <div className="flex flex-row items-center mb-2">
+            <label className="font-bold md:mr-2 lg:mr-2" htmlFor="faculty">Faculty of Interest:</label>
+            <select className="flex-1 bg-stone-100 rounded-lg outline-none w-[125px] lg:w-[150px]" id="faculty" value={faculty} onChange={(e) => setFaculty(e.target.value)}>
+                <option>Inginerie Electrică</option>
+                <option>Energetică</option>
+                <option>Automatică şi Calculatoare</option>
+                <option>Electronică, Telecomunicaţii şi Tehnologia Informaţiei</option>
+                <option>Inginerie Mecanică şi Mecatronică</option>
+                <option>Inginerie Industrială și Robotică</option>
+                <option>Ingineria Sistemelor Biotehnice</option>
+                <option>Transporturi</option>
+                <option>Inginerie Aerospaţială</option>
+                <option>Ştiinţa şi Ingineria Materialelor</option>
+                <option>Inginerie Chimică și Biotehnologii</option>
+                <option>Inginerie în Limbi Străine</option>
+                <option>Ştiinţe Aplicate</option>
+                <option>Inginerie Medicală</option>
+                <option>Antreprenoriat, Ingineria şi Managementul Afacerilor</option>
+            </select>
+          </div>
         </div>
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
-            type="text"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
-            type="text"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone:</label>
-          <input
-            type="tel"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="userClass">Class:</label>
-          <input
-            type="text"
-            id="userClass"
-            value={userClass}
-            onChange={(e) => setUserClass(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="faculty">Faculty of Interest:</label>
-          <input
-            type="text"
-            id="faculty"
-            value={faculty}
-            onChange={(e) => setFaculty(e.target.value)}
-          />
-        </div>
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit">Update Profile</button>
+        {errorMessage && <p className="p-3 bg-red-300 rounded-lg flex" style={{ color: "red" }}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+          </svg>
+          {errorMessage}</p>}
+        {successMessage && <p className="p-3 bg-lime-300 rounded-lg flex" style={{ color: "green" }}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mr-2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          {successMessage}</p>}
+        <button type="submit" className="mt-4 p-2 bg-blue-500 text-white rounded-lg">Update Profile</button>
       </form>
-      <p>Email: {user.email}</p>
-      <p>First Name: {user.user_metadata?.firstName}</p>
-      <p>Last Name: {user.user_metadata?.lastName}</p>
-      <p>Phone: {user.user_metadata?.phone}</p>
-      <p>Class: {user.user_metadata?.userClass}</p>
-      <p>Faculty of Interest: {user.user_metadata?.faculty}</p>
     </div>
+
   );
 }
