@@ -1,6 +1,7 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import {Field, Fieldset, Input, Label, Legend, Select} from "@headlessui/react";
 
 const supabase = createClient();
 
@@ -77,74 +78,77 @@ export default function ProfileSettings() {
   }
 
   return (
-    <div>
-      <h1>Profile Settings</h1>
-      <form onSubmit={handleUpdateProfile}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
+    <div className={"w-full"}>
+
+      <Fieldset className="space-y-6 flex flex-col content-center items-center   rounded-xl bg-white/5 fieldset-no-width" onSubmit={handleUpdateProfile}>
+        <Legend className={"w-3/4"}>Profile Settings</Legend>
+        <Field className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label className={"w-full md:w-fit"} htmlFor="email">Email:</Label>
+          <Input
+              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
             type="email"
             id="email"
-            value={email}
+            placeholder={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-        </div>
-        <div>
-          <label htmlFor="firstName">First Name:</label>
-          <input
+        </Field>
+        <Field className={"flex items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label htmlFor="firstName">First Name:</Label>
+          <Input
+              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
             type="text"
             id="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="lastName">Last Name:</label>
-          <input
+        </Field>
+        <Field className={"flex items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label htmlFor="lastName">Last Name:</Label>
+          <Input
+              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
             type="text"
             id="lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="phone">Phone:</label>
-          <input
+        </Field>
+        <Field className={"flex items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label htmlFor="phone">Phone:</Label>
+          <Input
+              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
             type="tel"
             id="phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor="userClass">Class:</label>
-          <input
-            type="text"
+        </Field>
+        <Field className={"flex items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label htmlFor="userClass">Class: {userClass}</Label>
+          <Input  className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
+            type="range"
+            min="9"
+            max="12"
             id="userClass"
-            value={userClass}
+            placeholder={userClass}
             onChange={(e) => setUserClass(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="faculty">Faculty of Interest:</label>
-          <input
+            />
+        </Field>
+        <Field className={"flex items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <Label htmlFor="faculty">Faculty of Interest:</Label>
+          <Input
             type="text"
             id="faculty"
             value={faculty}
             onChange={(e) => setFaculty(e.target.value)}
           />
-        </div>
+        </Field>
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit">Update Profile</button>
-      </form>
-      <p>Email: {user.email}</p>
-      <p>First Name: {user.user_metadata?.firstName}</p>
-      <p>Last Name: {user.user_metadata?.lastName}</p>
-      <p>Phone: {user.user_metadata?.phone}</p>
-      <p>Class: {user.user_metadata?.userClass}</p>
-      <p>Faculty of Interest: {user.user_metadata?.faculty}</p>
+          <button className={"bg-green-500 w-full text-white p-4 rounded-full shadow-lg dark:bg-green-600 disabled:bg-green-300 disabled:dark:bg-green-950 disabled:dark:text-gray-500"}
+                  type="submit">Update Profile
+          </button>
+      </Fieldset>
     </div>
   );
 }
