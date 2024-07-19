@@ -52,7 +52,9 @@ export default function Leaderboard() {
         </svg>
 
         <h1 className="text-xl capitalize ml-2 font-bold text-black">
-          {activeSubject} / {activeCategory}
+          {activeSubject}
+          {activeSubject != "general" && activeCategory != "general" && " / "}
+          {activeCategory != "general" && activeCategory}
         </h1>
       </div>
       <section className="flex flex-col gap-2  items-center justify-center w-full mt-2 relative ">
@@ -68,7 +70,7 @@ export default function Leaderboard() {
           ))}
         </div>
         <div
-          className={`absolute top-10 flex  overflow-x-auto w-full lg:w-fit  md:overflow-x-hidden  text-black  rounded-full gap-2   transition-all duration-700 ease-in-out ${
+          className={`absolute top-10 flex  overflow-x-auto max-w-full lg:w-fit  md:overflow-x-hidden  text-black  rounded-full gap-2   transition-all duration-700 ease-in-out ${
             activeSubject == "general" ? "scale-0" : "scale-100"
           } `}
         >
@@ -80,6 +82,7 @@ export default function Leaderboard() {
                 category={subCategory}
                 activeCategory={activeCategory}
                 setActiveCategory={setActiveCategory}
+                key={subCategory}
               />
             )
           )}
@@ -294,7 +297,7 @@ const SubjectChips = ({
   return (
     <div
       className={`flex items-center justify-center   cursor-pointer border-2   rounded-full p-1 px-2  transition-all duration-300 ease-linear  ${
-        activeSubject == subject && "bg-orange-300 border-black "
+        activeSubject == subject && "bg-orange-300 border-orange-400  "
       }  `}
       onClick={() => {
         if (activeSubject == subject) {
@@ -329,16 +332,31 @@ const SubCategoryChip = ({
       className={`flex items-center justify-center   cursor-pointer border-2   rounded-full p-1 px-2    ${
         activeCategory == category &&
         activeSubject != "general" &&
-        "bg-orange-300 border-black"
+        "bg-orange-300 border-orange-400"
       }   `}
       onClick={() => {
         if (activeCategory == category) {
           setActiveCategory("general");
-          setActiveCategory("");
         } else setActiveCategory(category);
       }}
     >
       <p className="font-bold">{category}</p>
+      {activeCategory == category && (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="size-4 ml-1"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+      )}
     </div>
   );
 };
