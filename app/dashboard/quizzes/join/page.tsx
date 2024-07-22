@@ -1,8 +1,7 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
-
 
 interface QuizType {
   _id: any;
@@ -44,6 +43,7 @@ export default function QuizzesJoin() {
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
+  const router = useRouter();
 
   let user = getUser();
 
@@ -131,14 +131,14 @@ export default function QuizzesJoin() {
         selected_answer_id: value,
         is_correct,
       };
-  
+
       const updatedSubmissionAnswers = [
         ...prevConfig.submission_answers.filter(
           (answer) => answer.question_id !== name
         ),
         newSubmissionAnswer,
       ];
-  
+
       return {
         ...prevConfig,
         quiz_id: quizID,
@@ -159,26 +159,42 @@ export default function QuizzesJoin() {
       },
       body: JSON.stringify(configuration),
     });
+
+    if (response.ok) {
+      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
+    } else {
+      console.error('Failed to submit answers')
+    }
   };
 
+  console.log(quizzesData)
   return (
     <div>
-      {quizzesData &&
+      <div className="mb-5 font-medium">{quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
           <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+            <div className="text-center text-[28px]">{quiz.name}</div>
+            <div className="flex flex-col lg:flex-row">
+              <div className="lg:mr-5 text-[18px] text-gray-700">Materie: {quiz.subject}</div>
+              <div className="text-[18px] text-gray-700">Capitol: {quiz.chapter}</div>
+            </div>
+
           </div>
         ))}
+      </div>
+
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
-            <p>{question.question}</p>
-            <fieldset>
+          <div key={index} className="mb-5 shadow-md rounded-lg">
+            <div className="py-2 bg-blue-600 rounded-t-lg"><p className="px-2 text-justify text-[18px] text-white ">{question.question}</p>
+              {!question.image ?
+                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
+                </div> : <div className="hidden"></div>}</div>
+            <fieldset className={`p-2 ${question.answer_type
+              == "string" ? "grid grid-cols-2 md:grid-cols-3" : "block"} `}>
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i}>
+                <div key={i} className="flex py-[2px] text-[16px] items-center">
                   <input
                     required
                     type="radio"
@@ -187,13 +203,13 @@ export default function QuizzesJoin() {
                     name={question._id}
                     onChange={handleChange}
                   />
-                  <label htmlFor={answer}>{answer}</label>
+                  <label htmlFor={answer} className="ml-2">{answer}</label>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
-      <button type="submit" onClick={submitAnswer}>Trimite răspunsul</button>
+      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
     </div>
   );
 }
