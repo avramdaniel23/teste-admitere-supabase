@@ -45,7 +45,7 @@ const SubjectCard = ({ title, icon, chapters, subjectID, totalQuizzes, totalSolv
   let progress = Math.floor((100*totalSolved)/totalQuizzes);
 
   return (
-  <div className="relative flex flex-col gap-2 w-full h-fit bg-zinc-200 rounded-md max-w-[20rem] md:max-w-[24rem] lg:duration-200 lg:cursor-pointer lg:hover:scale-110 lg:max-w-full lg:w-[480px] lg:h-fit lg:rounded-2xl">
+  <div className="relative flex flex-col gap-2 w-full h-fit bg-zinc-200 rounded-md max-w-[20rem] md:max-w-[24rem] lg:duration-200 lg:cursor-pointer lg:hover:scale-110 lg:max-w-full lg:min-w-[480px] lg:h-fit lg:rounded-2xl">
 
     <div className="absolute right-6 -top-4 flex flex-row items-center w-fit p-2 bg-zinc-300 border-4 border-white rounded-xl lg:right-0 lg:left-0 lg:my-0 lg:mx-auto lg:rounded-2xl lg:border-8"> 
       <Image src={icon} alt={`${title} Icon`} className="w-8 h-8 lg:w-16 lg:h-16" />

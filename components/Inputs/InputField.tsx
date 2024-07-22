@@ -17,10 +17,10 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, r
             placeholder = 'email@gmail.com';
             break;
         case "First Name":
-            placeholder = 'Nicu';
+            placeholder = 'Ion';
             break;
         case "Last Name":
-            placeholder = 'Guta';
+            placeholder = 'Popescu';
             break;
         case "Phone":
             placeholder = '0723456789';
@@ -30,8 +30,8 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, r
     }
 
     return (
-        <div className={`flex flex-col gap-[2px]`}>
-            <label className="text-slate-800 text-sm font-medium lg:text-base">{label}:</label>
+        <div className={`flex flex-col gap-2`}>
+            <label className="text-slate-900 text-xs font-medium lg:text-sm">{label}:</label>
             <input
             placeholder={placeholder}
             type={type}
@@ -42,8 +42,8 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, r
             className="focus:outline-none px-2 bg-inherit"
             required={required}
             />
-            <div className={`flex flex-row rounded-full w-[100%] h-0.5 bg-slate-300 lg:h-1`}>
-            <div className={`${isFocused ? "w-[100%]" : "w-[0%]"} m-auto duration-300 rounded-full h-0.5 bg-blue-400 lg:h-1`}></div>
+            <div className={`flex flex-row rounded-full w-[100%] h-1 bg-slate-200 lg:h-1`}>
+            <div className={`${isFocused ? "w-[100%]" : "w-[0%]"} m-auto duration-300 rounded-full h-1 bg-blue-400`}></div>
             </div>
         </div>
     );
