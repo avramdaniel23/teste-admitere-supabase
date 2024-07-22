@@ -1,6 +1,7 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
+import {set} from "yaml/dist/schema/yaml-1.1/set";
 
 const supabase = createClient();
 
@@ -41,13 +42,15 @@ export default function ProfileSettings() {
   };
 
 
-  const checkEmail = (html: HTMLInputElement, value: string): void => {
+  const checkEmail = (html: HTMLInputElement, value: string): boolean => {
     setEmail(value);
     if (html.checkValidity() && user?.email !== value) {
       setIsDisabled(false);
+      return true
     }
     else {
         setIsDisabled(true);
+        return false
     }
 
   }
@@ -75,13 +78,16 @@ export default function ProfileSettings() {
     const checkPhone = (html: HTMLInputElement, value: string) => {
         setPhone(value);
         if (html.checkValidity() && user?.user_metadata?.phone !== value) {
-
+          setIsDisabled(false);
+        }
+        else {
+          setIsDisabled(true);
         }
     }
 
-    const checkUserClass = (html: HTMLInputElement, value: string) => {
+    const checkUserClass = (value: number) => {
         setUserClass(value);
-        if (html.checkValidity() && user?.user_metadata?.userClass !== value) {
+        if (user?.user_metadata?.userClass !== value) {
             setIsDisabled(false);
         }
         else {
@@ -131,7 +137,7 @@ export default function ProfileSettings() {
     console.log("Updating user with data:", updates);
 
     const { data, error } = await supabase.auth.updateUser({
-      email: updates.email,
+     // email: updates.email,
       data: updates.data,
     });
 
@@ -169,79 +175,102 @@ export default function ProfileSettings() {
 
 
   return (
-    <div className={"w-full"}>
 
-      <form className="space-y-6 flex flex-col content-center items-center   rounded-xl bg-white/5 divset-no-width" onSubmit={handleUpdateProfile}>
-        <h1 className={"w-3/4"}>Profile Settings</h1>
-        <div className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+      <>
+        <h1 className={"w-full text-center rounded-lg bg-neon-blue/10 h-10 text-xl items-center flex justify-center my-6 font-bold"}>Profile Settings</h1>
+  <form className="flex flex-col rounded-xl bg-white/5 divset-no-width"
+            onSubmit={handleUpdateProfile}>
+    <div className={"flex flex-col lg:flex-row w-full"}>
+      <div className={"w-full lg:w-[49%] space-y-6 my-6 items-center content-center flex flex-col"}>
+
+        <div
+            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="email">Email</label>
           <input
-              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
-            type="email"
-            id="email"
-            placeholder={user?.user_metadata?.email || ""}
-            onChange={(e) => (checkEmail(e.target,  e.target.value))}
+              className={"border-2 rounded-full m-2 p-4 w-[99%]"}
+              type="email"
+              id="email"
+              placeholder={user?.user_metadata?.email || ""}
+              onChange={(e) => (checkEmail(e.target, e.target.value))}
           />
         </div>
-        <div className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+        <div
+            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="firstName">First Name</label>
           <input
-              className={"border-2 rounded-full mx-2 px-2 empty:border-gray-600 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
-            type="text"
-            id="firstName"
-            minLength={2}
-            placeholder={user?.user_metadata?.firstName || ""}
-            onChange={(e) => checkFirstName(e.target, e.target.value)}
-          />
-        </div>
-        <div className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
-          <label className={"w-full text-center"} htmlFor="lastName">Last Name:</label>
-          <input
-              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
-            type="text"
-            id="lastName"
+              className={"border-2 rounded-full m-2 p-4 w-[99%]"}
+              type="text"
+              id="firstName"
               minLength={2}
-            placeholder={user?.user_metadata?.lastName || ""}
-            onChange={(e) => checkLastName(e.target, e.target.value)}
+              placeholder={user?.user_metadata?.firstName || ""}
+              onChange={(e) => checkFirstName(e.target, e.target.value)}
           />
         </div>
-        <div className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+        <div
+            className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <label className={"w-full text-center"} htmlFor="userClass">Class: </label>
+          <div className={"w-full flex justify-evenly my-4"}>
+            <div className={`flex size-16 rounded-full mx-2 justify-center items-center ${userClass==9 ? 'bg-neon-blue/50':'bg-neon-blue/10' }`} onClick={() => checkUserClass(9)}>9</div>
+            <div className={`flex size-16 rounded-full mx-2 justify-center items-center ${userClass==10 ? 'bg-neon-blue/50':'bg-neon-blue/10'} `} onClick={() => checkUserClass(10)}>10</div>
+            <div className={`flex size-16 rounded-full mx-2 justify-center items-center ${userClass==11 ? 'bg-neon-blue/50':'bg-neon-blue/10'}`} onClick={() => checkUserClass(11)}>11</div>
+            <div className={`flex size-16 rounded-full mx-2 justify-center items-center ${userClass==12 ? 'bg-neon-blue/50':'bg-neon-blue/10'}`} onClick={() => checkUserClass(12)}>12</div>
+          </div>
+
+        </div>
+
+
+      </div>
+      <div className={"w-full lg:w-[49%] space-y-6 my-6 items-center content-center flex flex-col"}>
+        <div
+            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="phone">Phone:</label>
           <input
-              className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
-            type="tel"
-            id="phone"
-            placeholder={user?.user_metadata?.phone || ""}
-            onChange={(e) => checkPhone(e.target, e.target.value)}
+              className={"border-2 rounded-full m-2 p-4"}
+              type="tel"
+              id="phone"
+              placeholder={user?.user_metadata?.phone || ""}
+              onChange={(e) => checkPhone(e.target, e.target.value)}
           />
         </div>
-        <div className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
-          <label className={"w-full text-center"} htmlFor="userClass">Class: {userClass}th</label>
-          <input  className={"border-2 rounded-full mx-2 px-2 border-red-300 valid:border-green-300 dark:valid:border-green-600"}
-            type="range"
-            min="9"
-            max="12"
-            id="userClass"
-            value={userClass}
-            onChange={(e) => checkUserClass(e.target, e.target.value)}
-            />
+        <div
+            className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+          <label className={"w-full text-center"} htmlFor="lastName">Last Name:</label>
+          <input
+              className={"border-2 rounded-full m-2 p-4 w-[99%]"}
+              type="text"
+              id="lastName"
+              minLength={2}
+              placeholder={user?.user_metadata?.lastName || ""}
+              onChange={(e) => checkLastName(e.target, e.target.value)}
+          />
         </div>
-        <div className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
-          <label htmlFor="faculty">Faculty of Interest:</label>
-        <select  id="faculty"
-                 value={faculty} className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl"}  onChange={(e) => checkFaculty(e.target.value)}>
-            <option selected={!faculty}>--- Choose a faculty --- </option>
-          {faculties.map(value => (
-                <option selected={faculty==value} value={value}>{value}</option>
-            ))}
-        </select>
-        </div>
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-          <button className={"bg-green-500 w-full text-white p-4 rounded-full shadow-lg dark:bg-green-600 disabled:bg-green-300 disabled:dark:bg-green-950 disabled:dark:text-gray-500"}
-                  disabled = {isDisabled} type="submit">Update Profile
-          </button>
-      </form>
+      </div>
+
     </div>
-  );
+    <div className={"w-full my-6 space-y-6 items-center content-center flex flex-col"}>
+      <div
+          className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] lg:w-full px-8 py-4 shadow-xl hover:scale-110"}>
+        <label htmlFor="faculty">Faculty of Interest:</label>
+        <select id="faculty"
+                value={faculty}
+                className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-full px-8 py-4 shadow-xl"}
+                onChange={(e) => checkFaculty(e.target.value)}>
+          <option selected={!faculty}>--- Choose a faculty ---</option>
+          {faculties.map(value => (
+              <option selected={faculty == value} value={value}>{value}</option>
+          ))}
+        </select>
+      </div>
+      {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
+      {successMessage && <p style={{color: "green"}}>{successMessage}</p>}
+      <button
+          className={"bg-green-500 w-full text-white p-4 rounded-full shadow-lg dark:bg-green-600 disabled:bg-green-300 disabled:dark:bg-green-950 disabled:dark:text-gray-500"}
+          disabled={isDisabled} type="submit">Update Profile
+      </button>
+    </div>
+
+  </form>
+      </>
+  )
+      ;
 }

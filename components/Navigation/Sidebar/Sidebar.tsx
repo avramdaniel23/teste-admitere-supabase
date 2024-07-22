@@ -11,7 +11,7 @@ function capitalizeFirstLetter(string: string | undefined) {
 
 export default function Sidebar({ user }: { user: User | null }) {
   const { isMenuOpen: expanded, toggleMenu } = useMobileMenu();
-  const username = user?.email?.split("@")[0];
+  const username = user?.user_metadata?.firstName || "User";
 
   return (
     <aside className="h-screen sticky top-0 hidden lg:flex flex-col bg-white shadow-sm p-5 gap-10">
