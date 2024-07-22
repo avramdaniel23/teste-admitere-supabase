@@ -64,7 +64,7 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </main>
 
-      <footer className="w-full border-t border-t-foreground/10 block justify-center text-center text-xs lg:hidden">
+      <footer className="w-full border-t border-t-foreground/10 block justify-center text-center text-xs sticky bottom-0 lg:hidden ">
         <QuickNavigation />
       </footer>
     </div>

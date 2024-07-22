@@ -1,4 +1,5 @@
 "use client";
+import AnswersSection from "@/components/Quizz/AnswersSection";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -72,6 +73,7 @@ export default function QuizzesJoin() {
       try {
         const questionsData = await fetchQuestionsData();
         setQuestions(questionsData);
+        console.log(questionsData);
       } catch (error) {
         console.error("Error fetching questions data:", error);
       }
@@ -103,7 +105,8 @@ export default function QuizzesJoin() {
         filteredQuestions.map((question, index) => (
           <div key={index}>
             <p>{question.question}</p>
-            <fieldset>
+            <AnswersSection questionAnswers={question.question_answers} />
+            {/* <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
                 <div key={i}>
                   <input
@@ -115,7 +118,7 @@ export default function QuizzesJoin() {
                   <label htmlFor={answer}>{answer}</label>
                 </div>
               ))}
-            </fieldset>
+            </fieldset> */}
           </div>
         ))}
     </div>

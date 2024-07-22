@@ -3,22 +3,10 @@ import { createClient } from "@/utils/supabase/client";
 import { useEffect, useState } from "react";
 
 import InputForm from "@/components/Forms/InputForm";
+import { SelectForm } from "@/components/Forms/SelectForm";
 
 const supabase = createClient();
 const classes = ["9th", "10th", "11th", "12th"];
-
-const faculties = [
-  "Choose a faculty",
-  "Automatica",
-  "ETTI",
-  "Energetica",
-  "Inginerie Mecanica si Mecatronica",
-  "Faima",
-  "Transporturi",
-  "Fils",
-  "Electrica",
-  "etc",
-];
 
 export default function ProfileSettings() {
   const [user, setUser] = useState<any>(null);
@@ -28,6 +16,8 @@ export default function ProfileSettings() {
   const [phone, setPhone] = useState<any>("");
   const [userClass, setUserClass] = useState<any>("");
   const [faculty, setFaculty] = useState<any>("");
+  const [county, setCounty] = useState<any>("");
+  const [city, setCity] = useState<any>("");
   const [errorMessage, setErrorMessage] = useState<any>("");
   const [successMessage, setSuccessMessage] = useState<any>("");
 
@@ -73,19 +63,19 @@ export default function ProfileSettings() {
 
     console.log("Updating user with data:", updates);
 
-    const { data, error } = await supabase.auth.updateUser({
-      email: updates.email,
-      data: updates.data,
-    });
+    // const { data, error } = await supabase.auth.updateUser({
+    //   email: updates.email,
+    //   data: updates.data,
+    // });
 
-    if (error) {
-      console.error("Error updating user:", error);
-      setErrorMessage(error.message);
-    } else {
-      console.log("User updated successfully:", data.user);
-      setSuccessMessage("Profile updated successfully!");
-      setUser(data.user);
-    }
+    // if (error) {
+    //   console.error("Error updating user:", error);
+    //   setErrorMessage(error.message);
+    // } else {
+    //   console.log("User updated successfully:", data.user);
+    //   setSuccessMessage("Profile updated successfully!");
+    //   setUser(data.user);
+    // }
   };
 
   if (!user) {
@@ -94,36 +84,17 @@ export default function ProfileSettings() {
 
   return (
     <div className="w-full flex flex-col items-center justify-center ">
-      <h1>Profile Settings</h1>
-      <section className=" items-center justify-center flex p-4 rounded-md ">
-        <div className={`rounded-full shadow-xl relative cursor-pointer `}>
-          <img
-            className="w-28 h-28 lg:h-32 lg:w-32  object-scale-down p-1 rounded-full ring-2 ring-gray-400 dark:ring-gray-500"
-            src="https://i.pinimg.com/564x/f4/76/2b/f4762b5fa708c903317cfd38647237f4.jpg"
-            alt="Bordered avatar"
-          />
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="black"
-            className="size-6 absolute bottom-0 -right-2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-            />
-          </svg>
+      <section className="w-full flex items-center justify-center">
+        <div className=" flex items-center justify-center bg-slate-200 shadow-lg rounded-lg p-2 px-8">
+          <h1 className="text-xl font-bold">Profile Settings</h1>
         </div>
       </section>
 
       <form
         onSubmit={handleUpdateProfile}
-        className="w-full items-center justify-center flex flex-col"
+        className="w-full items-center justify-center flex flex-col mt-2"
       >
-        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5 mt-5">
+        <div className="grid grid-cols-1 gap-2  lg:grid-cols-2 lg:gap-5 mt-5 w-full p-4 rounded-lg  shadow-md bg-slate-200">
           <InputForm
             type="email"
             id="email"
@@ -152,78 +123,115 @@ export default function ProfileSettings() {
             setValue={setPhone}
             label="Phone"
           />
-
-          <div className="p-1 ">
-            <label htmlFor="class" className="ml-2 font-medium ">
-              Class:
-            </label>
-            <select
-              value={userClass}
-              onChange={(e) => {
-                setUserClass(e.target.value);
-              }}
-              id="class"
-              className="block font-medium w-full rounded-lg shadow-md border-2 p-2 text-slate-500 focus:outline-none focus:border-blue-500 focus:text-black"
-            >
-              {classes.map((currClass) => (
-                <option value={currClass}>{currClass}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="p-1 ">
-            <label htmlFor="faculty" className="ml-2 font-medium ">
-              Faculty of interest:
-            </label>
-            <select
-              value={faculty}
-              onChange={(e) => {
-                setFaculty(e.target.value);
-              }}
-              id="faculty"
-              className=" block font-medium w-full rounded-lg shadow-md border-2 p-2 text-slate-500 focus:outline-none focus:border-blue-500 focus:text-black "
-            >
-              {faculties.map((facultate) => (
-                <option value={facultate}>{facultate}</option>
-              ))}
-            </select>
-          </div>
         </div>
 
-        {/* <div className="p-1 ml-2">
-          <label htmlFor="userClass">Class:</label>
-          <input
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5 mt-5 w-full p-4 rounded-lg  shadow-md bg-slate-200">
+          <SelectForm
+            label="County"
+            value={county}
+            setValue={setCounty}
+            id="county"
+            objects={counties}
+          />
+
+          <InputForm
             type="text"
-            id="userClass"
+            id="city"
+            value={city}
+            setValue={setCity}
+            label="City"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5 mt-5 w-full p-4 rounded-lg  shadow-md bg-slate-200">
+          <SelectForm
+            label="Class"
             value={userClass}
-            onChange={(e) => setUserClass(e.target.value)}
+            setValue={setUserClass}
+            id="class"
+            objects={classes}
+          />
+          <SelectForm
+            label="Faculty of interest"
+            value={faculty}
+            setValue={setFaculty}
+            id="facuty"
+            objects={faculties}
           />
         </div>
-        <div>
-          <label htmlFor="faculty">Faculty of Interest:</label>
-          <input
-            type="text"
-            id="faculty"
-            value={faculty}
-            onChange={(e) => setFaculty(e.target.value)}
-          />
-        </div> */}
+
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         <button
           type="submit"
-          className="bg-blue-500 p-2 text-white m-5 rounded-lg hover:bg-blue-600 shadow-md"
+          className="bg-blue-500 p-3 text-white m-5 rounded-lg hover:bg-blue-600 shadow-md"
         >
           Update Profile
         </button>
       </form>
 
-      <p>Email: {user.email}</p>
+      {/* <p>Email: {user.email}</p>
       <p>First Name: {user.user_metadata?.firstName}</p>
       <p>Last Name: {user.user_metadata?.lastName}</p>
       <p>Phone: {user.user_metadata?.phone}</p>
       <p>Class: {user.user_metadata?.userClass}</p>
-      <p>Faculty of Interest: {user.user_metadata?.faculty}</p>
+      <p>Faculty of Interest: {user.user_metadata?.faculty}</p> */}
     </div>
   );
 }
+const faculties = [
+  "Choose a faculty",
+  "Automatica",
+  "ETTI",
+  "Energetica",
+  "Inginerie Mecanica si Mecatronica",
+  "Faima",
+  "Transporturi",
+  "Fils",
+  "Electrica",
+  "etc",
+];
+
+const counties = [
+  "Choose a County",
+  "Alba",
+  "Arad",
+  "Argeș",
+  "Bacău",
+  "Bihor",
+  "Bistrița-Năsăud",
+  "Botoșani",
+  "Brașov",
+  "Brăila",
+  "Buzău",
+  "Caraș-Severin",
+  "Călărași",
+  "Cluj",
+  "Constanța",
+  "Covasna",
+  "Dâmbovița",
+  "Dolj",
+  "Galați",
+  "Giurgiu",
+  "Gorj",
+  "Harghita",
+  "Hunedoara",
+  "Ialomița",
+  "Iași",
+  "Maramureș",
+  "Mehedinți",
+  "Mureș",
+  "Neamț",
+  "Olt",
+  "Prahova",
+  "Satu Mare",
+  "Sălaj",
+  "Sibiu",
+  "Suceava",
+  "Teleorman",
+  "Timiș",
+  "Tulcea",
+  "Vaslui",
+  "Vâlcea",
+  "Vrancea",
+];
