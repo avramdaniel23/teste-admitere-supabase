@@ -101,11 +101,11 @@ export default function QuizzesJoin() {
         ))}
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
-            <p>{question.question}</p>
+          <div key={index} className={"shadow-lg bg-gray-200 my-40 rounded-lg"}>
+            <p className={"h-fit min-h-20 bg-neon-blue text-white rounded-lg text-lg p-2"}>{question.question}</p>
             <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i}>
+                <div key={i} className={"my-2 p-2"}>
                   <input
                     type="radio"
                     value={answer}
