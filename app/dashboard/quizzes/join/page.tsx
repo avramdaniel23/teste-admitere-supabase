@@ -93,28 +93,30 @@ export default function QuizzesJoin() {
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+          <div key={index} className={"flex flex-col items-center"}>
+            <div className={"font-extrabold text-2xl"}>{quiz.name}</div>
+            <div className={"font-bold capitalize text-xl"}>{quiz.subject} -{">"} {quiz.chapter}</div>
           </div>
         ))}
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index} className={"shadow-lg bg-gray-200 my-40 rounded-lg"}>
-            <p className={"h-fit min-h-20 bg-neon-blue text-white rounded-lg text-lg p-2"}>{question.question}</p>
+          <div key={index} className={"shadow-lg bg-gray-200 my-24 rounded-lg"}>
+            <p className={"h-fit min-h-20 bg-neon-blue text-white rounded-t-lg text-lg font-bold p-2"}>{index+1}. {question.question}</p>
             <fieldset>
+              <div className={"grid grid-cols-1 md:grid-cols-2"}>
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className={"my-2 p-2"}>
+                <div key={i} className={"my-2 px-4 py-2"}>
                   <input
+                      className={"p-4"}
                     type="radio"
                     value={answer}
                     id={answer}
                     name={`question-${question._id}`}
                   />
-                  <label htmlFor={answer}>{answer}</label>
+                  <label className={"p-4 m-4"} htmlFor={answer}>{answer}</label>
                 </div>
               ))}
+              </div>
             </fieldset>
           </div>
         ))}

@@ -225,7 +225,7 @@ export default function ProfileSettings() {
             className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="phone">Phone:</label>
           <input
-              className={"border-2 rounded-full m-2 p-4"}
+              className={"border-2 rounded-full m-2 p-4 w-[99%]" }
               type="tel"
               id="phone"
               placeholder={user?.user_metadata?.phone || ""}
@@ -255,7 +255,7 @@ export default function ProfileSettings() {
                 value={faculty}
                 className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-full px-8 py-4 shadow-xl"}
                 onChange={(e) => checkFaculty(e.target.value)}>
-          <option selected={!faculty}>--- Choose a faculty ---</option>
+          <option disabled selected={!faculty}>--- Choose a faculty ---</option>
           {faculties.map(value => (
               <option selected={faculty == value} value={value}>{value}</option>
           ))}
