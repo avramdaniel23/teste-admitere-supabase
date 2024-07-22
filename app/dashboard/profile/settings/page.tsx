@@ -1,7 +1,6 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
-import { useEffect, useState } from "react";
-import {set} from "yaml/dist/schema/yaml-1.1/set";
+import React, { useEffect, useState } from "react";
 
 const supabase = createClient();
 
@@ -11,15 +10,11 @@ export default function ProfileSettings() {
   const [firstName, setFirstName] = useState<any>("");
   const [lastName, setLastName] = useState<any>("");
   const [phone, setPhone] = useState<any>("");
-  const [userClass, setUserClass] = useState<any>("");
+  const [userClass, setUserClass] = useState<number>(-1);
   const [faculty, setFaculty] = useState<any>("");
   const [errorMessage, setErrorMessage] = useState<any>("");
   const [successMessage, setSuccessMessage] = useState<any>("");
   const [isDisabled, setIsDisabled ] = useState<boolean>(true)
-  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
-  const [isFirstNameValid, setIsFirstNameValid] = useState<boolean>(false);
-  const [isLastNameValid, setIsLastNameValid] = useState<boolean>(false);
-  const [isPhoneValid, setIsPhoneValid] = useState<boolean>(false);
 
   // Function to fetch user information
   const fetchUser = async () => {
@@ -87,7 +82,7 @@ export default function ProfileSettings() {
 
     const checkUserClass = (value: number) => {
         setUserClass(value);
-        if (user?.user_metadata?.userClass !== value) {
+        if (user?.user_metadata?.userClass != value) {
             setIsDisabled(false);
         }
         else {
@@ -184,7 +179,7 @@ export default function ProfileSettings() {
       <div className={"w-full lg:w-[49%] space-y-6 my-6 items-center content-center flex flex-col"}>
 
         <div
-            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+            className={"flex flex-col items-center justify-center rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="email">Email</label>
           <input
               className={"border-2 rounded-full m-2 p-4 w-[99%]"}
@@ -195,7 +190,7 @@ export default function ProfileSettings() {
           />
         </div>
         <div
-            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+            className={"flex flex-col items-center justify-center rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="firstName">First Name</label>
           <input
               className={"border-2 rounded-full m-2 p-4 w-[99%]"}
@@ -207,7 +202,7 @@ export default function ProfileSettings() {
           />
         </div>
         <div
-            className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
+            className={"flex flex-col items-center justify-center dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow hover:scale-110"}>
           <label className={"w-full text-center"} htmlFor="userClass">Class: </label>
           <div className={"w-full flex justify-evenly my-4"}>
             <div className={`flex size-16 rounded-full mx-2 justify-center items-center ${userClass==9 ? 'bg-neon-blue/50':'bg-neon-blue/10' }`} onClick={() => checkUserClass(9)}>9</div>
@@ -222,8 +217,8 @@ export default function ProfileSettings() {
       </div>
       <div className={"w-full lg:w-[49%] space-y-6 my-6 items-center content-center flex flex-col"}>
         <div
-            className={"flex flex-col items-center justify-center border-2 rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
-          <label className={"w-full text-center"} htmlFor="phone">Phone:</label>
+            className={"flex flex-col items-center justify-center rounded-full dark:border-gray-700 w-[90%] px-8 py-4 shadow hover:scale-110"}>
+          <label className={"w-full text-center"} htmlFor="phone">Phone</label>
           <input
               className={"border-2 rounded-full m-2 p-4 w-[99%]" }
               type="tel"
@@ -233,8 +228,8 @@ export default function ProfileSettings() {
           />
         </div>
         <div
-            className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow-xl hover:scale-110"}>
-          <label className={"w-full text-center"} htmlFor="lastName">Last Name:</label>
+            className={"flex flex-col items-center justify-center dark:border-gray-700 rounded-full w-[90%] px-8 py-4 shadow hover:scale-110"}>
+          <label className={"w-full text-center"} htmlFor="lastName">Last Name</label>
           <input
               className={"border-2 rounded-full m-2 p-4 w-[99%]"}
               type="text"
@@ -249,8 +244,8 @@ export default function ProfileSettings() {
     </div>
     <div className={"w-full my-6 space-y-6 items-center content-center flex flex-col"}>
       <div
-          className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-[90%] lg:w-full px-8 py-4 shadow-xl hover:scale-110"}>
-        <label htmlFor="faculty">Faculty of Interest:</label>
+          className={"flex flex-col items-center justify-center dark:border-gray-700 rounded-full w-[90%] lg:w-full px-8 py-4 shadow-xl hover:scale-110"}>
+        <label htmlFor="faculty">Faculty of Interest</label>
         <select id="faculty"
                 value={faculty}
                 className={"flex flex-col items-center justify-center border-2 dark:border-gray-700 rounded-full w-full px-8 py-4 shadow-xl"}
