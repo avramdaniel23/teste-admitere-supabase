@@ -56,7 +56,7 @@ const QuestionCard = ({ question, index }: Props) => {
         onClick={() => {
           setIsFlagged(!isFlagged);
         }}
-        className="absolute top-4 right-4 flex cursor-pointer"
+        className="absolute top-4 right-4 flex cursor-pointer transition-all duration-300 ease-linear"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +64,7 @@ const QuestionCard = ({ question, index }: Props) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={`size-6 ${isFlagged ? "fill-red-500" : "fill-none"}`}
+          className={`size-6 ${isFlagged ? "fill-red-500" : "fill-none"} `}
         >
           <path
             strokeLinecap="round"

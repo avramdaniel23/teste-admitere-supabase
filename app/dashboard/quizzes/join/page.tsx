@@ -1,5 +1,5 @@
 "use client";
-import AnswersSection from "@/components/Quizz/AnswersSection";
+
 import QuestionCard from "@/components/Quizz/QuestionCard";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -96,10 +96,19 @@ export default function QuizzesJoin() {
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+          <div
+            key={index}
+            className="flex w-full items-center justify-around text-md lg:ext-lg font-bold border-b-2 pb-4 lg:pb-8"
+          >
+            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
+              {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+            </div>
+            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
+              {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
+            </div>
+            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
+              {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+            </div>
           </div>
         ))}
       {filteredQuestions &&
