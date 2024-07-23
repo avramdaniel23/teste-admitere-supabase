@@ -170,7 +170,7 @@ export default function QuizzesJoin() {
   console.log(quizzesData)
   return (
     <div>
-      <div className="mb-5 font-medium">{quizzesData &&
+      <div className="font-medium">{quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
           <div className="flex flex-col items-center bg-red-600 rounded-t-2xl shadow-xl p-4" key={index}>
@@ -205,7 +205,9 @@ export default function QuizzesJoin() {
             </fieldset>
           </div>
         ))}
-      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+        <div className="bg-white p-4 rounded-b-2xl shadow-xl">
+          <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+        </div>
     </div>
   );
 }

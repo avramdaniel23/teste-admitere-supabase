@@ -189,7 +189,7 @@ export default function Sidebar({ user }: { user: User | null }) {
             <SidebarItem
               text="Settings"
               isExpanded={expanded}
-              href="/dashboard/profile/settings"
+              href="/dashboard/profile/profileSettings"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
