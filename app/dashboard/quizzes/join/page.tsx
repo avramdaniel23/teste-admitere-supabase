@@ -89,35 +89,47 @@ export default function QuizzesJoin() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4 mb-14">
+
+      <div className="rounded-md">
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+          <div className="flex flex-col gap-2 rounded-md shadow-md p-2 uppercase" key={index}>
+            <div className="text-4xl font-bold">{quiz.name}</div>
+            <div className="w-full h-0.5 bg-blue-400 rounded-full"></div>
+            <div className="flex flex-row justify-between">
+              <div>{quiz.subject}</div>
+              <div>{quiz.chapter}</div>
+            </div>
           </div>
         ))}
+      </div>
+
+      <div className="flex flex-col gap-6">
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
-            <p>{question.question}</p>
-            <fieldset>
+          <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow-md lg:p-8" key={index}>
+            <p className="">{question.question}</p>
+            <div className="w-full h-0.5 bg-slate-200 rounded-full"></div>
+            <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i}>
+                <div className="flex items-center gap-1 bg-slate-100 rounded-md p-1 hover:bg-blue-100 duration-100" key={i}>
                   <input
                     type="radio"
                     value={answer}
                     id={answer}
                     name={`question-${question._id}`}
+                    className="w-4 h-4"
                   />
-                  <label htmlFor={answer}>{answer}</label>
+                  <label className="w-full h-full" htmlFor={answer}>{answer}</label>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
+      </div>
+
     </div>
   );
 }

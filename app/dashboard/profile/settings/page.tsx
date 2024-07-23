@@ -129,8 +129,8 @@ export default function ProfileSettings() {
         <DropdownField label="Faculty of Interest" value={faculty} onChange={(e) => setFaculty(e.target.value)} options={facultyOptions} />
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-        <button type="submit" className="mx-auto w-fit bg-blue-200 p-2 rounded-md duration-200 hover:bg-blue-300">Update Profile</button>
       </form>
+      <button type="submit" className="mx-auto w-fit bg-blue-200 p-2 rounded-md duration-200 hover:bg-blue-300">Update Profile</button>
 
     </div>
   );
