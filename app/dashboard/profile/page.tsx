@@ -10,16 +10,25 @@ export default function Profile() {
 
   return (
     <section className="lg:mx-auto flex flex-col items-center">
-      <h1 className="text-[36px] font-[900]  ">Profil</h1>
-      <div className="flex">
-          <p>{user.user_metadata?.firstName}</p>
-          <p>{user.user_metadata?.lastName}</p>
-      </div>
-      <div className="flex flex-col md:grid md:grid-cols-2 md:gap-x-12 lg:grid lg:grid-cols-2 lg:gap-x-12">
-        <p>Email: {user.email}</p>
-        <p>Phone: {user.user_metadata?.phone}</p>
-        <p>Class: {user.user_metadata?.userClass}</p>
-        <p>Faculty of Interest: {user.user_metadata?.faculty}</p>
+      <h1 className="text-[36px] font-[900] my-4">Profile</h1>
+      <div className="flex flex-col bg-orange-400 rounded-xl shadow-lg w-full items-center relative">
+        <div className="absolute right-4 top-4">
+          <Link href="/dashboard/profile/settings">
+            <button className="bg-blue-500 font-bold text-white text-ms rounded-lg shadow-lg p-2 lg:text-lg">Settings</button>
+          </Link>
+        </div>
+        <div className="flex flex-col items-center  p-12">
+          <img className="w-[100px] h-[100px] lg:w-[150px] lg:h-[150px] rounded-full mb-4" src="https://cdn-icons-png.flaticon.com/512/5987/5987424.png" />
+          <p className="font-bold text-2xl text-white lg:text-3xl">{user.user_metadata?.firstName}</p>
+          <p className="font-bold text-2xl text-white lg:text-3xl">{user.user_metadata?.lastName}</p>
+        </div>
+        <div className="p-6">
+          <p className="font-bold text-sm text-white md:text-md lg:text-xl">Email: {user.email}</p>
+          <p className="font-bold text-sm text-white md:text-md lg:text-xl">Phone: {user.user_metadata?.phone}</p>
+          <p className="font-bold text-sm text-white md:text-md lg:text-xl">County: </p>
+          <p className="font-bold text-sm text-white md:text-md lg:text-xl">Class: {user.user_metadata?.userClass}</p>
+          <p className="font-bold text-sm text-white md:text-md lg:text-xl ">Faculty of Interest: {user.user_metadata?.faculty}</p>
+        </div>
       </div>
 
       <div className="mt-16">
@@ -32,9 +41,7 @@ export default function Profile() {
         {/* <Link href="/dashboard/profile/stats">
           <div>Stats</div>
         </Link> */}
-        <Link href="/dashboard/profile/profileSettings">
-          <button className="bg-gray-400 font-bold text-white text-2xl rounded-lg p-2">Settings</button>
-        </Link>
+        
       </div>
     </section>
   );

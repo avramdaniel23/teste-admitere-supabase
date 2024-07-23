@@ -4,6 +4,77 @@ import { useEffect, useState } from "react";
 
 const supabase = createClient();
 
+const judeteRomania = [
+  "Alba",
+  "Arad",
+  "Argeș",
+  "Bacău",
+  "Bihor",
+  "Bistrița-Năsăud",
+  "Botoșani",
+  "Brăila",
+  "Brașov",
+  "București",
+  "Buzău",
+  "Caraș-Severin",
+  "Călărași",
+  "Cluj",
+  "Constanța",
+  "Covasna",
+  "Dâmbovița",
+  "Dolj",
+  "Galați",
+  "Giurgiu",
+  "Gorj",
+  "Harghita",
+  "Hunedoara",
+  "Ialomița",
+  "Iași",
+  "Ilfov",
+  "Maramureș",
+  "Mehedinți",
+  "Mureș",
+  "Neamț",
+  "Olt",
+  "Prahova",
+  "Sălaj",
+  "Satu Mare",
+  "Sibiu",
+  "Suceava",
+  "Teleorman",
+  "Timiș",
+  "Tulcea",
+  "Vaslui",
+  "Vâlcea",
+  "Vrancea"
+];
+
+const clase = [
+  "9",
+  "10",
+  "11",
+  "12"
+];
+
+const facultyOptions = [
+  "Automatică și Calculatoare",
+  "Inginerie Electrică",
+  "Electronică, Telecomunicații și Tehnologia Informației",
+  "Energetică",
+  "Inginerie Mecanică și Mecatronică",
+  "Inginerie și Managementul Sistemelor Tehnologice",
+  "Inginerie Industrială și Robotică",
+  "Știința și Ingineria Materialelor",
+  "Inginerie a Sistemelor Biotehnice",
+  "Inginerie Chimică și Biotehnologii",
+  "Chimie Aplicată și Știința Materialelor",
+  "Inginerie în Limbi Străine",
+  "Inginerie Aerospațială",
+  "Inginerie a Transporturilor",
+  "Științe Aplicate",
+  "Antreprenoriat, Ingineria și Managementul Afacerilor"
+];
+
 export default function ProfileSettings() {
   const [user, setUser] = useState<any>(null);
   const [email, setEmail] = useState<any>("");
@@ -78,15 +149,30 @@ export default function ProfileSettings() {
 
   return (
     <div className="p-6 bg-white rounded-2xl my-8 mx-4 shadow-xl flex-col items-center justify-center md:p-8 lg:p-8 lg:mx-auto lg:w-[50%] lg:h-[50%]">
-      <h1 className="text-4xl font-bold justify-center">Profile Settings</h1>
+      <div className="flex justify-center my-4">
+        <h1 className="text-4xl font-bold mb-4">Profile Settings</h1>
+      </div>
       <form onSubmit={handleUpdateProfile}>
         <div className="flex flex-col mt-2">
+          <div className="flex justify-center mb-4">
+          <div className="relative">
+            <img className="w-[100px] h-[100px] lg:w-[100px] lg:h-[100px] rounded-full mb-4 border-4 border-white" src="https://cdn-icons-png.flaticon.com/512/5987/5987424.png" />
+            <div className="absolute bottom-0 -right-2 mb-2 mr-2">
+              <div className="relative inline-block">
+                <input type="file" id="file-input" className="hidden" />
+                <label htmlFor="file-input" className="px-3 py-1 rounded-full bg-blue-500 text-white cursor-pointer flex items-center justify-center">
+                  <span className="text-white text-lg">+</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          </div>
           <div className="flex flex-row items-center mb-2">
             <label className="font-bold mr-2" htmlFor="email">Email:</label>
             <input
               type="email"
               id="email"
-              className="flex-1 outline-none w-[200px] bg-stone-100 rounded-lg"
+              className="flex-1 outline-blue-500 w-[200px] h-[35px] bg-stone-100 rounded-lg"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -97,7 +183,7 @@ export default function ProfileSettings() {
             <input
               type="text"
               id="firstName"
-              className="flex-1 outline-none w-[150px] bg-stone-100 rounded-lg"
+              className="flex-1 outline-blue-500 w-[150px] h-[35px] bg-stone-100 rounded-lg"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
@@ -107,7 +193,7 @@ export default function ProfileSettings() {
             <input
               type="text"
               id="lastName"
-              className="flex-1 outline-none w-[150px] bg-stone-100 rounded-lg"
+              className="flex-1 outline-blue-500 w-[150px] h-[35px] bg-stone-100 rounded-lg"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
@@ -117,38 +203,33 @@ export default function ProfileSettings() {
             <input
               type="tel"
               id="phone"
-              className="flex-1 outline-none w-[200px] bg-stone-100 rounded-lg"
+              className="flex-1 outline-blue-500 w-[200px] h-[35px] bg-stone-100 rounded-lg"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
             />
           </div>
           <div className="flex flex-row items-center mb-2">
+            <label className="font-bold mr-2">County:</label>
+            <select className="flex bg-stone-100 rounded-lg outline-blue-500 h-[35px] w-[150px]">
+                {judeteRomania.map((judet,idx) => (
+                  <option>{judet}</option>
+                ))}
+            </select>
+          </div>
+          <div className="flex flex-row items-center mb-2">
             <label className="font-bold mr-2" htmlFor="userClass">Class:</label>
-            <select className="flex bg-stone-100 rounded-lg outline-none w-[40px]" id="userClass" value={userClass} onChange={(e) => setUserClass(e.target.value)}>
-                <option>9</option>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
+            <select className="flex bg-stone-100 rounded-lg outline-blue-500 h-[35px] w-[40px]" id="userClass" value={userClass} onChange={(e) => setUserClass(e.target.value)}>
+                {clase.map((clasa,idx) => (
+                  <option>{clasa}</option>
+                ))}
             </select>
           </div>
           <div className="flex flex-row items-center mb-2">
             <label className="font-bold md:mr-2 lg:mr-2" htmlFor="faculty">Faculty of Interest:</label>
-            <select className="flex-1 bg-stone-100 rounded-lg outline-none w-[125px] lg:w-[150px]" id="faculty" value={faculty} onChange={(e) => setFaculty(e.target.value)}>
-                <option>Inginerie Electrică</option>
-                <option>Energetică</option>
-                <option>Automatică şi Calculatoare</option>
-                <option>Electronică, Telecomunicaţii şi Tehnologia Informaţiei</option>
-                <option>Inginerie Mecanică şi Mecatronică</option>
-                <option>Inginerie Industrială și Robotică</option>
-                <option>Ingineria Sistemelor Biotehnice</option>
-                <option>Transporturi</option>
-                <option>Inginerie Aerospaţială</option>
-                <option>Ştiinţa şi Ingineria Materialelor</option>
-                <option>Inginerie Chimică și Biotehnologii</option>
-                <option>Inginerie în Limbi Străine</option>
-                <option>Ştiinţe Aplicate</option>
-                <option>Inginerie Medicală</option>
-                <option>Antreprenoriat, Ingineria şi Managementul Afacerilor</option>
+            <select className="flex-1 bg-stone-100 rounded-lg outline-blue-500 h-[35px] w-[125px] lg:w-[150px]" id="faculty" value={faculty} onChange={(e) => setFaculty(e.target.value)}>
+                {facultyOptions.map((facultate,idx) => (
+                  <option>{facultate}</option>
+                ))}
             </select>
           </div>
         </div>
