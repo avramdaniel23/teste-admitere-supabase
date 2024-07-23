@@ -120,7 +120,10 @@ export default function Leaderboard() {
             />
           ))}
         </section>
-        <a
+
+        {
+          // Scroll Arrow ->
+          /* <a
           href="#"
           onClick={handleScroll}
           className="absolute top-[93%] hover:scale-125  hidden lg:flex dark:hover:text-black bg-transparent p-2 transition-all duration-300"
@@ -139,7 +142,8 @@ export default function Leaderboard() {
               d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
-        </a>
+        </a> */
+        }
       </div>
       <div
         id="table"

@@ -1,5 +1,6 @@
 "use client";
 import AnswersSection from "@/components/Quizz/AnswersSection";
+import QuestionCard from "@/components/Quizz/QuestionCard";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -103,10 +104,14 @@ export default function QuizzesJoin() {
         ))}
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
-            <p>{question.question}</p>
-            <AnswersSection questionAnswers={question.question_answers} />
-            {/* <fieldset>
+          <QuestionCard question={question} key={index} index={index + 1} />
+          // <div
+          //   key={index}
+          //   className="bg-slate-200 p-4 shadow-md rounded-lg mt-8 border-b-2 border-slate-400 font-bold "
+          // >
+          //   <p className="p-4">{question.question}</p>
+          //   <AnswersSection questionAnswers={question.question_answers} />
+          /* <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
                 <div key={i}>
                   <input
@@ -118,8 +123,8 @@ export default function QuizzesJoin() {
                   <label htmlFor={answer}>{answer}</label>
                 </div>
               ))}
-            </fieldset> */}
-          </div>
+            </fieldset> */
+          // </div>
         ))}
     </div>
   );
