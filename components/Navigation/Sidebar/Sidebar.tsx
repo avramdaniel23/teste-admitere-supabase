@@ -10,11 +10,18 @@ function capitalizeFirstLetter(string: string | undefined) {
 }
 
 export default function Sidebar({ user }: { user: User | null }) {
-  const { isMenuOpen: expanded, toggleMenu } = useMobileMenu();
-  const username = user?.user_metadata?.firstName || "User";
+  const {
+    isMenuOpen: expanded,
+    toggleMenu,
+    buttonRef,
+    portalRef,
+  } = useSidebarMenu();
+  const username = user?.email?.split("@")[0];
 
   return (
-    <aside className="h-screen sticky top-0 hidden lg:flex flex-col bg-white shadow-sm p-5 gap-10">
+    <aside
+      className="sticky top-0 hidden h-screen flex-col gap-10 bg-white p-5 shadow-sm lg:flex"
+      ref={portalRef}>
       <div
         className={`flex items-center ${
           expanded ? "justify-between" : "justify-center"
@@ -29,7 +36,8 @@ export default function Sidebar({ user }: { user: User | null }) {
           }`}></Image>
         <button
           onClick={() => toggleMenu()}
-          className="p-1.5 rounded-lg hover:text-indigo-800">
+          ref={buttonRef}
+          className="rounded-lg p-1.5 hover:text-indigo-800">
           {expanded ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +69,8 @@ export default function Sidebar({ user }: { user: User | null }) {
           )}
         </button>
       </div>
-      <nav className="flex flex-col justify-between h-full">
-        <div className="flex flex-col justify-between h-full">
+      <nav className="flex h-full flex-col justify-between">
+        <div className="flex h-full flex-col justify-between">
           <ul>
             <SidebarItem
               text="Dashboard"
@@ -214,15 +222,12 @@ export default function Sidebar({ user }: { user: User | null }) {
           </ul>
         </div>
 
-        <div className="mt-4 flex px-3 pt-5 font-semibold border-t-[1px]">
-          <div className="w-10 h-10 bg-blue-200 rounded-full grid place-items-center">
+        <div className="mt-4 flex border-t-[1px] px-3 pt-5 font-semibold">
+          <div className="grid h-10 w-10 place-items-center rounded-full bg-blue-200">
             {capitalizeFirstLetter(username?.at(0))}
           </div>
           <div
-            className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}>
+            className={`flex items-center justify-between overflow-hidden transition-all ${expanded ? "ml-3 w-52" : "w-0"} `}>
             <div className="leading-4">
               <h4 className="font-semibold">{username}</h4>
               <span className="text-xs text-gray-600">{user?.email}</span>
@@ -247,13 +252,13 @@ export default function Sidebar({ user }: { user: User | null }) {
   );
 }
 
-function useMobileMenu() {
+function useSidebarMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const portalRef = useRef<HTMLUListElement | null>(null);
-  const buttonRef = useRef<HTMLSpanElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev) => !prev);
+    setIsMenuOpen(prev => !prev);
   };
 
   useEffect(() => {
@@ -295,30 +300,21 @@ export function SidebarItem({
     <li className="pt-2">
       <Link
         href={href}
-        className={`
-          relative flex items-center py-2 px-3
-          font-semibold rounded-md cursor-pointer
-          transition-colors group justify-center
-          ${
-            isActive
-              ? "bg-neon-blue/10"
-              : "hover:bg-indigo-100 hover:text-indigo-800"
-          }
-      `}>
+        className={`group relative flex cursor-pointer items-center justify-center rounded-md px-3 py-2 font-semibold transition-colors ${
+          isActive
+            ? "bg-neon-blue/10"
+            : "hover:bg-indigo-100 hover:text-indigo-800"
+        } `}>
         {icon}
         <span
           className={`overflow-hidden transition-all ${
-            isExpanded ? "w-52 ml-3" : "w-0"
+            isExpanded ? "ml-3 w-52" : "w-0"
           }`}>
           {text}
         </span>
 
         {!isExpanded && (
-          <div
-            className="absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-indigo-800 text-sm
-            invisible opacity-20 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0">
+          <div className="invisible absolute left-full ml-6 -translate-x-3 rounded-md bg-indigo-100 px-2 py-1 text-sm text-indigo-800 opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
             {text}
           </div>
         )}
