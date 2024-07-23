@@ -1,20 +1,29 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { facultati } from "../../../../libs/profileSettingsOpions/profileSettingsOptions";
+import { judete } from "../../../../libs/profileSettingsOpions/judeteOptions";
 
 const supabase = createClient();
 
 export default function ProfileSettings() {
   const [user, setUser] = useState<any>(null);
-  const [email, setEmail] = useState<any>("");
-  const [firstName, setFirstName] = useState<any>("");
-  const [lastName, setLastName] = useState<any>("");
-  const [phone, setPhone] = useState<any>("");
-  const [userClass, setUserClass] = useState<any>("");
-  const [faculty, setFaculty] = useState<any>("");
-  const [county, setCounty] = useState<any>("");
-  const [errorMessage, setErrorMessage] = useState<any>("");
-  const [successMessage, setSuccessMessage] = useState<any>("");
+  const [email, setEmail] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [userClass, setUserClass] = useState<string>("");
+  const [highschool, setHighschool] = useState<string>("");
+  const [faculty, setFaculty] = useState<any>(facultati[0]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [selectedCounty, setSelectedCounty] = useState<any>(judete[0]);
 
   // Function to fetch user information
   const fetchUser = async () => {
@@ -25,15 +34,15 @@ export default function ProfileSettings() {
     if (error) {
       console.error("Error fetching user:", error);
     } else {
-      console.log("Fetched user:", user);
       setUser(user);
-      setEmail(user?.email);
+      setEmail(user?.email || "");
       setFirstName(user?.user_metadata?.firstName || "");
       setLastName(user?.user_metadata?.lastName || "");
       setPhone(user?.user_metadata?.phone || "");
       setUserClass(user?.user_metadata?.userClass || "");
-      setFaculty(user?.user_metadata?.faculty || "");
-      setCounty(user?.user_metadata?.county || "");
+      setHighschool(user?.user_metadata?.highschool || "");
+      setFaculty(user?.user_metadata?.faculty || facultati[0]);
+      setSelectedCounty(user?.user_metadata?.selectedCounty || judete[0]);
     }
   };
 
@@ -47,22 +56,23 @@ export default function ProfileSettings() {
     setSuccessMessage("");
 
     const updates = {
-      email: email,
-      data: {
+      // email: email,
+      user_metadata: {
         firstName: firstName,
         lastName: lastName,
         phone: phone,
         userClass: userClass,
         faculty: faculty,
-        county: county,
+        highschool: highschool,
+        selectedCounty: selectedCounty,
       },
     };
 
     console.log("Updating user with data:", updates);
 
     const { data, error } = await supabase.auth.updateUser({
-      email: updates.email,
-      data: updates.data,
+      // email: updates.email,
+      data: updates.user_metadata,
     });
 
     if (error) {
@@ -80,290 +90,150 @@ export default function ProfileSettings() {
   }
 
   return (
-    // <div>
-    //   <h1>Profile Settings</h1>
-    //   <form onSubmit={handleUpdateProfile}>
-    //     <div>
-    //       <label htmlFor="email">Email:</label>
-    //       <input
-    //         type="email"
-    //         id="email"
-    //         value={email}
-    //         onChange={(e) => setEmail(e.target.value)}
-    //         required
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="firstName">First Name:</label>
-    //       <input
-    //         type="text"
-    //         id="firstName"
-    //         value={firstName}
-    //         onChange={(e) => setFirstName(e.target.value)}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="lastName">Last Name:</label>
-    //       <input
-    //         type="text"
-    //         id="lastName"
-    //         value={lastName}
-    //         onChange={(e) => setLastName(e.target.value)}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="phone">Phone:</label>
-    //       <input
-    //         type="tel"
-    //         id="phone"
-    //         value={phone}
-    //         onChange={(e) => setPhone(e.target.value)}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="userClass">Class:</label>
-    //       <input
-    //         type="text"
-    //         id="userClass"
-    //         value={userClass}
-    //         onChange={(e) => setUserClass(e.target.value)}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="faculty">Faculty of Interest:</label>
-    //       <input
-    //         type="text"
-    //         id="faculty"
-    //         value={faculty}
-    //         onChange={(e) => setFaculty(e.target.value)}
-    //       />
-    //     </div>
-    //     <div>
-    //       <label htmlFor="county">County:</label>
-    //       <input
-    //         type="text"
-    //         id="county"
-    //         value={county}
-    //         onChange={(e) => setCounty(e.target.value)}
-    //       />
-    //     </div>
-    //     {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-    //     {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-    //     <button type="submit">Update Profile</button>
-    //   </form>
-    // </div>
-    <div className="border-b border-gray-900/10 pb-12">
-      <h2 className="text-base font-semibold leading-7 text-gray-900">
-        Informatii Personale
-      </h2>
-      <p className="mt-1 text-sm leading-6 text-gray-600">
-        Va recomandam utilizarea unei adrese de email pe care o verificati
-        constant!
-      </p>
-      <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-        <div className="sm:col-span-3">
-          <label
-            htmlFor="first-name"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Nume
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
+    <div className="w-full mb-[100px] md:mb-0 ">
+      <h1 className="text-[36px] font-[900]">Profile Settings</h1>
+      <form onSubmit={handleUpdateProfile} className="w-full mt-8 ">
+        <div className="grid md:grid-cols-2 gap-8 ">
+          <div className="w-[95%] md:w-full relative mx-auto ">
             <input
-              id="first-name"
-              name="first-name"
-              type="text"
-              autoComplete="given-name"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
-            />
-          </div>
-        </div>
-
-        <div className="sm:col-span-3">
-          <label
-            htmlFor="last-name"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Prenume
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
-            <input
-              id="last-name"
-              name="last-name"
-              type="text"
-              autoComplete="family-name"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
-            />
-          </div>
-        </div>
-
-        <div className="sm:col-span-3">
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Adresa de email
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
-            <input
-              id="email"
-              name="email"
               type="email"
-              autoComplete="email"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
+              id="email"
+              value={email}
+              readOnly={true}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-none text-gray-400 "
             />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold">
+              Email
+            </span>
           </div>
-        </div>
 
-        <div className="sm:col-span-3">
-          <label
-            htmlFor="class"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Clasa
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
-            <select
-              id="class"
-              name="class"
-              autoComplete="class_number"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none"
-            >
-              <option>a IX-a</option>
-              <option>a X-a</option>
-              <option>a XI-a</option>
-              <option>a XII-a</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="sm:col-span-3">
-          <label
-            htmlFor="county"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Judet
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
-            <select
-              id="county"
-              name="county"
-              autoComplete="county-name"
-              className="block relative bottom-0 w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
-            >
-              <option>Bucuresti</option>
-              <option>Alba</option>
-              <option>Arad</option>
-              <option>Arges</option>
-              <option>Bacau</option>
-              <option>Bihor</option>
-              <option>Bistrita-Nasaud</option>
-              <option>Botosani</option>
-              <option>Brasov</option>
-              <option>Braila</option>
-              <option>Buzau</option>
-              <option>Caras-Severin</option>
-              <option>Calarasi</option>
-              <option>Cluj</option>
-              <option>Constanta</option>
-              <option>Covasna</option>
-              <option>Damboovita</option>
-              <option>Dolj</option>
-              <option>Galati</option>
-              <option>Giurgiu</option>
-              <option>Gorj</option>
-              <option>Harghita</option>
-              <option>Hunedoara</option>
-              <option>Ialomita</option>
-              <option>Iasi</option>
-              <option>Ilfov</option>
-              <option>Maramures</option>
-              <option>Mehedinti</option>
-              <option>Mures</option>
-              <option>Neamt</option>
-              <option>Olt</option>
-              <option>Prahova</option>
-              <option>Satu Mare</option>
-              <option>Salaj</option>
-              <option>Sibiu</option>
-              <option>Suceava</option>
-              <option>Teleorman</option>
-              <option>Timis</option>
-              <option>Tulcea</option>
-              <option>Valcea</option>
-              <option>Vaslui</option>
-              <option>Vrancea</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="sm:col-span-3 ">
-          <label
-            htmlFor="city"
-            className="block text-sm font-medium leading-6 text-gray-900"
-          >
-            Oras
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
+          <div className="w-[95%] md:w-full relative mx-auto">
             <input
-              id="city"
-              name="city"
               type="text"
-              autoComplete="address-level2"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
+              id="firstName"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-gray-400 "
             />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold">
+              Prenume
+            </span>
+          </div>
+
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <input
+              type="text"
+              id="lastName"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-gray-400 "
+            />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold ">
+              Nume
+            </span>
+          </div>
+
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <input
+              type="tel"
+              id="phone"
+              value={phone}
+              onKeyPress={(event) => {
+                if (!/[0-9]/.test(event.key)) {
+                  event.preventDefault();
+                }
+              }}
+              onChange={(e) => setPhone(e.target.value)}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-gray-400 "
+            />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold ">
+              Telefon
+            </span>
+          </div>
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <input
+              type="text"
+              id="highschool"
+              value={highschool}
+              onChange={(e) => setHighschool(e.target.value)}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-gray-400 "
+            />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold ">
+              Liceu
+            </span>
+          </div>
+
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <input
+              type="text"
+              id="userClass"
+              value={userClass}
+              onChange={(e) => setUserClass(e.target.value)}
+              className="p-4 pl-8 w-full rounded-xl border border-gray-300 focus-visible:outline-gray-400 "
+            />
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold ">
+              Clasa
+            </span>
+          </div>
+
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <Listbox value={selectedCounty} onChange={setSelectedCounty}>
+              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left relative">
+                {selectedCounty.nume}
+              </ListboxButton>
+              <ListboxOptions className="bg-white w-full mt-[3.7rem] rounded-xl shadow-lg border border-gray-300 absolute z-10 h-[200px] lg:h-[350px] overflow-y-auto  ">
+                {judete.map((judet, index) => (
+                  <ListboxOption
+                    key={index}
+                    value={judet}
+                    className="data-[focus]:bg-blue-100 px-4 py-2"
+                  >
+                    {judet.nume}
+                  </ListboxOption>
+                ))}
+              </ListboxOptions>
+            </Listbox>
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold">
+              Județ
+            </span>
+          </div>
+
+          <div className="w-[95%] md:w-full relative mx-auto">
+            <Listbox value={faculty} onChange={setFaculty}>
+              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left">
+                {faculty.name}
+              </ListboxButton>
+              <ListboxOptions className="bg-white w-full mt-[3.7rem] rounded-xl shadow-lg border border-gray-300 absolute z-10 h-[200px] lg:h-[350px] overflow-y-auto  ">
+                {facultati.map((facultate) => (
+                  <ListboxOption
+                    key={facultate.id}
+                    value={facultate}
+                    className="data-[focus]:bg-blue-100 px-4 py-2"
+                  >
+                    {facultate.name}
+                  </ListboxOption>
+                ))}
+              </ListboxOptions>
+            </Listbox>
+            <span className="absolute left-[5%] -top-[17.5%] bg-white px-2 text-[14px] text-gray-400 font-bold ">
+              Facultatea de interes
+            </span>
           </div>
         </div>
 
-        <div className="sm:col-span-3 sm:col-start-1">
-          <label
-            htmlFor="faculty"
-            className="block text-sm font-medium leading-6 text-gray-900"
+        {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+        {successMessage && (
+          <p className="text-green-500 mt-4">{successMessage}</p>
+        )}
+        <div className="flex justify-end mt-8 w-full">
+          <button
+            type="submit"
+            className="px-8 py-4 text-white font-bold rounded-xl bg-[#0172f0]"
           >
-            Facultatea de interes
-          </label>
-          <div className="mt-2 shadow-md rounded-md">
-            <select
-              id="faculty"
-              name="faculty"
-              autoComplete="faculty_name"
-              className="block w-full rounded-md border-0 py-2.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-none "
-            >
-              <option>Facultatea de Inginerie Electrica</option>
-              <option>Facultatea de Energetica</option>
-              <option>Facultatea de Automatica si Calculatoare</option>
-              <option>
-                Facultatea de Electronica, Telecomunicatii si Tehnologia
-                Informatiei
-              </option>
-              <option>Facultatea de Inginerie Mecanica si Mecatronica</option>
-              <option>Facultatea de Inginerie Industriala si Robotica</option>
-              <option>Facultatea de Ingineria Sistemelor Biotehnice</option>
-              <option>Facultatea de Transporturi</option>
-              <option>Facultatea de Inginerie Aerospatiala</option>
-              <option>Facultatea de Stiinta si Ingineria Materialelor</option>
-              <option>Facultatea de Inginerie Chimica si Biotehnologii</option>
-              <option>Facultatea de Inginerie in Limbi Straine</option>
-              <option>Facultatea de Stiinte Aplicate</option>
-              <option>Facultatea de Inginerie Medicala</option>
-              <option>
-                Facultatea de Antreprenoriat, Ingineria si Managementul
-                Afacerilor
-              </option>
-            </select>
-          </div>
+            Update Profile
+          </button>
         </div>
-      </div>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-      <div className="flex justify-center p-3 mt-8">
-        <button
-          className="bg-neon-blue p-2 rounded-lg text-white"
-          type="submit"
-        >
-          Finalizare
-        </button>
-      </div>
+      </form>
     </div>
   );
 }

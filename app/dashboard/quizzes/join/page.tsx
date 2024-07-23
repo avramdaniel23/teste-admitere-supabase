@@ -1,6 +1,7 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import getUser from "@/libs/getUser/getUser";
 
 interface QuizType {
   _id: any;
@@ -11,14 +12,40 @@ interface QuizType {
   difficulty: number;
   privacy: boolean;
   points: number;
-  questions: [];
+  questions: any[];
 }
 
+interface SubmissionAnswer {
+  question_id: any;
+  selected_answer_id: any;
+  is_correct: boolean;
+}
+
+interface Configuration {
+  _id: any;
+  quiz_id: any;
+  user_id: any;
+  score: number;
+  submission_answers: SubmissionAnswer[];
+}
+
+const defaultConfiguration: Configuration = {
+  _id: null,
+  quiz_id: null,
+  user_id: null,
+  score: 0,
+  submission_answers: [],
+};
+
 export default function QuizzesJoin() {
-  const [quizzesData, setQuizzes] = useState<QuizType[]>([]);
+  const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
+  const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
+  const router = useRouter();
+
+  let user = getUser();
 
   const fetchQuizData = async () => {
     try {
@@ -84,40 +111,105 @@ export default function QuizzesJoin() {
 
   if (quizzesData.length > 0 && quizzesData[0].questions) {
     filteredQuestions = questionsData.filter((question: any) =>
-      quizzesData[0].questions.some((q: any) => q._id === question._id)
+      quizzesData[0].questions.filter((q: any) => q._id === question._id)
     );
   }
 
+  const handleChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+
+    // Find the current question based on the _id
+    const currentQuestion = filteredQuestions.find(q => q._id === name);
+
+    // Check if the selected answer is correct
+    const is_correct = currentQuestion && value === currentQuestion.correct_answer;
+
+    // Update configuration state
+    setConfiguration((prevConfig) => {
+      const newSubmissionAnswer = {
+        question_id: name,
+        selected_answer_id: value,
+        is_correct,
+      };
+
+      const updatedSubmissionAnswers = [
+        ...prevConfig.submission_answers.filter(
+          (answer) => answer.question_id !== name
+        ),
+        newSubmissionAnswer,
+      ];
+
+      return {
+        ...prevConfig,
+        quiz_id: quizID,
+        user_id: user.id,
+        submission_answers: updatedSubmissionAnswers,
+        score: is_correct ? prevConfig.score + 10 : prevConfig.score,
+      };
+    });
+  };
+
+  const submitAnswer = async (event: any) => {
+    event.preventDefault();
+
+    const response = await fetch("/api/post/submissions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(configuration),
+    });
+
+    if (response.ok) {
+      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
+    } else {
+      console.error('Failed to submit answers')
+    }
+  };
+
+  console.log(quizzesData)
   return (
     <div>
-      {quizzesData &&
+      <div className="mb-5 font-medium">{quizzesData &&
         quizzesData.length > 0 &&
-        quizzesData.map((quiz, index) => (
+        quizzesData.map((quiz: any, index: any) => (
           <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+            <div className="text-center text-[28px]">{quiz.name}</div>
+            <div className="flex flex-col lg:flex-row">
+              <div className="lg:mr-5 text-[18px] text-gray-700">Materie: {quiz.subject}</div>
+              <div className="text-[18px] text-gray-700">Capitol: {quiz.chapter}</div>
+            </div>
+
           </div>
         ))}
+      </div>
+
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
-            <p>{question.question}</p>
-            <fieldset>
+          <div key={index} className="mb-5 shadow-md rounded-lg">
+            <div className="py-2 bg-blue-600 rounded-t-lg"><p className="px-2 text-justify text-[18px] text-white ">{question.question}</p>
+              {!question.image ?
+                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
+                </div> : <div className="hidden"></div>}</div>
+            <fieldset className={`p-2 ${question.answer_type
+              == "string" ? "grid grid-cols-2 md:grid-cols-3" : "block"} `}>
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i}>
+                <div key={i} className="flex py-[2px] text-[16px] items-center">
                   <input
+                    required
                     type="radio"
                     value={answer}
                     id={answer}
-                    name={`question-${question._id}`}
+                    name={question._id}
+                    onChange={handleChange}
                   />
-                  <label htmlFor={answer}>{answer}</label>
+                  <label htmlFor={answer} className="ml-2">{answer}</label>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
+      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
     </div>
   );
 }

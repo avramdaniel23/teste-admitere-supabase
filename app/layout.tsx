@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en" className={GeistSans.className} suppressHydrationWarning>
       <body className="bg-background text-foreground">
         <Providers>
-          <main className="min-h-screen">
+          <main className="min-h-screen flex flex-col items-center justify-center">
             {/* <div className="h-[100vh] absolute left-0 top-0 w-[12.5%] bg-white shadow-xl ">
             <AsideNavbar />
           </div> */}

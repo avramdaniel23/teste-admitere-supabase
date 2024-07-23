@@ -5,6 +5,7 @@ import AuthButton from "@/components/AuthButton";
 import Logo from "@/components/Logo/Logo";
 import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNavigation";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
+import Sidebar from "@/components/Navigation/Sidebar/Sidebar";
 import Sidebar from "@/components/Navigation/Sidebar/sidebar";
 
 async function getTimeData() {
@@ -42,7 +43,7 @@ export default async function DashboardLayout({ children }: any) {
   const sunrise = convertTime12to24(timeData.results.sunrise);
   const sunset = convertTime12to24(timeData.results.sunset);
   return (
-    <div>
+    <div className="w-full min-h-screen flex flex-col">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-[75px] lg:hidden">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <div className="flex lg:hidden">
@@ -53,7 +54,7 @@ export default async function DashboardLayout({ children }: any) {
         </div>
       </nav>
 
-      <main className="flex bg-[#fafafa] ">
+      <main className="flex bg-[#fafafa] flex-grow">
         <Sidebar user={user} />
         <div className="p-4 bg-[#fafafa] md:p-10 h-full lg:max-w-7xl lg:mx-auto w-full">
           {children}
