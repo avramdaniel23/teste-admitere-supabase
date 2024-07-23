@@ -1,5 +1,4 @@
 "use client";
-
 import QuestionCard from "@/components/Quizz/QuestionCard";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
