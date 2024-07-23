@@ -95,18 +95,21 @@ export default function QuizzesJoin() {
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div
-            key={index}
-            className="flex w-full items-center justify-around text-md lg:ext-lg font-bold border-b-2 pb-4 lg:pb-8"
-          >
-            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
-              {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+          <div key={index}>
+            <div className=" rounded-lg p-2 px-4 flex justify-center items-center">
+              <h1 className=" text-lg font-bold">
+                {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+              </h1>
             </div>
-            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
-              {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
-            </div>
-            <div className="bg-slate-200  shadow-lg rounded-lg p-2 px-4">
-              {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+            <div>
+              <div>
+                Materie:{" "}
+                {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
+              </div>
+              <div>
+                Capitol:{" "}
+                {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+              </div>
             </div>
           </div>
         ))}
