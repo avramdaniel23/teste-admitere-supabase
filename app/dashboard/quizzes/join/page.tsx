@@ -1,4 +1,5 @@
 "use client";
+import AnswersSection from "@/components/Quizz/AnswersSection";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -93,17 +94,35 @@ export default function QuizzesJoin() {
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div>{quiz.name}</div>
-            <div>{quiz.subject}</div>
-            <div>{quiz.chapter}</div>
+          <div key={index} className="flex gap-2 items-center justify-center">
+            <div className="font-semibold ">
+              {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+            </div>
+            <div className="font-semibold">
+              {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
+            </div>
+            <div className="font-semibold">
+              {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+            </div>
           </div>
         ))}
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            className="border-2 rounded-lg p-4 border-black mt-4 shadow-lg"
+          >
+            {/* <div className=" flex items-stretch justify-start "> */}
+            <span className="flex items-center justify-center border-2 p-2 rounded-full size-8 mr-2 border-gray-400">
+              <p className="">{index + 1}</p>
+            </span>
+
             <p>{question.question}</p>
-            <fieldset>
+            {/* </div> */}
+            <AnswersSection
+              questionAnswer={question.question_answers}
+            ></AnswersSection>
+            {/* <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
                 <div key={i}>
                   <input
@@ -115,7 +134,7 @@ export default function QuizzesJoin() {
                   <label htmlFor={answer}>{answer}</label>
                 </div>
               ))}
-            </fieldset>
+            </fieldset> */}
           </div>
         ))}
     </div>
