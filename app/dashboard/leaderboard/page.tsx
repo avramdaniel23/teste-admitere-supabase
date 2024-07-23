@@ -37,7 +37,7 @@ export default function Leaderboard() {
 
   return (
     <div>
-      <h1>Leaderboard</h1>
+      <h1 className="text-[36px] font-[900]  ">Leaderboard</h1>
       {leaderboard.length === 0 ? (
         <p>No leaderboard data available.</p>
       ) : (
