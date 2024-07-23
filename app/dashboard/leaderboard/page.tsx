@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import LeaderboardComp from "@/components/Leaderboard/leaderboard";
 import Scoreboard from "@/components/Leaderboard/scoreboard";
+import PopoverNav from "@/components/Leaderboard/navleader";
 
 export default function Leaderboard() {
   // const [leaderboard, setLeaderboard] = useState<any[]>([]);
@@ -56,7 +57,7 @@ export default function Leaderboard() {
   // );
   return (
     <div>
-      {/* <PopoverNav /> */}
+      <PopoverNav />
       <LeaderboardComp />
       <Scoreboard />
     </div>
