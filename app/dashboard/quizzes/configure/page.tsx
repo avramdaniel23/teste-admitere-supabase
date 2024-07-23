@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import useRouter from next/router
 import { Field, Input, Label, Switch } from "@headlessui/react";
 import { subjects } from "@/libs/selectOptions/generateQuizzOptions";
 import {
@@ -35,6 +36,7 @@ interface Subject {
 }
 
 export default function QuizzesConfigure() {
+  const router = useRouter(); // Use the useRouter hook correctly here
   const [configuration, setConfiguration] = useState<Configuration>({
     name: "",
     materie: "",
@@ -113,11 +115,7 @@ export default function QuizzesConfigure() {
 
     try {
       const questionIDs = await fetchQuestionsData(configuration);
-      console.log("🚀 ~ handleGenerate ~ questionIDs:", questionIDs);
-      // await submitQuizz(configuration, questionIDs);
-      console.log(configuration);
-
-      console.log("Quiz successfully created");
+      await submitQuizz(configuration, questionIDs, router);
     } catch (error) {
       console.error("Error generating quiz:", error);
       alert("Error generating quiz. Please try again.");

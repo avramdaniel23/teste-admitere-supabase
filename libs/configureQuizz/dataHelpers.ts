@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 interface Configuration {
   name: string;
   materie: string;
@@ -39,7 +41,8 @@ export const fetchQuestionsData = async (configuration: Configuration) => {
 
 export const submitQuizz = async (
   configuration: Configuration,
-  questionsIDS: []
+  questionsIDS: string[],
+  router: any
 ) => {
   const dataToBeSent = { config: configuration, questionsIDS };
   try {
@@ -51,7 +54,9 @@ export const submitQuizz = async (
       body: JSON.stringify(dataToBeSent),
     });
     if (response.ok) {
-      console.log("Quiz successfully created");
+      const responseData = await response.json();
+      const quizID = responseData.quizID;
+      router.push(`/dashboard/quizzes/generated-quizz?quizID=${quizID}`);
     } else {
       alert("Error submitting the form. Please try again.");
     }
