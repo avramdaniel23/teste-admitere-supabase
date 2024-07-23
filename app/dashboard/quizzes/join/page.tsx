@@ -1,6 +1,7 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import getUser from "@/libs/getUser/getUser";
 
 interface QuizType {
   _id: any;
@@ -14,11 +15,37 @@ interface QuizType {
   questions: any[];
 }
 
+interface SubmissionAnswer {
+  question_id: any;
+  selected_answer_id: any;
+  is_correct: boolean;
+}
+
+interface Configuration {
+  _id: any;
+  quiz_id: any;
+  user_id: any;
+  score: number;
+  submission_answers: SubmissionAnswer[];
+}
+
+const defaultConfiguration: Configuration = {
+  _id: null,
+  quiz_id: null,
+  user_id: null,
+  score: 0,
+  submission_answers: [],
+};
+
 export default function QuizzesJoin() {
+  const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
+  const router = useRouter();
+
+  let user = getUser();
 
   const fetchQuizData = async () => {
     try {
@@ -88,6 +115,59 @@ export default function QuizzesJoin() {
     );
   }
 
+  const handleChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+
+    // Find the current question based on the _id
+    const currentQuestion = filteredQuestions.find(q => q._id === name);
+
+    // Check if the selected answer is correct
+    const is_correct = currentQuestion && value === currentQuestion.correct_answer;
+
+    // Update configuration state
+    setConfiguration((prevConfig) => {
+      const newSubmissionAnswer = {
+        question_id: name,
+        selected_answer_id: value,
+        is_correct,
+      };
+
+      const updatedSubmissionAnswers = [
+        ...prevConfig.submission_answers.filter(
+          (answer) => answer.question_id !== name
+        ),
+        newSubmissionAnswer,
+      ];
+
+      return {
+        ...prevConfig,
+        quiz_id: quizID,
+        user_id: user.id,
+        submission_answers: updatedSubmissionAnswers,
+        score: is_correct ? prevConfig.score + 10 : prevConfig.score,
+      };
+    });
+  };
+
+  const submitAnswer = async (event: any) => {
+    event.preventDefault();
+
+    const response = await fetch("/api/post/submissions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(configuration),
+    });
+
+    if (response.ok) {
+      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
+    } else {
+      console.error('Failed to submit answers')
+    }
+  };
+
+  console.log(quizzesData)
   return (
     <div className="flex flex-col gap-4 mb-14">
 
@@ -116,18 +196,20 @@ export default function QuizzesJoin() {
               {question.question_answers.map((answer: any, i: any) => (
                 <div className="flex items-center gap-1 bg-slate-100 rounded-md p-1 hover:bg-blue-100 duration-100" key={i}>
                   <input
+                    required
                     type="radio"
                     value={answer}
                     id={answer}
                     name={`question-${question._id}`}
                     className="w-4 h-4"
                   />
-                  <label className="w-full h-full" htmlFor={answer}>{answer}</label>
+                  <label className="w-full h-full" htmlFor={answer} className="ml-2">{answer}</label>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
+      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
       </div>
 
     </div>
