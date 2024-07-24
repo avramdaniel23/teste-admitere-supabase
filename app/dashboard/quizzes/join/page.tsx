@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
 
 interface QuizType {
@@ -38,9 +38,11 @@ const defaultConfiguration: Configuration = {
 };
 
 export default function QuizzesJoin() {
-  const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
+  const [isLoadingQuiz, setIsLoadingQuiz] = useState(true);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
@@ -66,10 +68,13 @@ export default function QuizzesJoin() {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
+        setIsLoadingQuiz(true);
         const quiz = await fetchQuizData();
         setQuizzes([quiz]); // Ensure the quiz data is set correctly
       } catch (error) {
         console.error("Error fetching quiz data:", error);
+      } finally {
+        setIsLoadingQuiz(false);
       }
     };
 
@@ -111,7 +116,7 @@ export default function QuizzesJoin() {
 
   if (quizzesData.length > 0 && quizzesData[0].questions) {
     filteredQuestions = questionsData.filter((question: any) =>
-      quizzesData[0].questions.filter((q: any) => q._id === question._id)
+      quizzesData[0].questions.filter((q: any) => q._id === question._id),
     );
   }
 
@@ -122,10 +127,11 @@ export default function QuizzesJoin() {
     const currentQuestion = filteredQuestions.find(q => q._id === name);
 
     // Check if the selected answer is correct
-    const is_correct = currentQuestion && value === currentQuestion.correct_answer;
+    const is_correct =
+      currentQuestion && value === currentQuestion.correct_answer;
 
     // Update configuration state
-    setConfiguration((prevConfig) => {
+    setConfiguration(prevConfig => {
       const newSubmissionAnswer = {
         question_id: name,
         selected_answer_id: value,
@@ -134,7 +140,7 @@ export default function QuizzesJoin() {
 
       const updatedSubmissionAnswers = [
         ...prevConfig.submission_answers.filter(
-          (answer) => answer.question_id !== name
+          answer => answer.question_id !== name,
         ),
         newSubmissionAnswer,
       ];
@@ -163,53 +169,125 @@ export default function QuizzesJoin() {
     if (response.ok) {
       router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
     } else {
-      console.error('Failed to submit answers')
+      console.error("Failed to submit answers");
     }
   };
 
-  console.log(quizzesData)
+  console.log(quizzesData);
   return (
     <div>
-      <div className="mb-5 font-medium">{quizzesData &&
-        quizzesData.length > 0 &&
-        quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div className="text-center text-[28px]">{quiz.name}</div>
-            <div className="flex flex-col lg:flex-row">
-              <div className="lg:mr-5 text-[18px] text-gray-700">Materie: {quiz.subject}</div>
-              <div className="text-[18px] text-gray-700">Capitol: {quiz.chapter}</div>
-            </div>
-
-          </div>
-        ))}
-      </div>
-
-      {filteredQuestions &&
-        filteredQuestions.map((question, index) => (
-          <div key={index} className="mb-5 shadow-md rounded-lg">
-            <div className="py-2 bg-blue-600 rounded-t-lg"><p className="px-2 text-justify text-[18px] text-white ">{question.question}</p>
-              {!question.image ?
-                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
-                </div> : <div className="hidden"></div>}</div>
-            <fieldset className={`p-2 ${question.answer_type
-              == "string" ? "grid grid-cols-2 md:grid-cols-3" : "block"} `}>
-              {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="flex py-[2px] text-[16px] items-center">
-                  <input
-                    required
-                    type="radio"
-                    value={answer}
-                    id={answer}
-                    name={question._id}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={answer} className="ml-2">{answer}</label>
+      {isLoadingQuiz ? (
+        <LoadingQuiz />
+      ) : (
+        <>
+          <div className="mb-5 font-medium">
+            {quizzesData &&
+              quizzesData.length > 0 &&
+              quizzesData.map((quiz: any, index: any) => (
+                <div key={index}>
+                  <div className="mb-5 text-center text-[28px]">
+                    {quiz.name}
+                  </div>
+                  <div className="flex flex-col lg:flex-row">
+                    <div className="text-[18px] text-gray-700 lg:mr-5">
+                      Materie: {quiz.subject}
+                    </div>
+                    <div className="text-[18px] text-gray-700">
+                      Capitol: {quiz.chapter}
+                    </div>
+                  </div>
                 </div>
               ))}
-            </fieldset>
           </div>
-        ))}
-      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+
+          {filteredQuestions &&
+            filteredQuestions.map((question, index) => (
+              <div key={index} className="mb-8 rounded-lg shadow-md">
+                <div className="rounded-t-lg bg-blue-600 p-3 leading-5">
+                  <p className="px-2 text-justify text-[18px] text-white">
+                    {question.question}
+                  </p>
+                  {question.image ? (
+                    <div className="h-[auto mx-auto mt-2 flex w-[70%] rounded-lg bg-pink-300 md:w-[45%] lg:w-[500px]"></div>
+                  ) : (
+                    <div className="hidden"></div>
+                  )}
+                </div>
+                <fieldset
+                  className={`p-2 ${
+                    question.answer_type == "string"
+                      ? "grid grid-cols-1 gap-3 p-5 lg:grid-cols-2"
+                      : "block"
+                  } `}
+                >
+                  {question.question_answers.map((answer: any, i: any) => (
+                    <label
+                      htmlFor={answer}
+                      key={i}
+                      className="flex w-full cursor-pointer items-center rounded-xl border-2 border-gray-200 bg-white transition-colors has-[:checked]:border-blue-400 has-[:checked]:bg-blue-100"
+                    >
+                      <span className="ml-5 w-full cursor-pointer py-4">
+                        {answer}
+                      </span>
+                      <input
+                        required
+                        type="radio"
+                        value={answer}
+                        id={answer}
+                        name={question._id}
+                        onChange={handleChange}
+                        className="mr-5 box-content size-2 appearance-none rounded-full border-[5px] border-white bg-white bg-clip-padding outline-none ring-1 ring-gray-300 transition-colors checked:border-blue-500 checked:ring-blue-500"
+                      />
+                    </label>
+                  ))}
+                </fieldset>
+              </div>
+            ))}
+        </>
+      )}
+
+      <button
+        type="submit"
+        onClick={submitAnswer}
+        className="m-4 mx-auto mb-[75px] flex w-full justify-center rounded-lg bg-blue-600 py-3 text-white shadow-md hover:opacity-75 md:w-[200px]"
+      >
+        Trimite răspunsul
+      </button>
     </div>
+  );
+}
+
+function LoadingQuiz() {
+  return (
+    <section role="status" className="max-w-7xl animate-pulse space-y-10">
+      <div className="mb-4 h-20 w-full rounded-lg bg-gray-300"></div>
+      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
+        <div className="col-span-2 rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+      </div>
+      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
+        <div className="col-span-2 rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+      </div>
+      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
+        <div className="col-span-2 rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+        <div className="rounded-lg bg-gray-300"></div>
+      </div>
+    </section>
   );
 }
