@@ -99,9 +99,11 @@ export default function QuizzesJoin() {
               {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
             </div>
             <div className="font-semibold">
+              Materie:{" "}
               {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
             </div>
             <div className="font-semibold">
+              Capitol: {""}
               {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
             </div>
           </div>
