@@ -32,16 +32,19 @@ const QuestionCard = ({
       <p className="p-4">
         {index}. {question.question}
       </p>
-      <div
-        className={`w-full items-center justify-center flex ${
-          questionImage && "p-4 mb-6"
-        }`}
-      >
-        <img
-          className="  lg:max-w-[50%] object-fit border-2 shadow-md"
-          src={questionImage}
-        />
-      </div>
+
+      {questionImage && (
+        <div
+          className={`w-full items-center justify-center flex ${
+            questionImage && "p-4 mb-6"
+          }`}
+        >
+          <img
+            className="  lg:max-w-[50%] object-fit border-2 shadow-md"
+            src={questionImage}
+          />
+        </div>
+      )}
 
       <RadioGroup
         value={selectedRadio}

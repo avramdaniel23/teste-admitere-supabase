@@ -36,14 +36,6 @@ interface SubmissionAnswer {
   is_correct: boolean;
 }
 
-interface Configuration {
-  _id: any;
-  quiz_id: any;
-  user_id: any;
-  score: number;
-  submission_answers: SubmissionAnswer[];
-}
-
 const defaultConfiguration: Configuration = {
   _id: null,
   quiz_id: null,
