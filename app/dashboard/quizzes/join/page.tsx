@@ -29,6 +29,15 @@ interface Configuration {
   submission_answers: SubmissionAnswer[];
 }
 
+interface LeaderboardConfig {
+  _id: any;
+  user_id: any;
+  subject: string | null;
+  chapter: string | null;
+  total_score: number;
+  total_quizzes: number;
+}
+
 const defaultConfiguration: Configuration = {
   _id: null,
   quiz_id: null,
@@ -37,13 +46,27 @@ const defaultConfiguration: Configuration = {
   submission_answers: [],
 };
 
+const defLeaderboardConfig: LeaderboardConfig = {
+  _id: null,
+  user_id: null,
+  subject: null,
+  chapter: null,
+  total_score: 0,
+  total_quizzes: 0,
+};
+
 export default function QuizzesJoin() {
-  const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
+  const [leaderboardConfig, setLeaderboardConfig] =
+    useState<LeaderboardConfig>(defLeaderboardConfig);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
+  const subject = quizzesData[0]?.subject;
+  const chapter = quizzesData[0]?.chapter;
 
   let user = getUser();
 
@@ -114,15 +137,15 @@ export default function QuizzesJoin() {
       quizzesData[0].questions.filter((q: any) => q._id === question._id)
     );
   }
-
   const handleChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
 
     // Find the current question based on the _id
-    const currentQuestion = filteredQuestions.find(q => q._id === name);
+    const currentQuestion = filteredQuestions.find((q) => q._id === name);
 
     // Check if the selected answer is correct
-    const is_correct = currentQuestion && value === currentQuestion.correct_answer;
+    const is_correct =
+      currentQuestion && value === currentQuestion.correct_answer;
 
     // Update configuration state
     setConfiguration((prevConfig) => {
@@ -143,56 +166,102 @@ export default function QuizzesJoin() {
         ...prevConfig,
         quiz_id: quizID,
         user_id: user.id,
+        subject: subject,
+        chapter: chapter,
         submission_answers: updatedSubmissionAnswers,
         score: is_correct ? prevConfig.score + 10 : prevConfig.score,
       };
     });
   };
 
-  const submitAnswer = async (event: any) => {
+  const submitBoth = async (event: any) => {
     event.preventDefault();
 
-    const response = await fetch("/api/post/submissions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(configuration),
-    });
+    try {
+      // Submit answers first
+      const answerResponse = await fetch("/api/post/submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(configuration),
+      });
 
-    if (response.ok) {
-      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
-    } else {
-      console.error('Failed to submit answers')
+      if (!answerResponse.ok) {
+        throw new Error("Failed to submit answers");
+      }
+
+      // Prepare leaderboard data
+      const leaderboardData = {
+        user_id: user.id,
+        subject: subject,
+        chapter: chapter,
+        total_score: configuration.score,
+        total_quizzes: 1,
+      };
+
+      // If answer submission is successful, update the leaderboard
+      const leaderboardResponse = await fetch("/api/post/leaderboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(leaderboardData),
+      });
+
+      if (!leaderboardResponse.ok) {
+        throw new Error("Failed to update leaderboard");
+      }
+
+      // If both are successful, navigate to the results page
+      router.push(
+        `/dashboard/quizzes/join/results?quizID=${quizID}}&userID=${user.id}`
+      );
+    } catch (error) {
+      console.error("Failed to submit answers");
     }
   };
 
-  console.log(quizzesData)
   return (
     <div>
-      <div className="mb-5 font-medium">{quizzesData &&
-        quizzesData.length > 0 &&
-        quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div className="text-center text-[28px]">{quiz.name}</div>
-            <div className="flex flex-col lg:flex-row">
-              <div className="lg:mr-5 text-[18px] text-gray-700">Materie: {quiz.subject}</div>
-              <div className="text-[18px] text-gray-700">Capitol: {quiz.chapter}</div>
+      <div className="mb-5 font-medium">
+        {quizzesData &&
+          quizzesData.length > 0 &&
+          quizzesData.map((quiz: any, index: any) => (
+            <div key={index}>
+              <div className="text-center text-[28px]">{quiz.name}</div>
+              <div className="flex flex-col lg:flex-row">
+                <div className="lg:mr-5 text-[18px] text-gray-700">
+                  Materie: {quiz.subject}
+                </div>
+                <div className="text-[18px] text-gray-700">
+                  Capitol: {quiz.chapter}
+                </div>
+              </div>
             </div>
-
-          </div>
-        ))}
+          ))}
       </div>
 
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
           <div key={index} className="mb-5 shadow-md rounded-lg">
-            <div className="py-2 bg-blue-600 rounded-t-lg"><p className="px-2 text-justify text-[18px] text-white ">{question.question}</p>
-              {!question.image ?
-                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
-                </div> : <div className="hidden"></div>}</div>
-            <fieldset className={`p-2 ${question.answer_type
-              == "string" ? "grid grid-cols-2 md:grid-cols-3" : "block"} `}>
+            <div className="py-2 bg-blue-600 rounded-t-lg">
+              <p className="px-2 text-justify text-[18px] text-white ">
+                {question.question}
+              </p>
+              {!question.image ? (
+                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg"></div>
+              ) : (
+                <div className="hidden"></div>
+              )}
+            </div>
+            <fieldset
+              className={`p-2 ${
+                question.answer_type == "string"
+                  ? "grid grid-cols-2 md:grid-cols-3"
+                  : "block"
+              } `}
+            >
               {question.question_answers.map((answer: any, i: any) => (
                 <div key={i} className="flex py-[2px] text-[16px] items-center">
                   <input
@@ -203,13 +272,21 @@ export default function QuizzesJoin() {
                     name={question._id}
                     onChange={handleChange}
                   />
-                  <label htmlFor={answer} className="ml-2">{answer}</label>
+                  <label htmlFor={answer} className="ml-2">
+                    {answer}
+                  </label>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
-      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+      <button
+        type="submit"
+        onClick={submitBoth}
+        className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md"
+      >
+        Trimite răspunsul
+      </button>
     </div>
   );
 }
