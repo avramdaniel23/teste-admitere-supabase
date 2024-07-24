@@ -1,6 +1,5 @@
 "use client";
-import QuestionCard from "@/components/Quizz/QuestionCard";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
 
@@ -101,7 +100,6 @@ export default function QuizzesJoin() {
       try {
         const questionsData = await fetchQuestionsData();
         setQuestions(questionsData);
-        console.log(questionsData);
       } catch (error) {
         console.error("Error fetching questions data:", error);
       }
@@ -118,7 +116,9 @@ export default function QuizzesJoin() {
     );
   }
 
-  const handleChange = (name: any, value: any) => {
+  const handleChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find((q) => q._id === name);
 
@@ -134,15 +134,12 @@ export default function QuizzesJoin() {
         is_correct,
       };
 
-      console.log(newSubmissionAnswer);
-
       const updatedSubmissionAnswers = [
         ...prevConfig.submission_answers.filter(
           (answer) => answer.question_id !== name
         ),
         newSubmissionAnswer,
       ];
-      // console.log(updatedSubmissionAnswers);
 
       return {
         ...prevConfig,
@@ -172,48 +169,64 @@ export default function QuizzesJoin() {
     }
   };
 
+  console.log(quizzesData);
   return (
     <div>
-      {quizzesData &&
-        quizzesData.length > 0 &&
-        quizzesData.map((quiz: any, index: any) => (
-          <div key={index}>
-            <div className=" rounded-lg p-2 px-4 flex justify-center items-center">
-              <h1 className=" text-lg font-bold">
-                {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
-              </h1>
-            </div>
-            <div>
-              <div>
-                Materie:{" "}
-                {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
-              </div>
-              <div>
-                Capitol:{" "}
-                {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+      <div className="mb-5 font-medium">
+        {quizzesData &&
+          quizzesData.length > 0 &&
+          quizzesData.map((quiz: any, index: any) => (
+            <div key={index}>
+              <div className="text-center text-[28px]">{quiz.name}</div>
+              <div className="flex flex-col lg:flex-row">
+                <div className="lg:mr-5 text-[18px] text-gray-700">
+                  Materie: {quiz.subject}
+                </div>
+                <div className="text-[18px] text-gray-700">
+                  Capitol: {quiz.chapter}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
+
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <QuestionCard
-            question={question}
-            key={index}
-            index={index + 1}
-            name={question._id}
-            onChange={handleChange}
-            questionImage={
-              (index + 1) % 2 == 0
-                ? "https://i.pinimg.com/564x/60/83/70/6083706875765e2f3d449a30238143bc.jpg"
-                : ""
-            }
-            anwserImage={
-              index % 3 == 0
-                ? "https://i.pinimg.com/564x/31/8d/5a/318d5ad2c866f6c4998b986f248567c1.jpg"
-                : ""
-            }
-          />
+          <div key={index} className="mb-5 shadow-md rounded-lg">
+            <div className="py-2 bg-blue-600 rounded-t-lg">
+              <p className="px-2 text-justify text-[18px] text-white ">
+                {question.question}
+              </p>
+              {!question.image ? (
+                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg"></div>
+              ) : (
+                <div className="hidden"></div>
+              )}
+            </div>
+            <fieldset
+              className={`p-2 ${
+                question.answer_type == "string"
+                  ? "grid grid-cols-2 md:grid-cols-3"
+                  : "block"
+              } `}
+            >
+              {question.question_answers.map((answer: any, i: any) => (
+                <div key={i} className="flex py-[2px] text-[16px] items-center">
+                  <input
+                    required
+                    type="radio"
+                    value={answer}
+                    id={answer}
+                    name={question._id}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor={answer} className="ml-2">
+                    {answer}
+                  </label>
+                </div>
+              ))}
+            </fieldset>
+          </div>
         ))}
       <button
         type="submit"

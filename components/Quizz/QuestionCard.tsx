@@ -1,13 +1,26 @@
 import { Radio, RadioGroup } from "@headlessui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import AnswerCard from "./AnswerCard";
 
 interface Props {
   question: any;
   index: number;
+  name: any;
+  onChange: Function;
+  questionImage: any;
+  anwserImage: any;
 }
 
-const QuestionCard = ({ question, index }: Props) => {
+const QuestionCard = ({
+  question,
+  index,
+  name,
+  onChange,
+  questionImage,
+  anwserImage,
+}: Props) => {
   const [selectedRadio, setSelectedRadio] = useState("");
+  const userAnswer = useRef("");
   const [isFlagged, setIsFlagged] = useState<boolean>(false);
 
   return (
@@ -19,36 +32,34 @@ const QuestionCard = ({ question, index }: Props) => {
       <p className="p-4">
         {index}. {question.question}
       </p>
-      {/* <div
-        onClick={() => {
-          setIsFlagged(!isFlagged);
-        }}
-        className="absolute top-4 right-4 cursor-pointer"
+      <div
+        className={`w-full items-center justify-center flex ${
+          questionImage && "p-4 mb-6"
+        }`}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          //   fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className={`size-6 ${isFlagged ? "fill-red-500" : "fill-none"}`}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5"
-          />
-        </svg>
-      </div> */}
+        <img
+          className="  lg:max-w-[50%] object-fit border-2 shadow-md"
+          src={questionImage}
+        />
+      </div>
 
       <RadioGroup
         value={selectedRadio}
-        onChange={setSelectedRadio}
+        onChange={(e) => {
+          setSelectedRadio(e);
+          userAnswer.current = e;
+          onChange(name, userAnswer.current);
+        }}
         className="w-full grid grid-cols-1 gap-2 lg:grid-cols-2  lg:gap-4 "
       >
         {question.question_answers.map((answer: any, index: number) => {
           return (
-            <AnswerCard answer={answer} selected={selectedRadio} key={index} />
+            <AnswerCard
+              answer={answer}
+              selected={selectedRadio}
+              key={index}
+              answerImage={anwserImage}
+            />
           );
         })}
       </RadioGroup>
@@ -74,58 +85,6 @@ const QuestionCard = ({ question, index }: Props) => {
         </svg>
       </div>
     </div>
-  );
-};
-
-interface CardProps {
-  answer: string;
-  selected: string;
-}
-
-const AnswerCard = ({ answer, selected }: CardProps) => {
-  return (
-    <Radio
-      value={answer}
-      className={`${
-        selected == answer
-          ? "bg-blue-300 border-black"
-          : "bg-white border-slate-200"
-      }  p-4 flex items-center  justify-between shadow-md border  rounded-md relative cursor-pointer  hover:bg-blue-300 hover:border-black mb-2 transition-all duration-300 ease-in-out `}
-      id={answer}
-    >
-      <div className="font-normal">{answer}</div>
-      {selected == answer ? (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d={`M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z`}
-          />
-        </svg>
-      ) : (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d={`M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z`}
-          />
-        </svg>
-      )}
-    </Radio>
   );
 };
 
