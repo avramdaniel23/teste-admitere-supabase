@@ -2,6 +2,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
+import {Field, Label, Radio, RadioGroup} from "@headlessui/react";
+import QuizQuestionCard from "@/components/Cards/QuizQuestionCard";
 
 interface QuizType {
   _id: any;
@@ -115,9 +117,7 @@ export default function QuizzesJoin() {
     );
   }
 
-  const handleChange = (event: { target: { name: any; value: any } }) => {
-    const { name, value } = event.target;
-
+  const handleChange = (name: any, value: any) => {
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find(q => q._id === name);
 
@@ -138,6 +138,8 @@ export default function QuizzesJoin() {
         ),
         newSubmissionAnswer,
       ];
+
+      console.log(`Question ${name} set to ${value}`)
 
       return {
         ...prevConfig,
@@ -167,7 +169,6 @@ export default function QuizzesJoin() {
     }
   };
 
-  console.log(quizzesData)
   return (
     <div>
       <div className="mb-5 font-medium">{quizzesData &&
@@ -186,29 +187,7 @@ export default function QuizzesJoin() {
 
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index} className="mb-5 shadow-md rounded-lg">
-            <div className="py-2 bg-blue-600 rounded-t-lg"><p className="px-2 text-justify text-[18px] text-white ">{question.question}</p>
-              {!question.image ?
-                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
-                </div> : <div className="hidden"></div>}</div>
-            <fieldset className={`p-2 ${question.answer_type
-              == "string" ? "grid grid-cols-2 md:grid-cols-3" : "block"} `}>
-              {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="flex py-[2px] text-[16px] items-center">
-                  <input
-                    required
-                      className={"p-4"}
-                    type="radio"
-                    value={answer}
-                    id={answer}
-                    name={question._id}
-                    onChange={handleChange}
-                  />
-                  <label className={"p-4 m-4"} htmlFor={answer}>{answer}</label>
-                </div>
-              ))}
-            </fieldset>
-          </div>
+            <QuizQuestionCard index={index} question={question} answers={question.question_answers} onAnswer={handleChange}></QuizQuestionCard>
         ))}
       <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
     </div>
