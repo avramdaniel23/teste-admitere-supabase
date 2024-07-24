@@ -1,12 +1,12 @@
-'use client'
-import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { User } from '@supabase/supabase-js'
+"use client";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { User } from "@supabase/supabase-js";
 
 function capitalizeFirstLetter(string: string | undefined) {
-  return string && string.charAt(0).toUpperCase() + string.slice(1)
+  return string && string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 export default function Sidebar({ user }: { user: User | null }) {
@@ -15,8 +15,8 @@ export default function Sidebar({ user }: { user: User | null }) {
     toggleMenu,
     buttonRef,
     portalRef,
-  } = useSidebarMenu()
-  const username = user?.email?.split('@')[0]
+  } = useSidebarMenu();
+  const username = user?.email?.split("@")[0];
 
   return (
     <aside
@@ -25,7 +25,7 @@ export default function Sidebar({ user }: { user: User | null }) {
     >
       <div
         className={`flex items-center ${
-          expanded ? 'justify-between' : 'justify-center'
+          expanded ? "justify-between" : "justify-center"
         }`}
       >
         <Image
@@ -34,7 +34,7 @@ export default function Sidebar({ user }: { user: User | null }) {
           width={100}
           height={100}
           className={`overflow-hidden transition-all ${
-            expanded ? 'w-9' : 'w-0'
+            expanded ? "w-9" : "w-0"
           }`}
         ></Image>
         <button
@@ -240,7 +240,7 @@ export default function Sidebar({ user }: { user: User | null }) {
             {capitalizeFirstLetter(username?.at(0))}
           </div>
           <div
-            className={`flex items-center justify-between overflow-hidden transition-all ${expanded ? 'ml-3 w-52' : 'w-0'} `}
+            className={`flex items-center justify-between overflow-hidden transition-all ${expanded ? "ml-3 w-52" : "w-0"} `}
           >
             <div className="leading-4">
               <h4 className="font-semibold">{username}</h4>
@@ -264,17 +264,17 @@ export default function Sidebar({ user }: { user: User | null }) {
         </div>
       </nav>
     </aside>
-  )
+  );
 }
 
 function useSidebarMenu() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const portalRef = useRef<HTMLUListElement | null>(null)
-  const buttonRef = useRef<HTMLButtonElement | null>(null)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const portalRef = useRef<HTMLUListElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleMenu = () => {
-    setIsMenuOpen(prev => !prev)
-  }
+    setIsMenuOpen(prev => !prev);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -283,20 +283,20 @@ function useSidebarMenu() {
         !portalRef.current?.contains(event.target as Node) &&
         !buttonRef.current?.contains(event.target as Node)
       ) {
-        setIsMenuOpen(false)
+        setIsMenuOpen(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handleClickOutside)
-    document.addEventListener('touchstart', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-      document.removeEventListener('touchstart', handleClickOutside)
-    }
-  }, [isMenuOpen])
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
-  return { isMenuOpen, toggleMenu, portalRef, buttonRef }
+  return { isMenuOpen, toggleMenu, portalRef, buttonRef };
 }
 export function SidebarItem({
   icon,
@@ -304,27 +304,27 @@ export function SidebarItem({
   text,
   isExpanded,
 }: {
-  icon: React.ReactNode
-  href: string
-  text: string
-  isExpanded: boolean
+  icon: React.ReactNode;
+  href: string;
+  text: string;
+  isExpanded: boolean;
 }) {
-  const pathname = usePathname()
-  const isActive = pathname === href
+  const pathname = usePathname();
+  const isActive = pathname === href;
   return (
     <li className="pt-2">
       <Link
         href={href}
         className={`group relative flex cursor-pointer items-center justify-center rounded-md px-3 py-2 font-semibold transition-colors ${
           isActive
-            ? 'bg-neon-blue/10'
-            : 'hover:bg-indigo-100 hover:text-indigo-800'
+            ? "bg-neon-blue/10"
+            : "hover:bg-indigo-100 hover:text-indigo-800"
         } `}
       >
         {icon}
         <span
           className={`overflow-hidden transition-all ${
-            isExpanded ? 'ml-3 w-52' : 'w-0'
+            isExpanded ? "ml-3 w-52" : "w-0"
           }`}
         >
           {text}
@@ -337,5 +337,5 @@ export function SidebarItem({
         )}
       </Link>
     </li>
-  )
+  );
 }
