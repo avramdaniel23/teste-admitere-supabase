@@ -190,7 +190,7 @@ export default function QuizzesJoin() {
         ))}
       </div>
       
-      <div className="sticky top-4 flex w-fit mx-auto p-2 gap-6 items-center justify-around rounded-lg bg-blue-300 lg:mx-0 lg:ml-auto lg:mr-8">
+      <div className="sticky top-4 flex w-fit mx-auto p-2 gap-6 items-center justify-around rounded-lg bg-blue-400 lg:mx-0 lg:ml-auto lg:mr-8">
         <QuizzTimer timerOn={timerOn} />
         <div className="w-1 h-10 bg-white rounded-full"></div>
         <div onClick={toggleTimer} className="flex items-center bg-white p-1 rounded-md cursor-pointer">
@@ -213,19 +213,21 @@ export default function QuizzesJoin() {
                 </div> : <div className="hidden"></div>
               }
             </div>
-            <div className="h-1 w-full bg-zinc-300 rounded-e-full"></div>
+            <div className="h-1 w-full bg-zinc-300 rounded-full"></div>
             <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
               {question.question_answers.map((answer: any, i: any) => (
-                <div className="flex items-center gap-1 bg-zinc-200 rounded-md p-2 hover:bg-blue-200 duration-100 lg:p-3" key={i}>
+                <div className="relative flex items-center gap-1 bg-zinc-200 rounded-md hover:bg-blue-400 duration-100" key={i}>
                   <input
                     required
                     type="radio"
                     value={answer}
                     id={answer}
                     name={`question-${question._id}`}
-                    className="w-4 h-4"
+                    className="absolute ml-2 w-4 h-4 lg:w-5 lg:h-5"
                   />
-                  <label className="w-full h-full" htmlFor={answer}>{answer}</label>
+                  <label className="flex w-full h-12 pl-10" htmlFor={answer}>
+                    <p className="my-auto">{answer}</p>
+                  </label>
                 </div>
               ))}
             </fieldset>
