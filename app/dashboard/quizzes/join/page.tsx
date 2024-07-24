@@ -174,9 +174,8 @@ export default function QuizzesJoin() {
     setTimerOn((prevTimerState) => !prevTimerState);
   };
 
-  console.log(quizzesData)
   return (
-    <div className="relative flex flex-col gap-4 lg:p-6 ">
+    <div className="relative flex flex-col gap-6 lg:p-6 ">
       <div className="bg-white rounded-md">
       {quizzesData &&
         quizzesData.length > 0 &&
@@ -201,17 +200,20 @@ export default function QuizzesJoin() {
           <svg className={`${timerOn ? "size-7 block" : "hidden"}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
           </svg>
-
-
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 lg:gap-16">
+      <div className="flex flex-col gap-10 lg:gap-16">
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div className="flex flex-col gap-6 bg-white p-4 rounded-xl shadow-grey-3 shadow-md  lg:gap-8 lg:p-8" key={index}>
-            <p className="lg:text-lg">{question.question}</p>
-            <div className="w-full h-1 bg-zinc-300 rounded-full"></div>
+          <div className="flex flex-col gap-6 bg-white p-4 rounded-xl shadow-grey-4 shadow-md lg:gap-8 lg:p-8" key={index}>
+            <div className=""><p className="px-2 text-justify lg:text-lg">{question.question}</p>
+              {!question.image ?
+                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg">
+                </div> : <div className="hidden"></div>
+              }
+            </div>
+            <div className="h-1 w-full bg-zinc-300 rounded-e-full"></div>
             <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
               {question.question_answers.map((answer: any, i: any) => (
                 <div className="flex items-center gap-1 bg-zinc-200 rounded-md p-2 hover:bg-blue-200 duration-100 lg:p-3" key={i}>
@@ -229,7 +231,7 @@ export default function QuizzesJoin() {
             </fieldset>
           </div>
         ))}
-      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-400 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
       </div>
 
     </div>
