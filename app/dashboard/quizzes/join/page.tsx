@@ -1,8 +1,8 @@
 "use client";
-import AnswersSection from "@/components/Quizz/AnswersSection";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
+import AnswersSection from "@/components/Quizz/AnswersSection";
 
 interface QuizType {
   _id: any;
@@ -39,7 +39,6 @@ const defaultConfiguration: Configuration = {
 };
 
 export default function QuizzesJoin() {
-  let user = getUser();
   const [configuration, setConfiguration] =
     useState<Configuration>(defaultConfiguration);
   const [quizzesData, setQuizzes] = useState<any>([]);
@@ -47,6 +46,8 @@ export default function QuizzesJoin() {
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
+
+  let user = getUser();
 
   const fetchQuizData = async () => {
     try {
@@ -116,6 +117,8 @@ export default function QuizzesJoin() {
     );
   }
 
+  console.log(quizzesData);
+
   const handleChange = (name: any, value: any) => {
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find((q) => q._id === name);
@@ -170,26 +173,28 @@ export default function QuizzesJoin() {
   };
 
   console.log(quizzesData);
-
   return (
     <div>
-      {quizzesData &&
-        quizzesData.length > 0 &&
-        quizzesData.map((quiz: any, index: any) => (
-          <div key={index} className="flex gap-2 items-center justify-center">
-            <div className="font-semibold ">
-              {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+      <div className="mb-5 font-medium">
+        {quizzesData &&
+          quizzesData.length > 0 &&
+          quizzesData.map((quiz: any, index: any) => (
+            <div key={index} className="flex gap-2 items-center justify-center">
+              <div className="font-semibold ">
+                {quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}
+              </div>
+              <div className="font-semibold">
+                Materie:{" "}
+                {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
+              </div>
+              <div className="font-semibold">
+                Capitol: {""}
+                {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
+              </div>
             </div>
-            <div className="font-semibold">
-              Materie:{" "}
-              {quiz.subject.charAt(0).toUpperCase() + quiz.subject.slice(1)}
-            </div>
-            <div className="font-semibold">
-              Capitol: {""}
-              {quiz.chapter.charAt(0).toUpperCase() + quiz.chapter.slice(1)}
-            </div>
-          </div>
-        ))}
+          ))}
+      </div>
+
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
           <div
@@ -225,14 +230,16 @@ export default function QuizzesJoin() {
             ></AnswersSection>
             {/* <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i}>
+                <div key={i} className="flex py-[2px] text-[16px] items-center">
                   <input
+                    required
                     type="radio"
                     value={answer}
                     id={answer}
-                    name={`question-${question._id}`}
+                    name={question._id}
+                    onChange={handleChange}
                   />
-                  <label htmlFor={answer}>{answer}</label>
+                  <label htmlFor={answer} className="ml-2">{answer}</label>
                 </div>
               ))}
             </fieldset> */}
