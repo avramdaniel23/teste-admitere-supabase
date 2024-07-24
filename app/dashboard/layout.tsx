@@ -6,7 +6,6 @@ import Logo from "@/components/Logo/Logo";
 import QuickNavigation from "@/components/Navigation/QuickNavigation/QuickNavigation";
 import DarkModeBtn from "@/components/Buttons/DarkMode";
 import Sidebar from "@/components/Navigation/Sidebar/Sidebar";
-import Sidebar from "@/components/Navigation/Sidebar/sidebar";
 
 async function getTimeData() {
   const res = await fetch("https://api.sunrisesunset.io/json?lat=45&lng=25");
