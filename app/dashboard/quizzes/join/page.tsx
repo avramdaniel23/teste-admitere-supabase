@@ -1,7 +1,8 @@
 "use client";
 import AnswersSection from "@/components/Quizz/AnswersSection";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import getUser from "@/libs/getUser/getUser";
 
 interface QuizType {
   _id: any;
@@ -15,11 +16,37 @@ interface QuizType {
   questions: any[];
 }
 
+interface SubmissionAnswer {
+  question_id: any;
+  selected_answer_id: any;
+  is_correct: boolean;
+}
+
+interface Configuration {
+  _id: any;
+  quiz_id: any;
+  user_id: any;
+  score: number;
+  submission_answers: SubmissionAnswer[];
+}
+
+const defaultConfiguration: Configuration = {
+  _id: null,
+  quiz_id: null,
+  user_id: null,
+  score: 0,
+  submission_answers: [],
+};
+
 export default function QuizzesJoin() {
+  let user = getUser();
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
+  const router = useRouter();
 
   const fetchQuizData = async () => {
     try {
@@ -89,6 +116,61 @@ export default function QuizzesJoin() {
     );
   }
 
+  const handleChange = (name: any, value: any) => {
+    // Find the current question based on the _id
+    const currentQuestion = filteredQuestions.find((q) => q._id === name);
+
+    // Check if the selected answer is correct
+    const is_correct =
+      currentQuestion && value === currentQuestion.correct_answer;
+
+    // Update configuration state
+    setConfiguration((prevConfig) => {
+      const newSubmissionAnswer = {
+        question_id: name,
+        selected_answer_id: value,
+        is_correct,
+      };
+
+      console.log(newSubmissionAnswer);
+
+      const updatedSubmissionAnswers = [
+        ...prevConfig.submission_answers.filter(
+          (answer) => answer.question_id !== name
+        ),
+        newSubmissionAnswer,
+      ];
+
+      return {
+        ...prevConfig,
+        quiz_id: quizID,
+        user_id: user.id,
+        submission_answers: updatedSubmissionAnswers,
+        score: is_correct ? prevConfig.score + 10 : prevConfig.score,
+      };
+    });
+  };
+
+  const submitAnswer = async (event: any) => {
+    event.preventDefault();
+
+    const response = await fetch("/api/post/submissions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(configuration),
+    });
+
+    if (response.ok) {
+      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
+    } else {
+      console.error("Failed to submit answers");
+    }
+  };
+
+  console.log(quizzesData);
+
   return (
     <div>
       {quizzesData &&
@@ -112,17 +194,34 @@ export default function QuizzesJoin() {
         filteredQuestions.map((question, index) => (
           <div
             key={index}
-            className="border-2 rounded-lg p-4 border-black mt-4 shadow-lg"
+            className="border-2 rounded-lg p-4 border-slate-500 mt-4 shadow-lg"
           >
             {/* <div className=" flex items-stretch justify-start "> */}
-            <span className="flex items-center justify-center border-2 p-2 rounded-full size-8 mr-2 border-gray-400">
+            <span className="flex items-center justify-center border-2 p-2 rounded-full size-8 mr-2 border-gray-400 mb-2">
               <p className="">{index + 1}</p>
             </span>
 
             <p>{question.question}</p>
+            <div className="flex items-center justify-center  mt-2 rounded-sm w-full">
+              <img
+                className="h-38 w-52 border-2 border-slate-400"
+                src={
+                  (index + 1) % 2 == 0
+                    ? "https://mquest.ro/textcurriculum/9/image3.png"
+                    : ""
+                }
+              ></img>
+            </div>
             {/* </div> */}
             <AnswersSection
               questionAnswer={question.question_answers}
+              name={question._id}
+              onChange={handleChange}
+              answerImage={
+                index % 3 == 0
+                  ? "https://www.math.md/school/formule/trigonom/trigonom36x.gif"
+                  : ""
+              }
             ></AnswersSection>
             {/* <fieldset>
               {question.question_answers.map((answer: any, i: any) => (
@@ -139,6 +238,13 @@ export default function QuizzesJoin() {
             </fieldset> */}
           </div>
         ))}
+      <button
+        type="submit"
+        onClick={submitAnswer}
+        className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md"
+      >
+        Trimite răspunsul
+      </button>
     </div>
   );
 }

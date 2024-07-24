@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import { useSelectedLayoutSegment } from "next/navigation";
+import React, { useRef, useState } from "react";
 
 interface Props {
   questionAnswer: any;
+  name: string;
+  onChange: Function;
+
+  answerImage: any;
 }
 // const borderColors = [
 //   "border-blue-400",
@@ -21,8 +26,14 @@ interface Props {
 //   "bg-yellow-300",
 // ];
 
-const AnswersSection = ({ questionAnswer }: Props) => {
+const AnswersSection = ({
+  questionAnswer,
+  name,
+  onChange,
+  answerImage,
+}: Props) => {
   const [selected, setSelected] = useState("");
+
   return (
     <section className="lg:grid lg:grid-cols-2 md:grid md:grid-cols-1 gap-3 mb-3 mt-3 grid grid-cols-1">
       {questionAnswer.map((question: any, index: any) => (
@@ -30,6 +41,10 @@ const AnswersSection = ({ questionAnswer }: Props) => {
           selected={selected}
           setSelected={setSelected}
           answer={question}
+          name={name}
+          onChange={onChange}
+          answerImage={answerImage}
+
           // borderColor={borderColors[index]}
           // bgColors={bgColors[index]}
         ></AnswerCard>
@@ -44,12 +59,18 @@ interface CardProps {
   // bgColors: string;
   selected: string;
   setSelected: Function;
+  onChange: Function;
+  answerImage: any;
+  name: any;
 }
 
 const AnswerCard = ({
   selected,
   setSelected,
   answer,
+  onChange,
+  name,
+  answerImage,
 }: // borderColor,
 // bgColors,
 CardProps) => {
@@ -57,12 +78,21 @@ CardProps) => {
     <div
       onClick={() => {
         selected == answer ? setSelected("") : setSelected(answer);
+
+        onChange(name, answer);
       }}
       className={`p-3 rounded-lg border-2 ${
         selected == answer ? "border-blue-300" : "border-gray-300"
       } shadow-lg font-semibold ${selected == answer && "bg-sky-200"} `}
     >
       {answer}
+      {answerImage && (
+        <div
+          className={`flex items-center justify-center border-2 mt-2 rounded-sm border-slate-400 h-38 w-52`}
+        >
+          <img src={answerImage}></img>
+        </div>
+      )}
     </div>
   );
 };
