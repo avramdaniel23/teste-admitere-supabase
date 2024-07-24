@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   const client = await connect;
   const requestData = await request.json();
 
-  const { user_id, score } = requestData;
+  const { user_id, total_score } = requestData;
 
   // Fetch the current points for the user
   const userInLeaderboard = await client
@@ -13,15 +13,30 @@ export async function POST(request: Request) {
     .findOne({ user_id });
 
   if (userInLeaderboard) {
+    // Ensure total_score is a number
+    const incrementValue = typeof total_score === "number" ? total_score : 0;
+
     await client
       .db("Teste_Admitere")
       .collection("leaderboard")
-      .updateOne({ user_id }, { $inc: { score: score } });
+      .updateOne(
+        { user_id },
+        {
+          $inc: { total_score: incrementValue, total_quizzes: 1 },
+        }
+      );
   } else {
+    // Initialize total_score and total_quizzes if the user is not in the leaderboard
+    const newLeaderboardEntry = {
+      ...requestData,
+      total_score: typeof total_score === "number" ? total_score : 0,
+      total_quizzes: 1,
+    };
+
     await client
       .db("Teste_Admitere")
       .collection("leaderboard")
-      .insertOne(requestData);
+      .insertOne(newLeaderboardEntry);
   }
 
   return new Response(
