@@ -3,6 +3,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
 
+import QuizzTimer from "@/components/Diverse/QuizzTimer";
+
 interface QuizType {
   _id: any;
   name: string;
@@ -41,6 +43,7 @@ export default function QuizzesJoin() {
   const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
+  const [timerOn, setTimerOn] = useState(false);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
@@ -167,34 +170,51 @@ export default function QuizzesJoin() {
     }
   };
 
+  const toggleTimer = () => {
+    setTimerOn((prevTimerState) => !prevTimerState);
+  };
+
   console.log(quizzesData)
   return (
-    <div className="flex flex-col gap-4 mb-14">
-
-      <div className="rounded-md">
+    <div className="relative flex flex-col gap-4 lg:p-6 ">
+      <div className="bg-white rounded-md">
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div className="flex flex-col gap-2 rounded-md shadow-md p-2 uppercase" key={index}>
-            <div className="text-4xl font-bold">{quiz.name}</div>
-            <div className="w-full h-0.5 bg-blue-400 rounded-full"></div>
-            <div className="flex flex-row justify-between">
-              <div>{quiz.subject}</div>
-              <div>{quiz.chapter}</div>
+          <div className="flex flex-col gap-2 rounded-md shadow-grey-3 shadow-md px-8 py-2 uppercase" key={index}>
+            <div className="text-4xl font-semibold lg:text-6xl">{quiz.name}</div>
+            {/* <div className="w-full h-1 bg-blue-400 rounded-full"></div> */}
+            <div className="flex items-center text-sm gap-1 lg:text-xl">
+              <div>{quiz.subject}</div>  <div>{quiz.chapter}</div>
             </div>
           </div>
         ))}
       </div>
+      
+      <div className="sticky top-4 flex w-fit mx-auto p-2 gap-6 items-center justify-around rounded-lg bg-blue-300 lg:mx-0 lg:ml-auto lg:mr-8">
+        <QuizzTimer timerOn={timerOn} />
+        <div className="w-1 h-10 bg-white rounded-full"></div>
+        <div onClick={toggleTimer} className="flex items-center bg-white p-1 rounded-md cursor-pointer">
+          <svg className={`${timerOn ? "hidden" : "size-7 block"}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
+          </svg>
+          <svg className={`${timerOn ? "size-7 block" : "hidden"}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
+          </svg>
 
-      <div className="flex flex-col gap-6">
+
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-6 lg:gap-16">
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div className="flex flex-col gap-4 bg-white p-4 rounded-lg shadow-md lg:p-8" key={index}>
-            <p className="">{question.question}</p>
-            <div className="w-full h-0.5 bg-slate-200 rounded-full"></div>
-            <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2">
+          <div className="flex flex-col gap-6 bg-white p-4 rounded-xl shadow-grey-3 shadow-md  lg:gap-8 lg:p-8" key={index}>
+            <p className="lg:text-lg">{question.question}</p>
+            <div className="w-full h-1 bg-zinc-300 rounded-full"></div>
+            <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
               {question.question_answers.map((answer: any, i: any) => (
-                <div className="flex items-center gap-1 bg-slate-100 rounded-md p-1 hover:bg-blue-100 duration-100" key={i}>
+                <div className="flex items-center gap-1 bg-zinc-200 rounded-md p-2 hover:bg-blue-200 duration-100 lg:p-3" key={i}>
                   <input
                     required
                     type="radio"
@@ -203,7 +223,7 @@ export default function QuizzesJoin() {
                     name={`question-${question._id}`}
                     className="w-4 h-4"
                   />
-                  <label className="w-full h-full" htmlFor={answer} className="ml-2">{answer}</label>
+                  <label className="w-full h-full" htmlFor={answer}>{answer}</label>
                 </div>
               ))}
             </fieldset>
