@@ -137,73 +137,28 @@ export default function Results() {
       {questionsData && (
         <div>
           {questionsData.map((question, index) => (
-            <div key={index} className="mb-8 rounded-lg shadow-md">
-              <p className="rounded-t-lg bg-blue-600 p-3 text-justify text-[18px] text-white">
+            <div key={index} className="mb-7 rounded-lg shadow-md">
+              <p className="rounded-t-lg bg-blue-600 p-2 text-justify text-[18px] text-white">
                 {index + 1}. {question.question}
               </p>
-
               {thisSubmission && thisSubmission.submission_answers[index] && (
-                <div className="flex w-full flex-col justify-between">
-                  <div
-                    key={index}
-                    className={`flex items-center gap-2 p-4 ${thisSubmission.submission_answers[index].is_correct ? "bg-green-300" : "bg-red-300"}`}
-                  >
-                    {thisSubmission.submission_answers[index].is_correct ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="size-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m4.5 12.75 6 6 9-13.5"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="size-5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
-                    )}
+                <div>
+                  <div key={index} className="p-2">
                     Răspunsul tău:{" "}
-                    <span className="font-medium">
+                    <span
+                      className={`${thisSubmission.submission_answers[index].is_correct == false ? "text-red-600" : "text-black"}`}
+                    >
                       {
                         thisSubmission.submission_answers[index]
                           .selected_answer_id
                       }
                     </span>
                   </div>
-
-                  <div className="flex items-center gap-2 rounded-b-lg p-4">
-                    {thisSubmission.submission_answers[index].is_correct ? (
-                      <span className="font-medium">
-                        Răspunsul tău este corect
-                      </span>
-                    ) : (
-                      <p>
-                        Răspunsul corect este:{" "}
-                        <span className="font-medium">
-                          {question.correct_answer}
-                        </span>{" "}
-                      </p>
-                    )}
-                  </div>
                 </div>
               )}
+              <div className="w-full rounded-b-lg bg-green-300 p-2 opacity-50">
+                <p>Răspunsul corect este: {question.correct_answer}</p>
+              </div>
             </div>
           ))}
         </div>

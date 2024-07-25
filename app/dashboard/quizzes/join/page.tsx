@@ -29,6 +29,15 @@ interface Configuration {
   submission_answers: SubmissionAnswer[];
 }
 
+interface LeaderboardConfig {
+  _id: any;
+  user_id: any;
+  subject: string | null;
+  chapter: string | null;
+  total_score: number;
+  total_quizzes: number;
+}
+
 const defaultConfiguration: Configuration = {
   _id: null,
   quiz_id: null,
@@ -37,15 +46,28 @@ const defaultConfiguration: Configuration = {
   submission_answers: [],
 };
 
+const defLeaderboardConfig: LeaderboardConfig = {
+  _id: null,
+  user_id: null,
+  subject: null,
+  chapter: null,
+  total_score: 0,
+  total_quizzes: 0,
+};
+
 export default function QuizzesJoin() {
   const [configuration, setConfiguration] =
     useState<Configuration>(defaultConfiguration);
+  const [leaderboardConfig, setLeaderboardConfig] =
+    useState<LeaderboardConfig>(defLeaderboardConfig);
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const [isLoadingQuiz, setIsLoadingQuiz] = useState(true);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
+  const subject = quizzesData[0]?.subject;
+  const chapter = quizzesData[0]?.chapter;
 
   let user = getUser();
 
@@ -119,7 +141,6 @@ export default function QuizzesJoin() {
       quizzesData[0].questions.filter((q: any) => q._id === question._id),
     );
   }
-
   const handleChange = (event: { target: { name: any; value: any } }) => {
     const { name, value } = event.target;
 
@@ -149,26 +170,58 @@ export default function QuizzesJoin() {
         ...prevConfig,
         quiz_id: quizID,
         user_id: user.id,
+        subject: subject,
+        chapter: chapter,
         submission_answers: updatedSubmissionAnswers,
         score: is_correct ? prevConfig.score + 10 : prevConfig.score,
       };
     });
   };
 
-  const submitAnswer = async (event: any) => {
+  const submitBoth = async (event: any) => {
     event.preventDefault();
 
-    const response = await fetch("/api/post/submissions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(configuration),
-    });
+    try {
+      // Submit answers first
+      const answerResponse = await fetch("/api/post/submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(configuration),
+      });
 
-    if (response.ok) {
-      router.push(`/dashboard/quizzes/join/results?quizID=${quizID}`);
-    } else {
+      if (!answerResponse.ok) {
+        throw new Error("Failed to submit answers");
+      }
+
+      // Prepare leaderboard data
+      const leaderboardData = {
+        user_id: user.id,
+        subject: subject,
+        chapter: chapter,
+        total_score: configuration.score,
+        total_quizzes: 1,
+      };
+
+      // If answer submission is successful, update the leaderboard
+      const leaderboardResponse = await fetch("/api/post/leaderboard", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(leaderboardData),
+      });
+
+      if (!leaderboardResponse.ok) {
+        throw new Error("Failed to update leaderboard");
+      }
+
+      // If both are successful, navigate to the results page
+      router.push(
+        `/dashboard/quizzes/join/results?quizID=${quizID}}&userID=${user.id}`,
+      );
+    } catch (error) {
       console.error("Failed to submit answers");
     }
   };
