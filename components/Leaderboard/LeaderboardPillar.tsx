@@ -9,7 +9,8 @@ import PillarProfile from "./PillarProfile";
 
 export default function LeaderboardPillar({
   place,
-  name,
+  firstName,
+  lastName,
   avatar,
   points,
 }: any) {
@@ -26,7 +27,13 @@ export default function LeaderboardPillar({
 
   return (
     <div className="flex flex-col   items-center justify-center hover:scale-105 origin-bottom cursor-pointer duration-300 transition-all   ">
-      <PillarProfile name={name} points={points} avatar={avatar} place={0} />
+      <PillarProfile
+        firstName={firstName}
+        lastName={lastName}
+        points={points}
+        avatar={avatar}
+        place={0}
+      />
 
       <div className={pillarStyle[place as keyof typeof pillarStyle]}>
         <div
