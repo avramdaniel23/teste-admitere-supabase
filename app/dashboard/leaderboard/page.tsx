@@ -1,11 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-
-import LeaderboardCard from "@/components/Cards/LeaderboardCard";
-import LeaderboardTopCard from "@/components/Cards/LeaderboardTopCard";
-import {Placement} from "@/components/Cards/LeaderboardTopCard";
-import LeaderboardNavigation from "@/components/Navigation/LeaderboardNavigation";
-
+import LeaderboardPillar from "../../../components/Leaderboard/LeaderboardPillar";
+import LeaderboardCard from "@/components/Leaderboard/LeaderboardCard";
 
 export default function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
@@ -18,61 +14,7 @@ export default function Leaderboard() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const leaderboardData: Placement[] = [
-        {
-          name: "John",
-          score: 9999,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9998,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9997,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "Lorem-ipsumstein",
-          score: 9996,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9995,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9994,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9993,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9992,
-          photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&dl=jurica-koletic-7YVZYZeITc8-unsplash.jpg"
-
-        },
-        {
-          name: "John",
-          score: 9991,
-        }
-      ]
-          //await response.json();
+      const leaderboardData = await response.json();
       console.log("Fetched data:", leaderboardData); // Log fetched data
       return leaderboardData;
     } catch (error) {
@@ -86,7 +28,6 @@ export default function Leaderboard() {
       try {
         const leaderboard = await fetchLeaderboardData();
         setLeaderboard(leaderboard);
-        console.log("State updated with leaderboard:", leaderboard);
       } catch (error) {
         console.error("Error fetching leaderboard data:", error);
       }
@@ -94,24 +35,69 @@ export default function Leaderboard() {
 
     fetchLeaderboard();
   }, []);
-  return (
-      <div className={"w-full"}>
-       <LeaderboardNavigation></LeaderboardNavigation>
-        {leaderboard.length === 0 ? (
-            <p>No leaderboard data available.</p>
-        ) : (
-            <div className={"flex justify-center"}>
-              <div className={"w-full lg:w-3/4 xl:w-1/2 flex flex-col justify-center "}>
-                <LeaderboardTopCard f1={leaderboard[0]} f2={leaderboard[1]} f3={leaderboard[2]}></LeaderboardTopCard>
-                <div className={"w-full h-1 my-2 bg-gray-500"}></div>
-                {leaderboard.slice(3).map((entry: Placement, index) => (
-                    <LeaderboardCard place={index + 4} name={entry.name} score={entry.score}
-                                     photo={entry.photo}></LeaderboardCard>
-                ))}
 
-              </div>
-            </div>
-        )}
-      </div>
+  const sortedUsers = leaderboard.sort((a, b) => b.total_score - a.total_score);
+  const ranking = sortedUsers.map((user, index) => ({
+    ...user,
+    place: index + 1,
+  }));
+
+  // const podiumRanking = [ranking[2], ranking[1], ranking[3]];
+
+  return (
+    <div>
+      <h1 className="text-[36px] font-[900]  ">Leaderboard</h1>
+      {ranking.length === 0 ? (
+        <p>No leaderboard data available.</p>
+      ) : (
+        <div>
+          <div className="relative justify-center  px-4 items-center flex mt-16 rounded-2xl shadow-lg shadow-slate-400 ">
+            {/* <div className="absolute right-0 top-0  w-fit bg-blue-300  p-2 rounded-lg flex-row flex items-center justify-center text-black shadow-lg  text-sm lg:text-md font-bold m-2  dark:text-white dark:bg-blue-900  dark:shadow-blue-600 dark:shadow-lg ">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-4 lg:size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+
+          <p className="ml-1">02d 12h 20min</p>
+        </div> */}
+
+            <section className="w-full   grid grid-cols-3 gap-3 lg:gap-7  items-end mt-16 ">
+              {ranking.slice(0, 3).map((user) => (
+                <LeaderboardPillar
+                  key={user.place}
+                  place={user.place}
+                  name={user.user_id}
+                  avatar={""}
+                  points={user.total_score}
+                />
+              ))}
+            </section>
+          </div>
+          <div
+            id="table"
+            className="gap-2 flex flex-col  mt-4 text-white   rounded-lg dark:bg-gradient-to-b dark:from-violet-600 dark:to-violet-400 dark:border-violet-800 "
+          >
+            {ranking.slice(3, ranking.length).map((user) => (
+              <LeaderboardCard
+                key={user.place}
+                name={user.user_id}
+                place={user.place}
+                points={user.total_score}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
