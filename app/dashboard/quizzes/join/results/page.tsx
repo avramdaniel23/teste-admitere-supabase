@@ -130,7 +130,7 @@ export default function Results() {
                     {questionsData.map((question, index) => (
                         <div key={index} className="flex flex-col gap-4 p-6 shadow-grey-3 shadow-md rounded-lg">
                             <p className="p-2 text-justify">{index + 1}. {question.question}</p>
-                            <div className="h-1 w-full bg-zinc-300"></div>
+                            <div className="h-0.5 w-full bg-zinc-300"></div>
                             {thisSubmission && thisSubmission.submission_answers[index] && (
                                 <div>
                                     <div key={index} className={`p-2 rounded-md ${thisSubmission.submission_answers[index].is_correct == false ? "bg-red-300" : "bg-green-300"}`}>Răspunsul tău: <span>{thisSubmission.submission_answers[index].selected_answer_id}</span></div>

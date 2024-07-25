@@ -44,6 +44,7 @@ export default function QuizzesJoin() {
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const [timerOn, setTimerOn] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
   const searchParams = useSearchParams();
   const quizID = searchParams.get("quizID");
   const router = useRouter();
@@ -170,30 +171,41 @@ export default function QuizzesJoin() {
     }
   };
 
-  const toggleTimer = () => {
+  const startTimer = () => {
     setTimerOn((prevTimerState) => !prevTimerState);
   };
 
+  const displayTimer = () => {
+    setShowTimer((prevTimerState) => !prevTimerState);
+  }
+
   return (
-    <div className="relative flex flex-col gap-6 lg:p-6 ">
+    <div className="relative flex flex-col gap-10 lg:p-6 lg:gap-16 ">
       <div className="bg-white rounded-md">
       {quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
           <div className="flex flex-col gap-2 rounded-md shadow-grey-3 shadow-md px-8 py-2 uppercase" key={index}>
-            <div className="text-4xl font-semibold lg:text-6xl">{quiz.name}</div>
+            <div className="text-4xl font-medium lg:text-6xl">{quiz.name}</div>
             {/* <div className="w-full h-1 bg-blue-400 rounded-full"></div> */}
             <div className="flex items-center text-sm gap-1 lg:text-xl">
-              <div>{quiz.subject}</div>  <div>{quiz.chapter}</div>
+              <div>{quiz.subject}</div> <div className="bg-blue-400 w-3 h-3 rounded-full"></div> <div>{quiz.chapter}</div>
             </div>
           </div>
         ))}
       </div>
       
-      <div className="sticky top-4 flex w-fit mx-auto p-2 gap-6 items-center justify-around rounded-lg bg-blue-400 lg:mx-0 lg:ml-auto lg:mr-8">
+      {/* <div className="bg-blue-400 rounded-full w-fit p-2">
+        <svg className="size-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+      </div>
+
+
+      <div className="sticky top-4 flex w-fit mx-auto p-2 gap-4 items-center justify-around rounded-lg bg-blue-400 lg:mx-0 lg:ml-auto lg:mr-8">
         <QuizzTimer timerOn={timerOn} />
-        <div className="w-1 h-10 bg-white rounded-full"></div>
-        <div onClick={toggleTimer} className="flex items-center bg-white p-1 rounded-md cursor-pointer">
+        <div className="w-0.5 h-9 bg-white rounded-full"></div>
+        <div onClick={startTimer} className="flex items-center bg-white p-1 rounded-md cursor-pointer">
           <svg className={`${timerOn ? "hidden" : "size-7 block"}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z" />
           </svg>
@@ -201,7 +213,7 @@ export default function QuizzesJoin() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25v13.5m-7.5-13.5v13.5" />
           </svg>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex flex-col gap-10 lg:gap-16">
       {filteredQuestions &&
@@ -213,20 +225,20 @@ export default function QuizzesJoin() {
                 </div> : <div className="hidden"></div>
               }
             </div>
-            <div className="h-1 w-full bg-zinc-300 rounded-full"></div>
+            <div className="h-0.5 w-full bg-zinc-300 rounded-full"></div>
             <fieldset className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-8">
               {question.question_answers.map((answer: any, i: any) => (
-                <div className="relative flex items-center gap-1 bg-zinc-200 rounded-md hover:bg-blue-400 duration-100" key={i}>
-                  <input
-                    required
-                    type="radio"
-                    value={answer}
-                    id={answer}
-                    name={`question-${question._id}`}
-                    className="absolute ml-2 w-4 h-4 lg:w-5 lg:h-5"
-                  />
-                  <label className="flex w-full h-12 pl-10" htmlFor={answer}>
-                    <p className="my-auto">{answer}</p>
+                <div className="flex items-center gap-1 bg-zinc-200 rounded-md hover:bg-blue-400 duration-100" key={i}>
+                  <label className="px-4 flex gap-2 items-center w-full h-12" htmlFor={answer}>
+                    <input
+                      required
+                      type="radio"
+                      value={answer}
+                      id={answer}
+                      name={`question-${question._id}`}
+                      className="w-4 h-4 lg:w-5 lg:h-5"
+                    />
+                    <p className="">{answer}</p>
                   </label>
                 </div>
               ))}

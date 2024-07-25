@@ -34,7 +34,7 @@ const QuizzTimer = ({ timerOn }: TimerProps) => {
   };
 
   return (
-    <div className="w-20 h-9 bg-white text-lg rounded-md flex items-center justify-center">
+    <div className="z-50 w-20 h-9 bg-white text-lg rounded-md flex items-center justify-center">
       {formatTime(timeElapsed)}
     </div>
   );

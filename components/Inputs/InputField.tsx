@@ -42,7 +42,7 @@ const InputField: React.FC<InputFieldProps> = ({ label, type, value, onChange, r
             className="focus:outline-none px-2 bg-inherit"
             required={required}
             />
-            <div className={`flex flex-row rounded-full w-[100%] h-1 bg-slate-200 lg:h-1`}>
+            <div className={`flex flex-row rounded-full w-[100%] h-0.5 bg-slate-200 lg:h-1`}>
             <div className={`${isFocused ? "w-[100%]" : "w-[0%]"} m-auto duration-300 rounded-full h-1 bg-blue-400`}></div>
             </div>
         </div>
