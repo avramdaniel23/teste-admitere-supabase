@@ -167,13 +167,50 @@ export default function QuizzesJoin() {
     }
   };
 
+  const imageQuestion = {
+    answer_type: "string",
+    question: "Menta-1,3,8-triena (A), p-cimenul (B) și timolul (C) sunt arome naturale. Atomi de carbon primari, secundari, terțiari și cuaternari se găsesc în:",
+    images: ["https://i.postimg.cc/wM4qxJ2j/Screenshot-2024-07-23-183843.png"],
+    question_answers: [
+      "A) A",
+      "B) B",
+      "C) A si B",
+      "D) A, B si C",
+      "E) C",
+      "F) B si C"
+    ],
+    correct_answer: "A) A"
+  }
+
+  const imageQuestion1 = {
+    answer_type: "image",
+    question: "Indicaţi formula corectă: ",
+    images: [],
+    question_answers: [
+      {
+        letter: "A) ",
+        url: "https://i.postimg.cc/wMrZbQcj/Screenshot-24-7-2024-12621.jpg"
+      },
+      {
+        letter: "B) ",
+        url: "https://i.postimg.cc/Vv2ZFLmS/Screenshot-24-7-2024-12649.jpg"
+      },
+      {
+        letter: "C) ",
+        url: "https://i.postimg.cc/zvpnttfs/Screenshot-2024-07-24-133037.png"
+      }
+    ],
+    correct_answer: "C) "
+  }
+ 
+
   console.log(quizzesData)
   return (
     <div>
       <div className="font-medium">{quizzesData &&
         quizzesData.length > 0 &&
         quizzesData.map((quiz: any, index: any) => (
-          <div className="flex flex-col items-center bg-red-600 rounded-t-2xl shadow-xl p-4" key={index}>
+          <div className="flex flex-col items-center bg-blue-600 rounded-t-2xl shadow-xl p-4" key={index}>
             <div className="text-white text-4xl font-bold">{quiz.name}</div>
             <div className="text-white text-xl font-bold uppercase">{quiz.subject}</div>
             <div className="text-white font-bold">{quiz.chapter}</div>
@@ -188,25 +225,79 @@ export default function QuizzesJoin() {
               <p className="mr-2 font-bold text-xl lg:text-2xl">{index + 1}.</p>
               <p className="font-bold text-xl lg:text-2xl">{question.question}</p>
             </div>
-            <fieldset>
+            <div className="flex justify-center mb-4">
+              <img src={question.images[0]}/>
+            </div>
+            <fieldset className="grid grid-cols-2 mr-6 items-center ">
               {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="ml-6 mb-4 flex items-center">
-                  <input
-                    className="mr-2 w-5 h-5"
-                    type="radio"
-                    value={answer}
-                    id={answer}
-                    name={question._id}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={answer} className="ml-2">{answer}</label>
+                <div key={i} className="ml-6 mb-4">
+                  <div className="flex items-center">
+                    <input
+                      className="mr-2 w-5 h-5"
+                      type="radio"
+                      value={answer}
+                      id={answer}
+                      name={question._id}
+                      onChange={handleChange}
+                    />
+                    <label htmlFor={answer} className="ml-2 font-bold">{answer}</label>
+                  </div>
                 </div>
               ))}
             </fieldset>
           </div>
         ))}
+        <div className="flex flex-col p-8 bg-white shadow-xl">
+          <div className="flex mb-4">
+              <p className="mr-2 font-bold text-xl lg:text-2xl">6.</p>
+              <p className="font-bold text-xl lg:text-2xl">{imageQuestion.question}</p>
+          </div>
+          <div className="flex justify-center mb-4">
+            <img src={imageQuestion.images[0]}/>
+          </div>
+          <fieldset className="grid grid-cols-2 mr-6 items-center ">
+              {imageQuestion.answer_type === "string" && imageQuestion.question_answers.map((answer: any, i: any) => (
+                <div key={i} className="ml-6 mb-4">
+                  <div className="flex items-center">
+                    <input
+                      className="mr-2 w-5 h-5"
+                      type="radio"
+                      value={answer}
+                      id={answer}
+                    />
+                    <label htmlFor={answer} className="ml-2 font-bold">{answer}</label>
+                  </div>
+                </div>
+              ))}
+            </fieldset>
+        </div>
+        <div className="flex flex-col p-8 bg-white shadow-xl">
+          <div className="flex mb-4">
+              <p className="mr-2 font-bold text-xl lg:text-2xl">7.</p>
+              <p className="font-bold text-xl lg:text-2xl">{imageQuestion1.question}</p>
+          </div>
+          <div className="flex justify-center mb-4">
+            <img src={imageQuestion1.images[0]}/>
+          </div>
+          <fieldset className="grid grid-cols-2 mr-6 items-center ">
+              {imageQuestion1.answer_type === "image" && imageQuestion1.question_answers.map((answer: any, i: any) => (
+                <div key={i} className="ml-6 mb-4">
+                  <div className="flex items-center">
+                    <input
+                      className="mr-2 w-5 h-5"
+                      type="radio"
+                      value={answer}
+                      id={answer}
+                    />
+                    <p className="ml-2 mr-2 font-bold">{answer.letter}</p>
+                    <img className="w-[75px] md:w-[150px] lg:w-[200px]" src={answer.url} />
+                  </div>
+                </div>
+              ))}
+            </fieldset>
+        </div>
         <div className="bg-white p-4 rounded-b-2xl shadow-xl">
-          <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+          <button type="submit" onClick={submitAnswer} className="w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
         </div>
     </div>
   );

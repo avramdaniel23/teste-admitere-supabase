@@ -1,6 +1,5 @@
 "use client";
 
-import { SubmitButton } from "@/app/login/submit-button";
 import getUser from "@/libs/getUser/getUser";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -120,7 +119,7 @@ export default function Results() {
     return (
         <div>
             {quizData && (
-                <div className="mb-5 font-medium">
+                <div className="font-medium">
                     <div className="text-center text-[28px]">Rezultatul testului {quizData.name}</div>
                     <p className="my-4 text-center text-[20px]">Scor: {thisSubmission.score}/{thisSubmission.submission_answers.length * 10}</p>
 
@@ -131,16 +130,21 @@ export default function Results() {
                 <div>
                     {questionsData.map((question, index) => (
                         <div key={index} className="mb-7 shadow-md rounded-lg">
-                            <p className="p-4 text-justify text-[18px] text-white bg-red-600 rounded-t-lg">{index + 1}. {question.question}</p>
+                            <div className="flex flex-col bg-gray-500 rounded-t-lg">
+                                <p className="p-8 text-justify text-[18px] text-white font-bold">{index + 1}. {question.question}</p>
+                                <div className="flex justify-center">
+                                    <img className={`w-[60%] rounded-lg shadow-xl ${question.images.length === 1 ? "mb-10" : ""}`} src={question.images[0]} />
+                                </div>
+                            </div>
                             {thisSubmission && thisSubmission.submission_answers[index] && (
                                 <div>
-                                    <div key={index} className="p-4">Răspunsul tău: <span className={`${thisSubmission.submission_answers[index].is_correct == false ? "text-red-600" : "text-black"}`}>{thisSubmission.submission_answers[index].selected_answer_id}</span></div>
+                                    <div key={index} className={`p-6 ${thisSubmission.submission_answers[index].is_correct == false ? "bg-red-300" : "bg-green-300"}`}>Răspunsul tău: <span className={`font-bold`}>{thisSubmission.submission_answers[index].selected_answer_id}</span></div>
                                 </div>
                             )}
-                            <div className="w-full p-4  rounded-b-lg bg-green-300 opacity-50"><p>Răspunsul corect este: {question.correct_answer}</p></div>
+                            <div className="w-full p-6 rounded-b-lg bg-gray-300"><p>Răspunsul corect este: <span className="font-bold">{question.correct_answer}</span></p></div>
                         </div>
                     ))}
-                </div> 
+                </div>
             )}
 
 
