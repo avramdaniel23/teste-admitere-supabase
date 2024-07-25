@@ -301,7 +301,7 @@ export default function QuizzesJoin() {
 
       <button
         type="submit"
-        onClick={submitAnswer}
+        onClick={submitBoth}
         className="m-4 mx-auto mb-[75px] flex w-full justify-center rounded-lg bg-blue-600 py-3 text-white shadow-md hover:opacity-75 md:w-[200px]"
       >
         Trimite răspunsul
