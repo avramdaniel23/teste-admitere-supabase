@@ -128,7 +128,7 @@ export default function Results() {
             {questionsData && (
                 <div className="flex flex-col gap-10">
                     {questionsData.map((question, index) => (
-                        <div key={index} className="flex flex-col gap-4 p-4 shadow-grey-3 shadow-md rounded-lg">
+                        <div key={index} className="flex flex-col gap-4 p-6 shadow-grey-3 shadow-md rounded-lg">
                             <p className="p-2 text-justify">{index + 1}. {question.question}</p>
                             <div className="h-1 w-full bg-zinc-300"></div>
                             {thisSubmission && thisSubmission.submission_answers[index] && (
