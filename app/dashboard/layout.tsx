@@ -55,7 +55,7 @@ export default async function DashboardLayout({ children }: any) {
 
       <main className="flex bg-[#fafafa] flex-grow">
         <Sidebar user={user} />
-        <div className="p-4 bg-[#fafafa] md:p-10 h-full lg:max-w-7xl lg:mx-auto w-full">
+        <div className="p-4 bg-[#fafafa] md:p-10 h-full lg:max-w-[110rem] lg:mx-auto w-full">
           {children}
         </div>
       </main>

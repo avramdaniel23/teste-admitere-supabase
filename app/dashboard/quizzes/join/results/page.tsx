@@ -3,6 +3,7 @@
 import getUser from "@/libs/getUser/getUser";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import QuizAnswerCard from "@/components/Cards/QuizAnswerCard";
 
 export default function Results() {
     const [submissions, setSubmissions] = useState<any[]>([]);
@@ -115,33 +116,35 @@ export default function Results() {
 
         thisSubmission = submissions.find((submission: any) => submission.user_id === user.id);
     }
+    else {
+        return <h1>No submission</h1>
+    }
 
     return (
         <div>
             {quizData && (
                 <div className="mb-5 font-medium">
-                    <div className="text-center text-[28px]">Rezultatul testuloui {quizData.name}</div>
-                    <p className="my-4 text-center text-[20px]">Scor: {thisSubmission.score}/{thisSubmission.submission_answers.length * 10}</p>
+                    <div className="text-center text-[28px]">Rezultatul testului {quizData.name}</div>
+                    <p className="my-4 text-center text-[20px]">Scor: {thisSubmission?.score || 0}/{thisSubmission?.submission_answers.length * 10}</p>
 
                 </div>
             )}
 
             {questionsData && (
-                <div>
+                <div onClick={() => {console.log(questionsData); console.log(thisSubmission.submission_answers[0])}}>
                     {questionsData.map((question, index) => (
                         <div key={index} className="mb-7 shadow-md rounded-lg">
-                            <p className="p-2 text-justify text-[18px] text-white bg-blue-600 rounded-t-lg">{index + 1}. {question.question}</p>
-                            {thisSubmission && thisSubmission.submission_answers[index] && (
-                                <div>
-                                    <div key={index} className="p-2">Răspunsul tău: <span className={`${thisSubmission.submission_answers[index].is_correct == false ? "text-red-600" : "text-black"}`}>{thisSubmission.submission_answers[index].selected_answer_id}</span></div>
-                                </div>
-                            )}
-                            <div className="w-full p-2  rounded-b-lg bg-green-300 opacity-50"><p>Răspunsul corect este: {question.correct_answer}</p></div>
+                            <QuizAnswerCard index={index} question={question} answers={question.question_answers}
+                                            userAnswer={thisSubmission.submission_answers[index].selected_answer_id}
+                                            correctAnswer={question.correct_answer}></QuizAnswerCard>
+                            <div className="w-full p-2  rounded-b-lg bg-gray-300 opacity-50"><p>Răspunsul tau
+                                este: {thisSubmission.submission_answers[index]?.selected_answer_id}</p></div>
+                            <div className="w-full p-2  rounded-b-lg bg-gray-300 opacity-50"><p>Răspunsul corect
+                                este: {question.correct_answer}</p></div>
                         </div>
                     ))}
                 </div>
             )}
-
 
 
         </div>

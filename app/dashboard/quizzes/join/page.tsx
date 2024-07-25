@@ -189,7 +189,7 @@ export default function QuizzesJoin() {
         filteredQuestions.map((question, index) => (
             <QuizQuestionCard index={index} question={question} answers={question.question_answers} onAnswer={handleChange}></QuizQuestionCard>
         ))}
-      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+      <button type="submit" onClick={submitAnswer} className="w-full md:w-[200px] lg:w-1/4 m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
     </div>
   );
 }
