@@ -144,18 +144,11 @@ export default function Results() {
 
               {thisSubmission && thisSubmission.submission_answers[index] && (
                 <div className="flex w-full flex-col justify-between">
-                  <div key={index} className="p-4">
-                    Răspunsul tău:{" "}
-                    <span className="font-medium">
-                      {
-                        thisSubmission.submission_answers[index]
-                          .selected_answer_id
-                      }
-                    </span>
-                  </div>
-
-                  {thisSubmission.submission_answers[index].is_correct ? (
-                    <div className="flex items-center gap-2 rounded-b-lg bg-green-300 p-4">
+                  <div
+                    key={index}
+                    className={`flex items-center gap-2 p-4 ${thisSubmission.submission_answers[index].is_correct ? "bg-green-300" : "bg-red-300"}`}
+                  >
+                    {thisSubmission.submission_answers[index].is_correct ? (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -170,10 +163,7 @@ export default function Results() {
                           d="m4.5 12.75 6 6 9-13.5"
                         />
                       </svg>
-                      Răspunsul tău este corect
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2 rounded-b-lg bg-red-300 p-4">
+                    ) : (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -188,14 +178,30 @@ export default function Results() {
                           d="M6 18 18 6M6 6l12 12"
                         />
                       </svg>
+                    )}
+                    Răspunsul tău:{" "}
+                    <span className="font-medium">
+                      {
+                        thisSubmission.submission_answers[index]
+                          .selected_answer_id
+                      }
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2 rounded-b-lg p-4">
+                    {thisSubmission.submission_answers[index].is_correct ? (
+                      <span className="font-medium">
+                        Răspunsul tău este corect
+                      </span>
+                    ) : (
                       <p>
                         Răspunsul corect este:{" "}
                         <span className="font-medium">
                           {question.correct_answer}
-                        </span>
+                        </span>{" "}
                       </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               )}
             </div>
