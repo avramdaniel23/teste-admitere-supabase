@@ -85,10 +85,10 @@ CardProps) => {
         selected == answer ? "border-blue-300" : "border-gray-300"
       } shadow-lg font-semibold ${selected == answer && "bg-sky-200"} `}
     >
-      {answer}
+      {!answerImage && answer}
       {answerImage && (
         <div
-          className={`flex items-center justify-center border-2 mt-2 rounded-sm border-slate-400 h-38 w-52`}
+          className={`flex items-center justify-center border-2 mt-2 rounded-sm border-slate-400 size-72`}
         >
           <img src={answerImage}></img>
         </div>
