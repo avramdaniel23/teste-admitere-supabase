@@ -46,7 +46,7 @@ export default function Leaderboard() {
   // const podiumRanking = [ranking[2], ranking[1], ranking[3]];
 
   return (
-    <div>
+    <div className="mb-[100px]">
       <h1 className="text-[36px] font-[900]  ">Leaderboard</h1>
       {ranking.length === 0 ? (
         <p>No leaderboard data available.</p>
@@ -77,7 +77,8 @@ export default function Leaderboard() {
                 <LeaderboardPillar
                   key={user.place}
                   place={user.place}
-                  name={user.user_id}
+                  firstName={user.user_firstName}
+                  lastName={user.user_lastName}
                   avatar={""}
                   points={user.total_score}
                 />
@@ -91,7 +92,8 @@ export default function Leaderboard() {
             {ranking.slice(3, ranking.length).map((user) => (
               <LeaderboardCard
                 key={user.place}
-                name={user.user_id}
+                firstName={user.user_firstName}
+                lastName={user.user_lastName}
                 place={user.place}
                 points={user.total_score}
               />

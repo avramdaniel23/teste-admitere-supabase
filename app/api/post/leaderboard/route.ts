@@ -4,45 +4,58 @@ export async function POST(request: Request) {
   const client = await connect;
   const requestData = await request.json();
 
-  const { user_id, total_score } = requestData;
+  const {
+    user_id,
+    user_firstName,
+    user_lastName,
+    subject,
+    chapter,
+    total_score,
+    total_quizzes,
+  } = requestData;
 
-  // Fetch the current points for the user
-  const userInLeaderboard = await client
+  const leaderboardCollection = client
     .db("Teste_Admitere")
-    .collection("leaderboard")
-    .findOne({ user_id });
+    .collection("leaderboard");
 
-  if (userInLeaderboard) {
-    // Ensure total_score is a number
-    const incrementValue = typeof total_score === "number" ? total_score : 0;
+  try {
+    // Check if user already exists in the leaderboard
+    const existingUser = await leaderboardCollection.findOne({ user_id });
 
-    await client
-      .db("Teste_Admitere")
-      .collection("leaderboard")
-      .updateOne(
+    if (existingUser) {
+      // Update the existing user's record
+      await leaderboardCollection.updateOne(
         { user_id },
         {
-          $inc: { total_score: incrementValue, total_quizzes: 1 },
+          $set: {
+            user_firstName,
+            user_lastName,
+          },
+          $inc: {
+            total_score,
+            total_quizzes,
+          },
         }
       );
-  } else {
-    // Initialize total_score and total_quizzes if the user is not in the leaderboard
-    const newLeaderboardEntry = {
-      ...requestData,
-      total_score: typeof total_score === "number" ? total_score : 0,
-      total_quizzes: 1,
-    };
-
-    await client
-      .db("Teste_Admitere")
-      .collection("leaderboard")
-      .insertOne(newLeaderboardEntry);
-  }
-
-  return new Response(
-    JSON.stringify({ message: "Successfully updated the leaderboard" }),
-    {
-      headers: { "Content-Type": "application/json" },
+    } else {
+      // Insert a new record for the user
+      await leaderboardCollection.insertOne({
+        user_id,
+        user_firstName,
+        user_lastName,
+        subject,
+        chapter,
+        total_score,
+        total_quizzes,
+      });
     }
-  );
+
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+  } catch (error) {
+    console.error("Failed to update leaderboard", error);
+    return new Response(
+      JSON.stringify({ error: "Failed to update leaderboard" }),
+      { status: 500 }
+    );
+  }
 }
