@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
+import QuestionCard from "@/components/QuizzComponents/QuestionCard";
 
 interface QuizType {
   _id: any;
@@ -27,47 +28,14 @@ interface Configuration {
   user_id: any;
   user_firstName: any;
   user_lastName: any;
+  quizName: any;
   score: number;
   submission_answers: SubmissionAnswer[];
 }
 
-interface LeaderboardConfig {
-  _id: any;
-  user_id: any;
-  user_firstName: any;
-  user_lastName: any;
-  subject: string | null;
-  chapter: string | null;
-  total_score: number;
-  total_quizzes: number;
-}
-
-const defaultConfiguration: Configuration = {
-  _id: null,
-  quiz_id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  score: 0,
-  submission_answers: [],
-};
-
-const defLeaderboardConfig: LeaderboardConfig = {
-  _id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  subject: null,
-  chapter: null,
-  total_score: 0,
-  total_quizzes: 0,
-};
-
 export default function QuizzesJoin() {
-  const [configuration, setConfiguration] =
-    useState<Configuration>(defaultConfiguration);
-  const [leaderboardConfig, setLeaderboardConfig] =
-    useState<LeaderboardConfig>(defLeaderboardConfig);
+  const [isFlagged, setIsFlagged] = useState<boolean>(false);
+
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
@@ -93,6 +61,19 @@ export default function QuizzesJoin() {
       throw error;
     }
   };
+
+  const defaultConfiguration: Configuration = {
+    _id: null,
+    quiz_id: null,
+    user_id: null,
+    user_firstName: null,
+    user_lastName: null,
+    quizName: null,
+    score: 0,
+    submission_answers: [],
+  };
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -146,9 +127,7 @@ export default function QuizzesJoin() {
     );
   }
 
-  const handleChange = (event: { target: { name: any; value: any } }) => {
-    const { name, value } = event.target;
-
+  const handleChange = (name: any, value: any) => {
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find((q) => q._id === name);
 
@@ -174,6 +153,7 @@ export default function QuizzesJoin() {
       return {
         ...prevConfig,
         quiz_id: quizID,
+        quizName: quizzesData[0].name,
         user_id: user.id,
         user_firstName: user.user_metadata.firstName,
         user_lastName: user.user_metadata.lastName,
@@ -185,10 +165,20 @@ export default function QuizzesJoin() {
     });
   };
 
-  const submitLeaderboard = async (event: any) => {
+  const submitBoth = async (event: any) => {
     event.preventDefault();
-
     try {
+      const answerResponse = await fetch("/api/post/submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(configuration),
+      });
+
+      if (!answerResponse.ok) {
+        throw new Error("Failed to submit answers");
+      }
       // Prepare leaderboard data
       const leaderboardData = {
         user_id: user.id,
@@ -275,85 +265,70 @@ export default function QuizzesJoin() {
 
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index} className="flex flex-col p-8 bg-white shadow-xl">
-            <div className="flex mb-4">
-              <p className="mr-2 font-bold text-xl lg:text-2xl">{index + 1}.</p>
-              <p className="font-bold text-xl lg:text-2xl">{question.question}</p>
-            </div>
-            <div className="flex justify-center mb-4">
-              <img src={question.images[0]}/>
-            </div>
-            <fieldset className="grid grid-cols-2 mr-6 items-center ">
-              {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="ml-6 mb-4">
-                  <div className="flex items-center">
-                    <input
-                      className="mr-2 w-5 h-5"
-                      type="radio"
-                      value={answer}
-                      id={answer}
-                      name={question._id}
-                      onChange={handleChange}
+          <div
+            key={index}
+            className="border-2 rounded-lg p-4 border-slate-500 mt-4 shadow-lg"
+          >
+            <div className="py-2  rounded-t-lg">
+              <div className=" flex justify-between pb-2 items-center ">
+                <span className="flex items-center justify-center border-2 p-2 rounded-full size-8 ml-1 mr-2 border-gray-400 mb-2">
+                  <p className="">{index + 1}</p>
+                </span>
+                <div
+                  onClick={() => {
+                    setIsFlagged(!isFlagged);
+                  }}
+                  className=" top-4 right-4 flex cursor-pointer transition-all duration-300 ease-linear"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    //   fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className={`size-6 ${
+                      isFlagged ? "fill-red-500" : "fill-none"
+                    } `}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5"
                     />
-                    <label htmlFor={answer} className="ml-2 font-bold">{answer}</label>
-                  </div>
+                  </svg>
                 </div>
-              ))}
-            </fieldset>
+              </div>
+
+              <p className="px-2 text-justify text-[18px]  ">
+                {question.question}
+              </p>
+            </div>
+            <QuestionCard
+              question={question}
+              key={index}
+              index={index + 1}
+              name={question._id}
+              onChange={handleChange}
+              questionImage={
+                (index + 1) % 2 == 0
+                  ? "https://i.pinimg.com/564x/60/83/70/6083706875765e2f3d449a30238143bc.jpg"
+                  : ""
+              }
+              anwserImage={
+                index % 3 == 0
+                  ? "https://i.pinimg.com/564x/1b/63/bf/1b63bfdeb6eac905c42442cf67c0f7f0.jpg"
+                  : ""
+              }
+            />
           </div>
         ))}
-        <div className="flex flex-col p-8 bg-white shadow-xl">
-          <div className="flex mb-4">
-              <p className="mr-2 font-bold text-xl lg:text-2xl">6.</p>
-              <p className="font-bold text-xl lg:text-2xl">{imageQuestion.question}</p>
-          </div>
-          <div className="flex justify-center mb-4">
-            <img src={imageQuestion.images[0]}/>
-          </div>
-          <fieldset className="grid grid-cols-2 mr-6 items-center ">
-              {imageQuestion.answer_type === "string" && imageQuestion.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="ml-6 mb-4">
-                  <div className="flex items-center">
-                    <input
-                      className="mr-2 w-5 h-5"
-                      type="radio"
-                      value={answer}
-                      id={answer}
-                    />
-                    <label htmlFor={answer} className="ml-2 font-bold">{answer}</label>
-                  </div>
-                </div>
-              ))}
-            </fieldset>
-        </div>
-        <div className="flex flex-col p-8 bg-white shadow-xl">
-          <div className="flex mb-4">
-              <p className="mr-2 font-bold text-xl lg:text-2xl">7.</p>
-              <p className="font-bold text-xl lg:text-2xl">{imageQuestion1.question}</p>
-          </div>
-          <div className="flex justify-center mb-4">
-            <img src={imageQuestion1.images[0]}/>
-          </div>
-          <fieldset className="grid grid-cols-2 mr-6 items-center ">
-              {imageQuestion1.answer_type === "image" && imageQuestion1.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="ml-6 mb-4">
-                  <div className="flex items-center">
-                    <input
-                      className="mr-2 w-5 h-5"
-                      type="radio"
-                      value={answer}
-                      id={answer}
-                    />
-                    <p className="ml-2 mr-2 font-bold">{answer.letter}</p>
-                    <img className="w-[75px] md:w-[150px] lg:w-[200px]" src={answer.url} />
-                  </div>
-                </div>
-              ))}
-            </fieldset>
-        </div>
-        <div className="bg-white p-4 rounded-b-2xl shadow-xl">
-          <button type="submit" onClick={submitLeaderboard} className="w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
-        </div>
+      <button
+        type="submit"
+        onClick={submitBoth}
+        className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md"
+      >
+        Trimite răspunsul
+      </button>
     </div>
   );
 }

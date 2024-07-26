@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function getAllQuizzes() {
+export default function getAllSubmissions() {
   const [submissions, setSubmissions] = useState<any[]>([]);
 
   const data = async () => {
@@ -19,7 +19,7 @@ export default function getAllQuizzes() {
     }
   };
   useEffect(() => {
-    const fetchQuizzes = async () => {
+    const fetchSubmissions = async () => {
       try {
         const quizzes = await data();
         setSubmissions(quizzes);
@@ -28,7 +28,7 @@ export default function getAllQuizzes() {
       }
     };
 
-    fetchQuizzes();
+    fetchSubmissions();
   }, []);
 
   return submissions;
