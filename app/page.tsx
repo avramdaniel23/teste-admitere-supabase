@@ -79,7 +79,7 @@ export default async function Index() {
             Ce oferim?
           </h1>
           <div className="grid md:grid-cols-2 gap-8 pt-8">
-            <div className=" text-left  ">
+            <div className="text-left border-2 rounded-lg p-2">
               <h2 className='font-bold ps-[20px] relative pb-4 uppercase before:content-[""] before:w-[10px] before:h-[10px] before:absolute before:top-[16%] before:left-0 before:bg-[#0172F0] '>
                 Title
               </h2>
@@ -89,7 +89,7 @@ export default async function Index() {
                 text ever since the 1500s
               </p>
             </div>
-            <div className=" text-left ">
+            <div className="text-left border-2 rounded-lg p-2">
               <h2 className='font-bold ps-[20px] relative pb-4 uppercase before:content-[""] before:w-[10px] before:h-[10px] before:absolute before:top-[16%] before:left-0 before:bg-[#0172F0] '>
                 Title
               </h2>
@@ -99,7 +99,7 @@ export default async function Index() {
                 text ever since the 1500s
               </p>
             </div>
-            <div className=" text-left ">
+            <div className="text-left border-2 rounded-lg p-2">
               <h2 className='font-bold ps-[20px] relative pb-4 uppercase before:content-[""] before:w-[10px] before:h-[10px] before:absolute before:top-[16%] before:left-0 before:bg-[#0172F0] '>
                 Title
               </h2>
@@ -109,7 +109,7 @@ export default async function Index() {
                 text ever since the 1500s
               </p>
             </div>
-            <div className="  text-left ">
+            <div className="text-left border-2 rounded-lg p-2">
               <h2 className='font-bold ps-[20px] relative pb-4 uppercase before:content-[""] before:w-[10px] before:h-[10px] before:absolute before:top-[16%] before:left-0 before:bg-[#0172F0] '>
                 Title
               </h2>

@@ -8,7 +8,7 @@ export default function ContactHP() {
           </h1>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-1.5 bg-gray-200 ">
+      <div className="grid grid-cols-3 gap-1.5 bg-gray-200 ">
         <div className="bg-[#F9FAFB]  flex flex-col text-center items-center justify-center p-10 md:p-20 ">
           <svg
             width="45px"
@@ -101,11 +101,6 @@ export default function ContactHP() {
           <p className="text-[16px] text-gray-400 lowercase ">
             Splaiul Independenței 313, București
           </p>
-        </div>
-        <div className="bg-[#F9FAFB] flex justify-end p-10 md:p-20 ">
-          {/* <h1 className="text-[24px] lg:text-[2rem]   font-[900] uppercase ">
-            Contactat!
-          </h1> */}
         </div>
         <div className="bg-[#F9FAFB]  flex flex-col text-end items-center justify-center p-10 md:p-20  ">
           <svg
