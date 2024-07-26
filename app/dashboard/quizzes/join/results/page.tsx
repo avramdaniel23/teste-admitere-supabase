@@ -115,6 +115,9 @@ export default function Results() {
 
         thisSubmission = submissions.find((submission: any) => submission.user_id === user.id);
     }
+    else {
+        return <h1>Loading submission...</h1>
+    }
 
     return (
         <div className="mb-20">
