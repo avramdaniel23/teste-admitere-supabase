@@ -12,11 +12,11 @@ const AnswerCard = ({ answer, selected, answerImage }: CardProps) => {
       value={answer}
       className={`${
         selected == answer
-          ? "bg-blue-300 border-black"
+          ? "bg-blue-100 border-black"
           : "bg-white border-slate-200"
       }  p-4 flex items-center  ${
         answerImage ? "justify-around" : "justify-between"
-      } shadow-md border  rounded-md relative cursor-pointer  hover:bg-blue-300 hover:border-black mb-2 transition-all duration-300 ease-in-out `}
+      } shadow-md border  rounded-md relative cursor-pointer  hover:bg-blue-200 hover:border-black mb-2 transition-all duration-300 ease-in-out `}
       id={answer}
     >
       {!answerImage ? (
