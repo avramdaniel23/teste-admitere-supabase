@@ -47,7 +47,7 @@ export default async function Index() {
         <section className="max-w-[90%] mx-auto">
           <span className="lg:w-[70%] text-center">
           <div className="border-b-2 border-gray-400">
-            <h1 className=" text-[4rem] md:text-[8rem] lg:text-[12rem] text-purple-500 italic font-serif">
+            <h1 className=" text-[4rem] md:text-[8rem] lg:text-[12rem] text-purple-500 caveat">
               Exersează!
             </h1>
           </div>
@@ -61,7 +61,10 @@ export default async function Index() {
         </section>
 
         <section className=" mt-24 p-10 pb-16 mx-auto text-center bg-gray-200">
-          <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-serif text-purple-500 italic font-[900]">
+        <svg viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+          <path d="M0,100 C150,200 350,0 500,100 L500,00 L0,0 Z"></path>
+        </svg>
+          <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] text-purple-500 font-[900] font-serif italic">
             Ce Oferim?
           </h1>
           <div className="grid md:grid-cols-2 gap-8 pt-8">

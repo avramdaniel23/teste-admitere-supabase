@@ -44,12 +44,12 @@ export default function Faq() {
             </h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />
@@ -81,12 +81,12 @@ export default function Faq() {
             <h1 className="max-w-[60%] text-white font-bold text-xl">Platforma este gratuita?</h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq1 === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq1 === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />
@@ -120,12 +120,12 @@ export default function Faq() {
             </h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq2 === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[14px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq2 === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />

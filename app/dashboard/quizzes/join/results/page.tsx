@@ -4,6 +4,8 @@ import getUser from "@/libs/getUser/getUser";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+
+
 export default function Results() {
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any>(null);
@@ -12,6 +14,7 @@ export default function Results() {
   const quizID = searchParams.get("quizID");
   let user = getUser();
 
+  
   const fetchSubmissions = async () => {
     try {
       const response = await fetch(
@@ -115,13 +118,16 @@ export default function Results() {
   let thisSubmission: any = null;
 
   if (user.id && submissions.length > 0) {
-    thisSubmission = submissions.find(
-      (submission: any) => submission.user_id === user.id
-    );
-  }
+
+    thisSubmission = submissions.find((submission: any) => submission.user_id === user.id);
+}
+else {
+    return <h1>Loading submission...</h1>
+}
 
     return (
-        <div>
+
+<div>
             {quizData && (
                 <div className="font-medium">
                     <div className="text-center text-[28px]">Rezultatul testului {quizData.name}</div>
@@ -137,7 +143,7 @@ export default function Results() {
                             <div className="flex flex-col bg-gray-500 rounded-t-lg">
                                 <p className="p-8 text-justify text-[18px] text-white font-bold">{index + 1}. {question.question}</p>
                                 <div className="flex justify-center">
-                                    <img className={`w-[60%] rounded-lg shadow-xl ${question.images.length === 1 ? "mb-10" : ""}`} src={question.images[0]} />
+                                    <img className={`w-[60%] rounded-lg shadow-xl ${question.images.length === 1 ? "mb-10" : "mb-10"}`} src="https://i.postimg.cc/wM4qxJ2j/Screenshot-2024-07-23-183843.png" />
                                 </div>
                             </div>
                             {thisSubmission && thisSubmission.submission_answers[index] && (
@@ -150,6 +156,8 @@ export default function Results() {
                     ))}
                 </div>
             )}
+
+
 
 
 
