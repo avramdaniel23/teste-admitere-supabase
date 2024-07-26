@@ -1,5 +1,5 @@
-'use client'
-import { useEffect } from 'react';
+"use client";
+import { useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { ThemeSupa, ViewType } from "@supabase/auth-ui-shared";
 import { Auth } from "@supabase/auth-ui-react";
@@ -48,23 +48,24 @@ const localization = {
 };
 
 export default function Login() {
-  
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        window.location.href = "/";
-      }
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          window.location.href = "/";
+        }
+      },
+    );
 
     // Cleanup function to unsubscribe the listener
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, []); 
+  }, []);
 
   return (
-    <div className="relative lg:mx-auto lg:max-w-md bg-zinc-900">
-      <div className="min-w-[300px] ">
+    <div className="relative bg-zinc-900 lg:mx-auto lg:max-w-md">
+      <div className="min-w-[300px]">
         <div className="border-scale-400 bg-scale-300 relative rounded-xl px-8 py-10 drop-shadow-sm">
           <div className="mb-6 flex flex-col gap-6">
             <div className="flex flex-col items-center gap-3">
@@ -77,14 +78,14 @@ export default function Login() {
                 ></Image>
               </Link>
 
-              <h1 className="text-scale-1200 text-2xl text-center text-white mt-2">
+              <h1 className="text-scale-1200 mt-2 text-center text-2xl text-white">
                 Universitatea Politehnica Bucuresti
               </h1>
             </div>
           </div>
           <Auth
             supabaseClient={supabase}
-            redirectTo="/"
+            redirectTo="/dashboard"
             view={views[0].id}
             appearance={{
               theme: ThemeSupa,

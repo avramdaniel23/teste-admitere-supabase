@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
+import QuizLoader from "@/components/Loaders/QuizLoader";
 
 interface QuizType {
   _id: any;
@@ -228,9 +229,9 @@ export default function QuizzesJoin() {
 
   console.log(quizzesData);
   return (
-    <div>
+    <>
       {isLoadingQuiz ? (
-        <LoadingQuiz />
+        <QuizLoader />
       ) : (
         <>
           <div className="mb-5 font-medium">
@@ -296,51 +297,15 @@ export default function QuizzesJoin() {
                 </fieldset>
               </div>
             ))}
+          <button
+            type="submit"
+            onClick={submitBoth}
+            className="m-4 mx-auto mb-[75px] flex w-full justify-center rounded-lg bg-blue-600 py-3 text-white shadow-md hover:opacity-75 md:w-[200px]"
+          >
+            Trimite răspunsul
+          </button>
         </>
       )}
-
-      <button
-        type="submit"
-        onClick={submitBoth}
-        className="m-4 mx-auto mb-[75px] flex w-full justify-center rounded-lg bg-blue-600 py-3 text-white shadow-md hover:opacity-75 md:w-[200px]"
-      >
-        Trimite răspunsul
-      </button>
-    </div>
-  );
-}
-
-function LoadingQuiz() {
-  return (
-    <section role="status" className="max-w-7xl animate-pulse space-y-10">
-      <div className="mb-4 h-20 w-full rounded-lg bg-gray-300"></div>
-      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
-        <div className="col-span-2 rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-      </div>
-      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
-        <div className="col-span-2 rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-      </div>
-      <div className="mb-4 grid h-[40vh] w-full grid-cols-1 gap-y-3 lg:grid-cols-2 lg:gap-3">
-        <div className="col-span-2 rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-        <div className="rounded-lg bg-gray-300"></div>
-      </div>
-    </section>
+    </>
   );
 }
