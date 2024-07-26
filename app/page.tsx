@@ -34,10 +34,10 @@ export default async function Index() {
         <section className="flex justify-between max-w-[90%] mx-auto ">
           <span className=" w-full lg:w-[70%] text-center lg:text-left ">
             <h1 className="text-[3rem] lg:text-[4rem] xl:text-[6rem] font-bold  ">
-              Hai sa te{" "}
+              Hai sa{" "}
             </h1>
             <h1 className="text-[3rem] lg:text-[4rem]  xl:text-[6rem] font-[900] uppercase lg:ml-20 xl:ml-64  ">
-              exersez!!
+              exersezi!!
             </h1>
             <div className="block xl:flex justify-around mt-12 xl:mt-20 ">
               <div className="pt-8 pr-8 text-left ">
