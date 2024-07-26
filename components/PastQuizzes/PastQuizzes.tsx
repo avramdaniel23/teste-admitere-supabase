@@ -11,7 +11,7 @@ export default function PastQuizzes() {
   });
 
   return (
-    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-full my-8">
+    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-full my-4">
       {userQuizzes.map((quiz: any, index: any) => {
         return (
           <div
@@ -29,8 +29,11 @@ export default function PastQuizzes() {
               <div className="text-[16px] border-r border-[#66A5AD] ">
                 <b className="uppercase text-[20px] ">{quiz.subject}</b>
               </div>
+              <div className="text-[16px]  ">
+                <b className="uppercase text-[20px] ">{quiz.chapter}</b>
+              </div>
 
-              <div className=" text-[16px] ">
+              <div className=" text-[16px] mt-4 col-span-2 ">
                 <b className="uppercase text-[20px] ">{quiz.points}</b> / 50
               </div>
             </div>
