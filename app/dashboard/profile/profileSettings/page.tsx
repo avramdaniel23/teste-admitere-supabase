@@ -178,8 +178,22 @@ export default function ProfileSettings() {
 
           <div className="w-[95%] md:w-full relative mx-auto">
             <Listbox value={selectedCounty} onChange={setSelectedCounty}>
-              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left relative">
-                {selectedCounty.nume}
+              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left relative flex justify-between">
+                <p>{selectedCounty.nume}</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-5 mt-[1.5px] ml-1 "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
               </ListboxButton>
               <ListboxOptions className="bg-white w-full mt-[3.7rem] rounded-xl shadow-lg border border-gray-300 absolute z-10 h-[200px] lg:h-[350px] overflow-y-auto  ">
                 {judete.map((judet, index) => (
@@ -200,8 +214,22 @@ export default function ProfileSettings() {
 
           <div className="w-[95%] md:w-full relative mx-auto">
             <Listbox value={faculty} onChange={setFaculty}>
-              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left">
-                {faculty.name}
+              <ListboxButton className="p-4 pl-8 w-full rounded-xl border bg-white border-gray-300 focus-visible:outline-gray-400 text-left truncate flex justify-between ">
+                <p className="truncate w-[90%] ">{faculty.name}</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-5 mt-[1.5px] ml-1 "
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                  />
+                </svg>
               </ListboxButton>
               <ListboxOptions className="bg-white w-full mt-[3.7rem] rounded-xl shadow-lg border border-gray-300 absolute z-10 h-[200px] lg:h-[350px] overflow-y-auto  ">
                 {facultati.map((facultate) => (

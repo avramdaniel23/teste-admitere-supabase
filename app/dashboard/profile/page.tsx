@@ -18,8 +18,9 @@ export default function Profile() {
           <div>Past Quizzes</div>
         </Link> */}
         <h1 className="text-[28px] font-[900] mt-8 ">Teste rezolvate</h1>
-
-        <PastQuizzes />
+        <div className="overflow-y-scroll h-[500px]  ">
+          <PastQuizzes />
+        </div>
 
         {/* <Link href="/dashboard/profile/stats">
           <div>Stats</div>
