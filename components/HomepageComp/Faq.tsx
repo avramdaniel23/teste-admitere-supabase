@@ -24,8 +24,8 @@ export default function Faq() {
 
   return (
     <section className=" mt-24 max-w-[95%] lg:max-w-[70%] lg:mx-auto text-center mx-auto ">
-      <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-[900] uppercase ">
-        faq u
+      <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-[900] text-purple-500 font-serif italic">
+        Întrebări Frecvente
       </h1>
       <div className="grid gap-y-8 w-full mt-8">
         <button
@@ -34,33 +34,33 @@ export default function Faq() {
           onClick={handleOpen}
         >
           <div
-            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 px-4 bg-gradient-to-r from-green-700  to-green-400  w-full  font-bold  flex items-center rounded-2xl shadow-xl`}
           >
             <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
               01.
             </span>
-            <h1 className="max-w-[60%] ">
+            <h1 className="max-w-[60%] text-white font-bold text-xl">
               Ce materii sunt disponibile acum pe platformă?
             </h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />
             </div>
           </div>
           <div
-            className={`relative pb-4 pt-[20px] -z-50 w-[90%] text-[16px]   mx-auto bg-white -mt-[10px]    ${
+            className={`relative pb-4 pt-[20px] z-50 w-[90%] md:w-[95%] lg:w-[95%] text-[16px] mx-auto bg-white   ${
               faq === true ? "rounded-b-lg flex" : "hidden"
             } `}
           >
-            <p className=" px-4 md:px-8">
+            <p className=" px-4 py-4 -mt-5 md:px-8 bg-gray-300 rounded-b-xl shadow-xl font-bold">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s
@@ -73,31 +73,31 @@ export default function Faq() {
           onClick={handleOpen1}
         >
           <div
-            className={`py-4 z-[80] px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 z-[80] px-4 bg-gradient-to-r from-green-700  to-green-400  w-full  font-bold  flex items-center rounded-2xl shadow-xl`}
           >
             <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
               02.
             </span>
-            <h1 className="max-w-[60%] ">Platforma este gratuita?</h1>
+            <h1 className="max-w-[60%] text-white font-bold text-xl">Platforma este gratuita?</h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq1 === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq1 === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />
             </div>
           </div>
           <div
-            className={`relative pb-4 pt-[20px] -z-50 w-[90%] text-[16px]   mx-auto bg-white -mt-[10px]  ${
+            className={`relative pb-4 pt-[20px] z-50 w-[90%] md:w-[95%] lg:w-[95%] text-[16px] mx-auto bg-white ${
               faq1 === true ? "rounded-b-lg flex " : "hidden "
             } `}
           >
-            <p className=" px-4 md:px-8">
+            <p className="px-4 py-4 -mt-5 md:px-8 bg-gray-300 rounded-b-xl shadow-xl font-bold">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s
@@ -110,33 +110,33 @@ export default function Faq() {
           onClick={handleOpen2}
         >
           <div
-            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 px-4 bg-gradient-to-r from-green-700  to-green-400  w-full  font-bold  flex items-center rounded-2xl shadow-xl`}
           >
             <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
               03.
             </span>
-            <h1 className="max-w-[60%] ">
-              Pot să văd răspunsurile corecte în istoricul grilelor?
+            <h1 className="max-w-[60%] text-white font-bold text-xl">
+              Pot vedea răspunsurile  în istoricul grilelor?
             </h1>
             <div className=" bg-white ml-4 ">
               <span
-                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[30px] lg:right-[50px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq2 === true ? "rotate-[122deg]" : "rotate-[55deg]"
                 } `}
               />
               <span
-                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-[#0172F0] transition-all duration-300 ease-in-out ${
+                className={`absolute right-[22.9px] lg:right-[42.9px] w-[13px] rounded-xl h-[2px] bg-white transition-all duration-300 ease-in-out ${
                   faq2 === true ? "-rotate-[122deg]" : "-rotate-[55deg]"
                 } `}
               />
             </div>
           </div>
           <div
-            className={`relative pb-4 pt-[20px] -z-50 w-[90%] text-[16px]   mx-auto bg-white -mt-[10px]   ${
+            className={`relative pb-4 pt-[20px] z-50 w-[90%] md:w-[95%] lg:w-[95%] text-[16px]  mx-auto bg-white  ${
               faq2 === true ? "rounded-b-lg flex" : "hidden"
             } `}
           >
-            <p className=" px-4 md:px-8">
+            <p className="px-4 py-4 -mt-5 md:px-8 bg-gray-300 rounded-b-xl shadow-xl font-bold">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s

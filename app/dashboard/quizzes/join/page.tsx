@@ -352,7 +352,7 @@ export default function QuizzesJoin() {
             </fieldset>
         </div>
         <div className="bg-white p-4 rounded-b-2xl shadow-xl">
-          <button type="submit" onClick={submitAnswer} className="w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
+          <button type="submit" onClick={submitBoth} className="w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md">Trimite răspunsul</button>
         </div>
     </div>
   );
