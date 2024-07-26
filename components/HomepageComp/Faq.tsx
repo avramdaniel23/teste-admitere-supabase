@@ -25,7 +25,7 @@ export default function Faq() {
   return (
     <section className=" mt-24 max-w-[95%] lg:max-w-[70%] lg:mx-auto text-center mx-auto ">
       <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-[900] uppercase ">
-        faq u
+        faq
       </h1>
       <div className="grid gap-y-8 w-full mt-8">
         <button
