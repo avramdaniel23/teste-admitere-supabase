@@ -6,27 +6,25 @@ export default function PastQuizzes() {
   let quizzes: any[] = getAllQuizzes();
   let user: any = getUser();
 
-  let userQuizzes = quizzes.filter((quiz) => {
-    return quiz.user_id == user.id;
-  });
+  let userQuizzes = quizzes.filter((quiz) => quiz.user_id == user.id)
 
   return (
-    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-4 w-full my-8">
+    <div className=" grid md:grid-cols-2 gap-8 w-full max-h-[500px] overflow-y-scroll border-2 p-2 rounded-lg ">
       {userQuizzes.map((quiz: any, index: any) => {
         return (
           <div
             key={index}
-            className="  mx-auto rounded-xl block align-middle items-center w-full"
+            className="rounded-xl align-middle items-center w-full"
           >
-            <div className=" w-full p-8 block bg-[#66A5AD] rounded-t-lg text-white ">
-              <div className=" w-full flex justify-center text-center ">
-                <h2 className="text-[30px] font-bold  uppercase">
+            <div className="p-4  bg-[#66A5AD] rounded-t-lg text-white ">
+              <div className="flex justify-center text-center ">
+                <h2 className="text-[30px] font-bold  uppercase text-nowrap">
                   {quiz.name}
                 </h2>
               </div>
             </div>
-            <div className=" grid  md:grid-cols-2 rounded-b-lg text-center p-4 mt-2 bg-[#C4DFE6]">
-              <div className="text-[16px] border-r border-[#66A5AD] ">
+            <div className=" grid  md:grid-cols-2 rounded-b-lg text-center p-2  bg-[#C4DFE6]">
+              <div className="text-[16px] no ">
                 <b className="uppercase text-[20px] ">{quiz.subject}</b>
               </div>
 
