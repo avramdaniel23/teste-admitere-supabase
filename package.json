@@ -14,6 +14,7 @@
     "autoprefixer": "10.4.17",
     "cookies-next": "^4.2.1",
     "geist": "^1.2.1",
+    "lottie-react": "^2.4.0",
     "mongodb": "^6.8.0",
     "next": "latest",
     "next-themes": "^0.3.0",

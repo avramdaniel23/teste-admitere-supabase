@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from "next/link";
+import Image from "next/image";
 
-export default function Logo({ size }: any) {
+export default function Logo({ size }: { size: number }) {
   return (
     <Link href="/">
       <Image
@@ -11,5 +11,5 @@ export default function Logo({ size }: any) {
         height={size}
       ></Image>
     </Link>
-  )
+  );
 }

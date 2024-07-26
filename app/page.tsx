@@ -8,6 +8,11 @@ import Image from "next/image";
 import { useState } from "react";
 import Faq from "@/components/HomepageComp/Faq";
 import ContactHP from "@/components/HomepageComp/Contact";
+import Link from "next/link";
+import LearnSection from "@/components/HomepageComp/LearnSection";
+import HeroSection from "@/components/HomepageComp/HeroSection";
+import Logo from "@/components/Logo/Logo";
+import QuizSection from "@/components/HomepageComp/QuizSection";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -24,6 +29,43 @@ export default async function Index() {
   const isSupabaseConnected = canInitSupabaseClient();
 
   return (
+    <div className="flex min-h-[100dvh] flex-col">
+      <nav className="h-20 w-full border-b border-b-gray-200">
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-5 md:px-0">
+          <Logo size={70} />
+          <div className="flex items-center font-medium">
+            {isSupabaseConnected && <AuthButton />}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="size-5"
+            >
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+              <polyline points="10 17 15 12 10 7" />
+              <line x1="15" x2="3" y1="12" y2="12" />
+            </svg>
+          </div>
+        </div>
+      </nav>
+      <HeroSection />
+      <LearnSection />
+      <QuizSection />
+
+      <footer className="py-6 text-center text-sm">
+        <div className="container mx-auto px-4 md:px-6">
+          <p>&copy; 2024 Euronews Quiz</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+/* return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center mb-[50px]">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full flex justify-end items-center p-3 text-sm mx-8">
@@ -125,12 +167,11 @@ export default async function Index() {
         <ContactHP />
       </main>
 
-      {/* <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
+       <div className="animate-in flex-1 flex flex-col gap-20 opacity-0 max-w-4xl px-3">
         <main className="flex-1 flex flex-col gap-6">
           <h2 className="font-bold text-4xl mb-4">Next steps</h2>
           {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
         </main>
-      </div> */}
+      </div> 
     </div>
-  );
-}
+  ); */
