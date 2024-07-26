@@ -7,14 +7,12 @@ export default function PastQuizzes() {
   let quizzes: any[] = getAllSubmissions();
   let user: any = getUser();
 
-  console.log(quizzes);
-
   let userQuizzes = quizzes.filter((quiz) => {
     return quiz.user_id == user.id;
   });
 
   return (
-    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 w-full my-4  ">
+    <div className=" grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 w-full   ">
       {userQuizzes.map((quiz: any, index: any) => {
         return (
           <div
