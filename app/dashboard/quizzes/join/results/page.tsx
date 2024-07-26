@@ -118,6 +118,9 @@ export default function Results() {
     thisSubmission = submissions.find(
       (submission: any) => submission.user_id === user.id
     );
+    console.log(thisSubmission);
+  } else {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -125,45 +128,107 @@ export default function Results() {
       {quizData && (
         <div className="mb-5 font-medium">
           <div className="text-center text-[28px]">
-            Rezultatul testuloui {quizData.name}
+            Rezultatul testului {quizData.name}
           </div>
-          <p className="my-4 text-center text-[20px]">
-            Scor: {thisSubmission.score}/
-            {thisSubmission.submission_answers.length * 10}
-          </p>
+          {thisSubmission && (
+            <p className="my-4 text-center text-[20px]">
+              Scor: {thisSubmission.score}/
+              {thisSubmission.submission_answers.length * 10}
+            </p>
+          )}
         </div>
       )}
 
       {questionsData && (
         <div>
           {questionsData.map((question, index) => (
-            <div key={index} className="mb-7 shadow-md rounded-lg">
-              <p className="p-2 text-justify text-[18px] text-white bg-blue-600 rounded-t-lg">
+            <div
+              key={index}
+              className="mb-7  relative shadow-md border border-black rounded-lg p-2 py-4"
+            >
+              <p className="p-2 text-justify text-[18px] text-black font-bold  rounded-t-lg">
                 {index + 1}. {question.question}
               </p>
               {thisSubmission && thisSubmission.submission_answers[index] && (
                 <div>
-                  <div key={index} className="p-2">
-                    Răspunsul tău:{" "}
-                    <span
-                      className={`${
-                        thisSubmission.submission_answers[index].is_correct ==
-                        false
-                          ? "text-red-600"
-                          : "text-green-600"
-                      }`}
+                  <div
+                    key={index}
+                    className={`p-2 rounded-md shadow-md flex items-center   ${
+                      thisSubmission.submission_answers[index].is_correct ==
+                      false
+                        ? "bg-red-300 "
+                        : "bg-green-200 my-2"
+                    }`}
+                  >
+                    {thisSubmission.submission_answers[index].is_correct ==
+                    false ? (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 mr-1"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M6 18 18 6M6 6l12 12"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 mr-1 "
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m4.5 12.75 6 6 9-13.5"
+                        />
+                      </svg>
+                    )}
+                    <p className="mr-2">Răspunsul tău: </p>
+                    <div
+                      className={`text- black
+                       `}
                     >
                       {
                         thisSubmission.submission_answers[index]
                           .selected_answer_id
                       }
-                    </span>
+                    </div>
                   </div>
                 </div>
               )}
-              <div className="w-full p-2  rounded-b-lg bg-green-300 opacity-50">
-                <p>Răspunsul corect este: {question.correct_answer}</p>
-              </div>
+              {thisSubmission.submission_answers[index].is_correct == false && (
+                <div className="w-full p-2 mt-2  rounded-md opacity-50  font-bold">
+                  <p className="ml-1">
+                    Răspunsul corect este: {question.correct_answer}
+                  </p>
+                </div>
+              )}
+              {/* <div className="relative -bottom-2 left-[98%]">
+                 Rezolvare 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6 hover:text-blue-400 cursor-pointer"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"
+                  />
+                </svg>
+              </div> */}
             </div>
           ))}
         </div>

@@ -2,10 +2,11 @@ import { Radio } from "@headlessui/react";
 interface CardProps {
   answer: string;
   selected: string;
-  answerImage: any;
+  answerImage: string;
 }
 
 const AnswerCard = ({ answer, selected, answerImage }: CardProps) => {
+  console.log(answerImage);
   return (
     <Radio
       value={answer}
@@ -13,19 +14,20 @@ const AnswerCard = ({ answer, selected, answerImage }: CardProps) => {
         selected == answer
           ? "bg-blue-300 border-black"
           : "bg-white border-slate-200"
-      }  p-4 flex items-center  justify-between shadow-md border  rounded-md relative cursor-pointer  hover:bg-blue-300 hover:border-black mb-2 transition-all duration-300 ease-in-out `}
+      }  p-4 flex items-center  ${
+        answerImage ? "justify-around" : "justify-between"
+      } shadow-md border  rounded-md relative cursor-pointer  hover:bg-blue-300 hover:border-black mb-2 transition-all duration-300 ease-in-out `}
       id={answer}
     >
-      <div
-        className={`grid grid-cols-1 lg:grid-cols-2 w-full ${
-          answerImage && "items-center p-4 gap-2"
-        }`}
-      >
+      {!answerImage ? (
         <div className="font-normal">{answer}</div>
-        {answerImage && (
-          <img className="w-full  lg:m-0 object-scale-down" src={answerImage} />
-        )}
-      </div>
+      ) : (
+        <img
+          src={answerImage}
+          className="max-w-[60%]   lg:m-0 object-contain"
+        />
+      )}
+
       {selected == answer ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"

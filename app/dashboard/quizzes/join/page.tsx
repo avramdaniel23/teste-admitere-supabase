@@ -220,7 +220,7 @@ export default function QuizzesJoin() {
             }
             anwserImage={
               index % 3 == 0
-                ? "https://i.pinimg.com/564x/31/8d/5a/318d5ad2c866f6c4998b986f248567c1.jpg"
+                ? "https://i.pinimg.com/564x/1b/63/bf/1b63bfdeb6eac905c42442cf67c0f7f0.jpg"
                 : ""
             }
           />
