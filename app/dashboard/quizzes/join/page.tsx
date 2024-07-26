@@ -28,45 +28,12 @@ interface Configuration {
   user_id: any;
   user_firstName: any;
   user_lastName: any;
+  quizName: any;
   score: number;
   submission_answers: SubmissionAnswer[];
 }
 
-interface LeaderboardConfig {
-  _id: any;
-  user_id: any;
-  user_firstName: any;
-  user_lastName: any;
-  subject: string | null;
-  chapter: string | null;
-  total_score: number;
-  total_quizzes: number;
-}
-
-const defaultConfiguration: Configuration = {
-  _id: null,
-  quiz_id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  score: 0,
-  submission_answers: [],
-};
-
-const defLeaderboardConfig: LeaderboardConfig = {
-  _id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  subject: null,
-  chapter: null,
-  total_score: 0,
-  total_quizzes: 0,
-};
-
 export default function QuizzesJoin() {
-  const [configuration, setConfiguration] =
-    useState<Configuration>(defaultConfiguration);
   const [isFlagged, setIsFlagged] = useState<boolean>(false);
 
   const [quizzesData, setQuizzes] = useState<any>([]);
@@ -94,6 +61,19 @@ export default function QuizzesJoin() {
       throw error;
     }
   };
+
+  const defaultConfiguration: Configuration = {
+    _id: null,
+    quiz_id: null,
+    user_id: null,
+    user_firstName: null,
+    user_lastName: null,
+    quizName: null,
+    score: 0,
+    submission_answers: [],
+  };
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -173,6 +153,7 @@ export default function QuizzesJoin() {
       return {
         ...prevConfig,
         quiz_id: quizID,
+        quizName: quizzesData[0].name,
         user_id: user.id,
         user_firstName: user.user_metadata.firstName,
         user_lastName: user.user_metadata.lastName,
@@ -184,10 +165,20 @@ export default function QuizzesJoin() {
     });
   };
 
-  const submitLeaderboard = async (event: any) => {
+  const submitBoth = async (event: any) => {
     event.preventDefault();
-
     try {
+      const answerResponse = await fetch("/api/post/submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(configuration),
+      });
+
+      if (!answerResponse.ok) {
+        throw new Error("Failed to submit answers");
+      }
       // Prepare leaderboard data
       const leaderboardData = {
         user_id: user.id,
@@ -302,7 +293,7 @@ export default function QuizzesJoin() {
         ))}
       <button
         type="submit"
-        onClick={submitLeaderboard}
+        onClick={submitBoth}
         className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md"
       >
         Trimite răspunsul
