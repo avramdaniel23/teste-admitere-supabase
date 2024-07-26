@@ -26,7 +26,7 @@ export default function LeaderboardPillar({
   };
 
   return (
-    <div className="flex flex-col   items-center justify-center hover:scale-105 origin-bottom cursor-pointer duration-300 transition-all   ">
+    <div className="flex flex-col   items-center justify-center hover:scale-[102%] origin-bottom cursor-pointer duration-300 transition-all   ">
       <PillarProfile
         firstName={firstName}
         lastName={lastName}

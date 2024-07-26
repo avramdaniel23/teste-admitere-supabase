@@ -17,6 +17,8 @@ export default function Profile() {
         {/* <Link href="/dashboard/profile/past-quizzes">
           <div>Past Quizzes</div>
         </Link> */}
+        <h1 className="text-[28px] font-[900] mt-8 ">Teste rezolvate</h1>
+
         <PastQuizzes />
 
         {/* <Link href="/dashboard/profile/stats">
