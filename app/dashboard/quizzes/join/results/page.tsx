@@ -120,7 +120,7 @@ export default function Results() {
         thisSubmission = submissions.find((submission: any) => submission.user_id === user.id);
     }
     else {
-        return <h1>No submission</h1>
+        return <h1>Loading submission...</h1>
     }
 
     return (

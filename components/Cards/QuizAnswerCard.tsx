@@ -1,6 +1,3 @@
-import {useState} from "react";
-import {it} from "node:test";
-
 interface QuizProps {
     index: number,
     question: any,
@@ -24,7 +21,7 @@ export default function QuizAnswerCard(props: QuizProps) {
                 }
                 </div>
             <div key={`${props.index}-answers`}
-                 className={"my-8 grid gap-4 grid-cols-1 w-full md:grid-cols-2 m-4"}>
+                 className={"my-8 grid gap-4 grid-cols-1 w-full md:grid-cols-2 lg:grid-cols-3 m-4"}>
                 {props.answers.map((value, index) => (
                     <div key={`${props.index}-${index}`}
                          className={`shadow border-2 border-gray-300 rounded-lg p-4 w-full text-center ${value==props.correctAnswer && "bg-green-600 text-white"} ${value==props.userAnswer && value != props.correctAnswer && "bg-red-600 text-white"} `}
