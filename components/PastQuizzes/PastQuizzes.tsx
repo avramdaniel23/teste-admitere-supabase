@@ -23,7 +23,7 @@ export default function PastQuizzes() {
           >
             <div className=" w-full p-8 block bg-[#66A5AD] rounded-t-lg text-white ">
               <div className=" w-full flex justify-center text-center ">
-                <h2 className="text-[25px] font-bold  uppercase">
+                <h2 className="text-[25px] font-bold  uppercase truncate ">
                   {quiz.quizName}
                 </h2>
               </div>

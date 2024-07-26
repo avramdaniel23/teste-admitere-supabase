@@ -127,8 +127,6 @@ export default function QuizzesJoin() {
     );
   }
 
-  console.log(quizzesData[0].name);
-
   const handleChange = (name: any, value: any) => {
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find((q) => q._id === name);

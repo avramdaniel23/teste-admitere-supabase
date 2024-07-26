@@ -115,7 +115,7 @@ export default function Results() {
   let thisSubmission: any = null;
 
   if (user.id && submissions.length > 0) {
-    thisSubmission = submissions.find(
+    thisSubmission = submissions.filter(
       (submission: any) => submission.user_id === user.id
     );
   } else {
@@ -124,15 +124,16 @@ export default function Results() {
 
   return (
     <div>
-      {quizData && (
+      {questionsData && (
         <div className="mb-5 font-medium">
           <div className="text-center text-[28px]">
             Rezultatul testului {quizData.name}
           </div>
-          {thisSubmission && (
+          {thisSubmission[thisSubmission.length - 1] && (
             <p className="my-4 text-center text-[20px]">
-              Scor: {thisSubmission.score}/
-              {thisSubmission.submission_answers.length * 10}
+              Scor: {thisSubmission[thisSubmission.length - 1].score}/
+              {thisSubmission[thisSubmission.length - 1].submission_answers
+                .length * 10}
             </p>
           )}
         </div>
@@ -153,60 +154,65 @@ export default function Results() {
               <p className="p-2 text-justify text-[18px] text-black font-bold  rounded-t-lg">
                 {question.question}
               </p>
-              {thisSubmission && thisSubmission.submission_answers[index] && (
-                <div>
-                  <div
-                    key={index}
-                    className={`p-2 rounded-md shadow-md flex items-center  ${
-                      thisSubmission.submission_answers[index].is_correct ==
-                      false
-                        ? "bg-red-300 "
-                        : "bg-green-200 my-2"
-                    }`}
-                  >
-                    {thisSubmission.submission_answers[index].is_correct ==
-                    false ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 28 28"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6 m-[2px] mt-[5px] "
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6 18 18 6M6 6l12 12"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 28 28"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="size-6 m-[2px] mt-[5px]"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m4.5 12.75 6 6 9-13.5"
-                        />
-                      </svg>
-                    )}
-                    <p className="mr-2  ">Răspunsul tău: </p>
-                    <div className={`text- black `}>
-                      {
-                        thisSubmission.submission_answers[index]
-                          .selected_answer_id
-                      }
+              {thisSubmission[thisSubmission.length - 1] &&
+                thisSubmission[thisSubmission.length - 1].submission_answers[
+                  index
+                ] && (
+                  <div>
+                    <div
+                      key={index}
+                      className={`p-2 rounded-md shadow-md flex items-center  ${
+                        thisSubmission[thisSubmission.length - 1]
+                          .submission_answers[index].is_correct == false
+                          ? "bg-red-300 "
+                          : "bg-green-200 my-2"
+                      }`}
+                    >
+                      {thisSubmission[thisSubmission.length - 1]
+                        .submission_answers[index].is_correct == false ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 28 28"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="size-6 m-[2px] mt-[5px] "
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M6 18 18 6M6 6l12 12"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 28 28"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="size-6 m-[2px] mt-[5px]"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="m4.5 12.75 6 6 9-13.5"
+                          />
+                        </svg>
+                      )}
+                      <p className="mr-2  ">Răspunsul tău: </p>
+                      <div className={`text- black `}>
+                        {
+                          thisSubmission[thisSubmission.length - 1]
+                            .submission_answers[index].selected_answer_id
+                        }
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
-              {thisSubmission.submission_answers[index].is_correct == false && (
+                )}
+              {thisSubmission[thisSubmission.length - 1].submission_answers[
+                index
+              ].is_correct == false && (
                 <div className="w-full p-2 mt-2  rounded-md opacity-50  font-bold">
                   <p className="ml-1  ">
                     Răspunsul corect este: {question.correct_answer}
