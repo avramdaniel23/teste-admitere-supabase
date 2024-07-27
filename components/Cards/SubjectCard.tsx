@@ -14,73 +14,86 @@ interface SubjectProps {
   subjectID: string;
   totalQuizzes: number;
   totalSolved: number;
-
 }
 
-const SubjectCard = ({ title, icon, chapters, subjectID, totalQuizzes, totalSolved }: SubjectProps) => {
-//   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
-//   const supabase = createClient();
+const SubjectCard = ({
+  title,
+  icon,
+  chapters,
+  subjectID,
+  totalQuizzes,
+  totalSolved,
+}: SubjectProps) => {
+  //   const [numberOfQuestions, setNumberOfQuestions] = useState<number>(0);
+  //   const supabase = createClient();
 
-//   useEffect(() => {
-//     const fetchNumberOfQuestions = async () => {
-//       try {
-//         const { data: questionsData, error: questionsError } = await supabase
-//           .from("questions")
-//           .select("id")
-//           .eq("subcategory_id", categoryId);
+  //   useEffect(() => {
+  //     const fetchNumberOfQuestions = async () => {
+  //       try {
+  //         const { data: questionsData, error: questionsError } = await supabase
+  //           .from("questions")
+  //           .select("id")
+  //           .eq("subcategory_id", categoryId);
 
-//         if (questionsError) {
-//           throw questionsError;
-//         }
+  //         if (questionsError) {
+  //           throw questionsError;
+  //         }
 
-//         setNumberOfQuestions(questionsData.length);
-//       } catch (error) {
-//         console.error("Eroare la încărcarea numărului de întrebări:", error);
-//       }
-//     };
+  //         setNumberOfQuestions(questionsData.length);
+  //       } catch (error) {
+  //         console.error("Eroare la încărcarea numărului de întrebări:", error);
+  //       }
+  //     };
 
-//     fetchNumberOfQuestions();
-//   }, [categoryId]);
+  //     fetchNumberOfQuestions();
+  //   }, [categoryId]);
 
-  let progress = Math.floor((100*totalSolved)/totalQuizzes);
+  let progress = Math.floor((100 * totalSolved) / totalQuizzes);
 
   return (
-  <div className="relative flex flex-col gap-2 w-full h-fit bg-zinc-200 rounded-md max-w-[20rem] md:max-w-[24rem] lg:duration-200 lg:cursor-pointer lg:hover:scale-110 lg:max-w-full lg:min-w-[480px] lg:h-fit lg:rounded-2xl">
-
-    <div className="absolute right-6 -top-4 flex flex-row items-center w-fit p-2 bg-zinc-300 border-4 border-white rounded-xl lg:right-0 lg:left-0 lg:my-0 lg:mx-auto lg:rounded-2xl lg:border-8"> 
-      <Image src={icon} alt={`${title} Icon`} className="w-8 h-8 lg:w-16 lg:h-16" />
-    </div>
-
-    <div className="absolute w-2 h-2 top-0 right-4 rounded-xl shadow-[-4px_-4px_rgba(255,255,255)] lg:rounded-md lg:w-6 lg:h-6 lg:top-0 lg:right-[168px] lg:shadow-[-6px_-6px_rgba(255,255,255)]"></div>
-    <div className="absolute w-2 h-2 top-0 right-20 rounded-xl shadow-[4px_-4px_rgba(255,255,255)] lg:rounded-md lg:w-6 lg:h-6 lg:top-0 lg:left-[168px] lg:shadow-[6px_-6px_rgba(255,255,255)]"></div>
-
-    <div className="flex flex-col gap-6 w-full h-full px-6 py-4 rounded-lg lg:items-center lg:pt-20">
-      <div className="flex flex-col lg:w-fit">
-        <h6 className="text-lg font-semibold lg:text-center lg:text-2xl">{title}</h6>
-        <div className="flex flex-row text-sm font-light text-neutral-800 md:text-xs lg:text-center lg:text-base">
-            {chapters}
-        </div>
+    <div className="relative flex h-fit w-full max-w-[20rem] flex-col gap-2 rounded-md bg-zinc-200 md:max-w-[24rem] lg:h-fit lg:min-w-[480px] lg:max-w-full lg:cursor-pointer lg:rounded-2xl lg:duration-200 lg:hover:scale-110">
+      <div className="absolute -top-4 right-6 flex w-fit flex-row items-center rounded-xl border-4 border-white bg-zinc-300 p-2 lg:left-0 lg:right-0 lg:mx-auto lg:my-0 lg:rounded-2xl lg:border-8">
+        <Image
+          src={icon}
+          alt={`${title} Icon`}
+          className="h-8 w-8 lg:h-16 lg:w-16"
+        />
       </div>
 
-      <div className="flex flex-col gap-1 lg:w-full">
-        {/* <p className="text-sm font-light text-slate-800">Progres:</p>       */}
-        <div className="flex flex-col items-center gap-1">
-          <div className=" flex flex-row items-center justify-between mx-auto w-full h-2 rounded-2xl bg-blue-200 lg:h-3">
-            <div style={{ width: `${progress}%` }} className="h-2 rounded-2xl bg-blue-400 lg:h-3"></div>
-            {/* <p className="text-xs font-thin">{progress}%</p> */}
+      <div className="absolute right-4 top-0 h-2 w-2 rounded-xl shadow-[-4px_-4px_rgba(255,255,255)] lg:right-[168px] lg:top-0 lg:h-6 lg:w-6 lg:rounded-md lg:shadow-[-6px_-6px_rgba(255,255,255)]"></div>
+      <div className="absolute right-20 top-0 h-2 w-2 rounded-xl shadow-[4px_-4px_rgba(255,255,255)] lg:left-[168px] lg:top-0 lg:h-6 lg:w-6 lg:rounded-md lg:shadow-[6px_-6px_rgba(255,255,255)]"></div>
+
+      <div className="flex h-full w-full flex-col gap-6 rounded-lg px-6 py-4 lg:items-center lg:pt-20">
+        <div className="flex flex-col lg:w-fit">
+          <h6 className="text-lg font-semibold lg:text-center lg:text-2xl">
+            {title}
+          </h6>
+          <div className="flex flex-row text-sm font-light text-neutral-800 md:text-xs lg:text-center lg:text-base">
+            {chapters}
           </div>
         </div>
 
-        <div className="flex flex-row justify-between text-sm font-light lg:text-lg">
-          <p>Ai exersat:</p>
-          <p>{totalSolved}/{totalQuizzes}</p>
+        <div className="flex flex-col gap-1 lg:w-full">
+          {/* <p className="text-sm font-light text-slate-800">Progres:</p>       */}
+          <div className="flex flex-col items-center gap-1">
+            <div className="mx-auto flex h-2 w-full flex-row items-center justify-between rounded-2xl bg-blue-200 lg:h-3">
+              <div
+                style={{ width: `${progress}%` }}
+                className="h-2 rounded-2xl bg-blue-400 lg:h-3"
+              ></div>
+              {/* <p className="text-xs font-thin">{progress}%</p> */}
+            </div>
+          </div>
+
+          <div className="flex flex-row justify-between text-sm font-light lg:text-lg">
+            <p>Ai exersat:</p>
+            <p>
+              {totalSolved}/{totalQuizzes}
+            </p>
+          </div>
         </div>
       </div>
-      
     </div>
-
-  </div>
-
   );
 };
 

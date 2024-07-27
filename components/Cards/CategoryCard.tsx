@@ -33,15 +33,15 @@ const CategoryCard = ({ title, categoryId }: Props) => {
   }, [categoryId]);
 
   return (
-    <div className=" rounded-lg shadow-xl">
-      <div className="w-full ">
-        <div className="py-4 flex flex-row-reverse">
-          <span className="uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white p-3 rounded-l-full px-[2rem] font-bold tracking-wider">
+    <div className="rounded-lg shadow-xl">
+      <div className="w-full">
+        <div className="flex flex-row-reverse py-4">
+          <span className="rounded-l-full bg-gradient-to-r from-[#4062BB] to-[#5200AE] p-3 px-[2rem] font-bold uppercase tracking-wider text-white">
             {title}
           </span>
         </div>
         <div className="px-4 pb-6">
-          <div className="text-xs flex flex-col">
+          <div className="flex flex-col text-xs">
             <div className="flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +49,8 @@ const CategoryCard = ({ title, categoryId }: Props) => {
                 viewBox="0 0 24 24"
                 strokeWidth={2}
                 stroke="#4062BB"
-                className="size-5 mr-1">
+                className="mr-1 size-5"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -62,8 +63,8 @@ const CategoryCard = ({ title, categoryId }: Props) => {
             </div>
           </div>
         </div>
-        <div className="px-4 pb-4 w-full">
-          <div className="w-full uppercase bg-gradient-to-r from-[#4062BB] to-[#5200AE] text-white py-2 rounded-full text-center tracking-wider">
+        <div className="w-full px-4 pb-4">
+          <div className="w-full rounded-full bg-gradient-to-r from-[#4062BB] to-[#5200AE] py-2 text-center uppercase tracking-wider text-white">
             Vezi categoria
           </div>
         </div>
