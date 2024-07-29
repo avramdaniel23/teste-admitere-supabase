@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getUser from "@/libs/getUser/getUser";
+import QuestionCard from "@/components/QuizzComponents/QuestionCard";
 
 interface QuizType {
   _id: any;
@@ -27,47 +28,14 @@ interface Configuration {
   user_id: any;
   user_firstName: any;
   user_lastName: any;
+  quizName: any;
   score: number;
   submission_answers: SubmissionAnswer[];
 }
 
-interface LeaderboardConfig {
-  _id: any;
-  user_id: any;
-  user_firstName: any;
-  user_lastName: any;
-  subject: string | null;
-  chapter: string | null;
-  total_score: number;
-  total_quizzes: number;
-}
-
-const defaultConfiguration: Configuration = {
-  _id: null,
-  quiz_id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  score: 0,
-  submission_answers: [],
-};
-
-const defLeaderboardConfig: LeaderboardConfig = {
-  _id: null,
-  user_id: null,
-  user_firstName: null,
-  user_lastName: null,
-  subject: null,
-  chapter: null,
-  total_score: 0,
-  total_quizzes: 0,
-};
-
 export default function QuizzesJoin() {
-  const [configuration, setConfiguration] =
-    useState<Configuration>(defaultConfiguration);
-  const [leaderboardConfig, setLeaderboardConfig] =
-    useState<LeaderboardConfig>(defLeaderboardConfig);
+  const [isFlagged, setIsFlagged] = useState<boolean>(false);
+
   const [quizzesData, setQuizzes] = useState<any>([]);
   const [questionsData, setQuestions] = useState<any[]>([]);
   const searchParams = useSearchParams();
@@ -93,6 +61,19 @@ export default function QuizzesJoin() {
       throw error;
     }
   };
+
+  const defaultConfiguration: Configuration = {
+    _id: null,
+    quiz_id: null,
+    user_id: null,
+    user_firstName: null,
+    user_lastName: null,
+    quizName: null,
+    score: 0,
+    submission_answers: [],
+  };
+  const [configuration, setConfiguration] =
+    useState<Configuration>(defaultConfiguration);
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -146,9 +127,7 @@ export default function QuizzesJoin() {
     );
   }
 
-  const handleChange = (event: { target: { name: any; value: any } }) => {
-    const { name, value } = event.target;
-
+  const handleChange = (name: any, value: any) => {
     // Find the current question based on the _id
     const currentQuestion = filteredQuestions.find((q) => q._id === name);
 
@@ -174,6 +153,7 @@ export default function QuizzesJoin() {
       return {
         ...prevConfig,
         quiz_id: quizID,
+        quizName: quizzesData[0].name,
         user_id: user.id,
         user_firstName: user.user_metadata.firstName,
         user_lastName: user.user_metadata.lastName,
@@ -185,10 +165,20 @@ export default function QuizzesJoin() {
     });
   };
 
-  const submitLeaderboard = async (event: any) => {
+  const submitBoth = async (event: any) => {
     event.preventDefault();
-
     try {
+      const answerResponse = await fetch("/api/post/submissions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(configuration),
+      });
+
+      if (!answerResponse.ok) {
+        throw new Error("Failed to submit answers");
+      }
       // Prepare leaderboard data
       const leaderboardData = {
         user_id: user.id,
@@ -244,45 +234,66 @@ export default function QuizzesJoin() {
 
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
-          <div key={index} className="mb-5 shadow-md rounded-lg">
-            <div className="py-2 bg-blue-600 rounded-t-lg">
-              <p className="px-2 text-justify text-[18px] text-white ">
+          <div
+            key={index}
+            className="border-2 rounded-lg p-4 border-slate-500 mt-4 shadow-lg"
+          >
+            <div className="py-2  rounded-t-lg">
+              <div className=" flex justify-between pb-2 items-center ">
+                <span className="flex items-center justify-center border-2 p-2 rounded-full size-8 ml-1 mr-2 border-gray-400 mb-2">
+                  <p className="">{index + 1}</p>
+                </span>
+                <div
+                  onClick={() => {
+                    setIsFlagged(!isFlagged);
+                  }}
+                  className=" top-4 right-4 flex cursor-pointer transition-all duration-300 ease-linear"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    //   fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className={`size-6 ${
+                      isFlagged ? "fill-red-500" : "fill-none"
+                    } `}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 3v1.5M3 21v-6m0 0 2.77-.693a9 9 0 0 1 6.208.682l.108.054a9 9 0 0 0 6.086.71l3.114-.732a48.524 48.524 0 0 1-.005-10.499l-3.11.732a9 9 0 0 1-6.085-.711l-.108-.054a9 9 0 0 0-6.208-.682L3 4.5M3 15V4.5"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <p className="px-2 text-justify text-[18px]  ">
                 {question.question}
               </p>
-              {!question.image ? (
-                <div className="w-[70%] h-[auto md:w-[45%] lg:w-[500px] flex mx-auto mt-2 bg-pink-300 rounded-lg"></div>
-              ) : (
-                <div className="hidden"></div>
-              )}
             </div>
-            <fieldset
-              className={`p-2 ${
-                question.answer_type == "string"
-                  ? "grid grid-cols-2 md:grid-cols-3"
-                  : "block"
-              } `}
-            >
-              {question.question_answers.map((answer: any, i: any) => (
-                <div key={i} className="flex py-[2px] text-[16px] items-center">
-                  <input
-                    required
-                    type="radio"
-                    value={answer}
-                    id={answer}
-                    name={question._id}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={answer} className="ml-2">
-                    {answer}
-                  </label>
-                </div>
-              ))}
-            </fieldset>
+            <QuestionCard
+              question={question}
+              key={index}
+              index={index + 1}
+              name={question._id}
+              onChange={handleChange}
+              questionImage={
+                (index + 1) % 2 == 0
+                  ? "https://i.pinimg.com/564x/60/83/70/6083706875765e2f3d449a30238143bc.jpg"
+                  : ""
+              }
+              anwserImage={
+                index % 3 == 0
+                  ? "https://i.pinimg.com/564x/1b/63/bf/1b63bfdeb6eac905c42442cf67c0f7f0.jpg"
+                  : ""
+              }
+            />
           </div>
         ))}
       <button
         type="submit"
-        onClick={submitLeaderboard}
+        onClick={submitBoth}
         className="w-full md:w-[200px] m-4 mb-[75px] py-3 mx-auto flex justify-center text-white bg-blue-600 hover:opacity-75 rounded-lg shadow-md"
       >
         Trimite răspunsul

@@ -20,12 +20,14 @@ export default function Sidebar({ user }: { user: User | null }) {
 
   return (
     <aside
-      className="sticky top-0 hidden h-screen flex-col gap-10 bg-white p-5 shadow-sm lg:flex"
-      ref={portalRef}>
+      className="sticky top-0 hidden h-screen flex-col gap-10 bg-white p-5 shadow-sm lg:flex z-[50] "
+      ref={portalRef}
+    >
       <div
         className={`flex items-center ${
           expanded ? "justify-between" : "justify-center"
-        }`}>
+        }`}
+      >
         <Image
           src="/upb.png"
           alt="Logo Politehnica"
@@ -33,11 +35,13 @@ export default function Sidebar({ user }: { user: User | null }) {
           height={100}
           className={`overflow-hidden transition-all ${
             expanded ? "w-9" : "w-0"
-          }`}></Image>
+          }`}
+        ></Image>
         <button
           onClick={() => toggleMenu()}
           ref={buttonRef}
-          className="rounded-lg p-1.5 hover:text-indigo-800">
+          className="rounded-lg p-1.5 hover:text-indigo-800"
+        >
           {expanded ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +49,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -59,7 +64,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -83,7 +89,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -103,7 +110,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -123,7 +131,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -143,7 +152,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -163,7 +173,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   className="size-6"
-                  stroke="currentColor">
+                  stroke="currentColor"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -185,7 +196,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -197,7 +209,7 @@ export default function Sidebar({ user }: { user: User | null }) {
             <SidebarItem
               text="Settings"
               isExpanded={expanded}
-              href="/dashboard/profile/settings"
+              href="/dashboard/profile/profileSettings"
               icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -205,7 +217,8 @@ export default function Sidebar({ user }: { user: User | null }) {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="size-6">
+                  className="size-6"
+                >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -227,7 +240,10 @@ export default function Sidebar({ user }: { user: User | null }) {
             {capitalizeFirstLetter(username?.at(0))}
           </div>
           <div
-            className={`flex items-center justify-between overflow-hidden transition-all ${expanded ? "ml-3 w-52" : "w-0"} `}>
+            className={`flex items-center justify-between overflow-hidden transition-all ${
+              expanded ? "ml-3 w-52" : "w-0"
+            } `}
+          >
             <div className="leading-4">
               <h4 className="font-semibold">{username}</h4>
               <span className="text-xs text-gray-600">{user?.email}</span>
@@ -238,7 +254,8 @@ export default function Sidebar({ user }: { user: User | null }) {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-6">
+              className="size-6"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -258,7 +275,7 @@ function useSidebarMenu() {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const toggleMenu = () => {
-    setIsMenuOpen(prev => !prev);
+    setIsMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -304,17 +321,19 @@ export function SidebarItem({
           isActive
             ? "bg-neon-blue/10"
             : "hover:bg-indigo-100 hover:text-indigo-800"
-        } `}>
+        } `}
+      >
         {icon}
         <span
           className={`overflow-hidden transition-all ${
             isExpanded ? "ml-3 w-52" : "w-0"
-          }`}>
+          }`}
+        >
           {text}
         </span>
 
         {!isExpanded && (
-          <div className="invisible absolute left-full ml-6 -translate-x-3 rounded-md bg-indigo-100 px-2 py-1 text-sm text-indigo-800 opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
+          <div className="invisible absolute z-[999] left-full ml-6 -translate-x-3 rounded-md bg-indigo-100 px-2 py-1 text-sm text-indigo-800 opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100">
             {text}
           </div>
         )}
