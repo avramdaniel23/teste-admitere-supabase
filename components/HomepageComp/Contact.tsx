@@ -3,7 +3,7 @@ export default function ContactHP() {
     <section className="mt-24 p-10 max-w-[90%] mx-auto block justify-center ">
       <div className="flex align-bottom justify-start text-[36px] font-bold w-full items-end ">
         <div className=" flex justify-center mb-8 w-full ">
-          <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-[900] text-center font-serif italic text-white">
+          <h1 className="text-[2rem] md:text-[3rem] lg:text-[4rem] font-[900] text-center caveat text-white">
             Contactați-ne!
           </h1>
         </div>

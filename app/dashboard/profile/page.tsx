@@ -107,7 +107,7 @@ export default function Profile() {
 
       <div className="mt-12">
         <h1 className="text-[28px] font-[900] mt-8 mb-4">Teste rezolvate</h1>
-        <div className="overflow-y-scroll h-[500px] mb-4">
+        <div className="mb-4">
           <PastQuizzes />
         </div>
 

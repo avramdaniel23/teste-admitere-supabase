@@ -212,57 +212,9 @@ export default function QuizzesJoin() {
     }
   };
 
-  const imageQuestion = {
-    answer_type: "string",
-    question: "Menta-1,3,8-triena (A), p-cimenul (B) și timolul (C) sunt arome naturale. Atomi de carbon primari, secundari, terțiari și cuaternari se găsesc în:",
-    images: ["https://i.postimg.cc/wM4qxJ2j/Screenshot-2024-07-23-183843.png"],
-    question_answers: [
-      "A) A",
-      "B) B",
-      "C) A si B",
-      "D) A, B si C",
-      "E) C",
-      "F) B si C"
-    ],
-    correct_answer: "A) A"
-  }
-
-  const imageQuestion1 = {
-    answer_type: "image",
-    question: "Indicaţi formula corectă: ",
-    images: [],
-    question_answers: [
-      {
-        letter: "A) ",
-        url: "https://i.postimg.cc/wMrZbQcj/Screenshot-24-7-2024-12621.jpg"
-      },
-      {
-        letter: "B) ",
-        url: "https://i.postimg.cc/Vv2ZFLmS/Screenshot-24-7-2024-12649.jpg"
-      },
-      {
-        letter: "C) ",
-        url: "https://i.postimg.cc/zvpnttfs/Screenshot-2024-07-24-133037.png"
-      }
-    ],
-    correct_answer: "C) "
-  }
- 
-
   console.log(quizzesData)
   return (
     <div>
-      <div className="font-medium">{quizzesData &&
-        quizzesData.length > 0 &&
-        quizzesData.map((quiz: any, index: any) => (
-          <div className="flex flex-col items-center bg-blue-600 rounded-t-2xl shadow-xl p-4" key={index}>
-            <div className="text-white text-4xl font-bold">{quiz.name}</div>
-            <div className="text-white text-xl font-bold uppercase">{quiz.subject}</div>
-            <div className="text-white font-bold">{quiz.chapter}</div>
-          </div>
-        ))}
-      </div>
-
       {filteredQuestions &&
         filteredQuestions.map((question, index) => (
           <div

@@ -20,7 +20,6 @@ const HorizontalSection = () => {
           Dashboard
         </h2>
       </header>
-      */}
       <h3 className="text-3xl uppercase font-bold mb-10">Dashboard</h3>
       <div
         className={` auto-rows-auto grid gap-y-[1.5rem] md:grid-cols-2 md:gap-x-[1.5rem] lg:auto-rows-auto  lg:gap-y-[1.5rem]`}
@@ -34,7 +33,8 @@ const HorizontalSection = () => {
             );
           })}
       </div>
-    </div>
+    </section>
+    
   );
 };
 
