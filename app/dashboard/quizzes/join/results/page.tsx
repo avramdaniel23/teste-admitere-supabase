@@ -123,7 +123,7 @@ export default function Results() {
   return (
     <div>
       {quizData && (
-        <div className="mb-5 font-medium">
+        <div className="mb-8 font-medium ">
           <div className="text-center text-[28px]">
             Rezultatul {quizData.name}
           </div>
@@ -135,7 +135,7 @@ export default function Results() {
       )}
 
       {questionsData && (
-        <div>
+        <div className="flex flex-col gap-4">
           {questionsData.map((question, index) => (
             <div
               key={index}
@@ -148,26 +148,30 @@ export default function Results() {
                 <div>
                   <div
                     key={index}
-                    className={`w-full p-2 rounded mb-3 ${
+                    className={` w-full p-2 rounded mb-3 ${
                       thisSubmission.submission_answers[index].is_correct ==
                       false
                         ? "bg-red-400 opacity-85"
                         : " bg-green-400 opacity-85"
                     } font-semibold`}
                   >
-                    Răspunsul tău:{" "}
-                    <span>
-                      {
-                        thisSubmission.submission_answers[index]
-                          .selected_answer_id
-                      }
-                    </span>
+                    <div className="flex flex-col md:flex-row">
+                      Răspunsul tău:{" "}
+                      <span>
+                        {
+                          thisSubmission.submission_answers[index]
+                            .selected_answer_id
+                        }
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
+
               {thisSubmission.submission_answers[index].is_correct == false && (
-                <div className="w-full p-2 font-semibold rounded bg-green-400 opacity-85">
-                  <p>Răspunsul corect este: {question.correct_answer}</p>
+                <div className="flex flex-col md:flex-row w-full p-2 font-semibold rounded bg-green-400 opacity-85">
+                  <p>Răspunsul corect este: </p>
+                  <p>{question.correct_answer}</p>
                 </div>
               )}
             </div>

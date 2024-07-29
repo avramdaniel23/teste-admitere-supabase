@@ -2,6 +2,8 @@
 import getAllQuizzes from "@/libs/getAllQuizzes/getAllQuizzes";
 import getUser from "@/libs/getUser/getUser";
 
+// const materii = ["Matematica", "Fizica", "Informatica", "Chimie"];
+
 export default function PStats() {
   let quizzes: any[] = getAllQuizzes();
   let user: any = getUser();
@@ -11,7 +13,9 @@ export default function PStats() {
   });
 
   return (
-    <div>
+    <div className="border-2 rounded">
+      <div>Materii:</div>
+      <div>Incercari teste:</div>
       {userQuizzes.map((quiz: any, index: any) => {
         return (
           <div key={index}>

@@ -256,8 +256,10 @@ export default function ProfileSettings() {
               onChange={(e) => setFaculty(e.target.value)}
               className=" focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border-b-2 p-2 shadow-sm text-black outline-none focus:border-blue-400"
             >
-              {facultati.map((facultate) => (
-                <option value={facultate}>{facultate}</option>
+              {facultati.map((facultate, index) => (
+                <option key={index} value={facultate}>
+                  {facultate}
+                </option>
               ))}
             </select>
           </div>
@@ -286,8 +288,10 @@ export default function ProfileSettings() {
               onChange={(e) => setCounty(e.target.value)}
               className=" focus:ring-blue-500 dark:bg-gray-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 block w-full rounded-lg border-b-2 p-2 shadow-sm text-black outline-none focus:border-blue-400"
             >
-              {judete.map((judet) => (
-                <option value={judet}>{judet}</option>
+              {judete.map((judet, index) => (
+                <option key={index} value={judet}>
+                  {judet}
+                </option>
               ))}
             </select>
           </div>

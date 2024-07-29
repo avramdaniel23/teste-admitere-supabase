@@ -34,12 +34,12 @@ export default function Faq() {
           onClick={handleOpen}
         >
           <div
-            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[85%] lg:to-[85.2%] w-full  font-bold  flex items-center rounded-full border-2 border-[#0172F0]`}
           >
-            <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
+            <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto  ">
               01.
             </span>
-            <h1 className="max-w-[60%] ">
+            <h1 className="max-w-[60%]">
               Ce materii sunt disponibile acum pe platformă?
             </h1>
             <div className=" bg-white ml-4 ">
@@ -73,7 +73,7 @@ export default function Faq() {
           onClick={handleOpen1}
         >
           <div
-            className={`py-4 z-[80] px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 z-[80] px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[85%] lg:to-[85.2%] w-full  font-bold  flex items-center rounded-full border-2 border-[#0172F0]`}
           >
             <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
               02.
@@ -110,7 +110,7 @@ export default function Faq() {
           onClick={handleOpen2}
         >
           <div
-            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[30%] lg:to-[13.2%] w-full  font-bold  flex items-center rounded-full`}
+            className={`py-4 px-4 bg-gradient-to-r from-[#0172F0] from-0% to-white to-[85%] lg:to-[85.2%] w-full  font-bold  flex items-center rounded-full border-2 border-[#0172F0]`}
           >
             <span className=" mr-4 text-[28px] lg:text-[40px] font-[900] text-white w-[15%] md:w-auto ">
               03.
